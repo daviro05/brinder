@@ -41,7 +41,10 @@ export class BrinderComponent implements OnInit {
   loadCharacters() {
     this.brinderService.obtenerPersonajes().subscribe(
       (data) => {
-        this.characters = data; // Asignamos los personajes obtenidos al arreglo characters
+        this.characters = data.sort((a, b) => a.name.localeCompare(b.name)); // Orden alfabético
+        this.characters = this.characters.filter(
+          (character) => character.tipo === 'brinder'
+        );
       },
       (error) => {
         console.error('Error al cargar los personajes:', error);
