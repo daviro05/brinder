@@ -31,6 +31,9 @@ export class BuzonPersonalComponent extends BuzonBaseComponent {
     this.buzon.codigo_origen = this.codigo!;
     this.buzonService.obtenerPersonajes().subscribe((data) => {
       this.personajes = data;
+      this.personajes = this.personajes.filter(
+        (personaje) => personaje.tipo === 'brinder'
+      );
     });
   }
 

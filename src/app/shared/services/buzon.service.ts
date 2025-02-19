@@ -20,6 +20,9 @@ export class BuzonService {
         this.brinderService.obtenerPersonajes().subscribe(
           (data) => {
             this.personajes = data; // Actualizamos la caché
+            this.personajes = this.personajes.filter(
+              (personaje) => personaje.tipo === 'brinder'
+            );
             observer.next(this.personajes);
             observer.complete();
           },
