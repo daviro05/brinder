@@ -15,7 +15,12 @@ import { CodigoDialogComponent } from '../dialog/codigo-dialog/codigo-dialog.com
 })
 export class BuzonPersonalComponent extends BuzonBaseComponent {
   personajes: any[] = [];
-  buzon = { codigo_origen: '', codigo_destino: '', mensaje: '', tipo: 'brinder' };
+  buzon = {
+    codigo_origen: '',
+    codigo_destino: '',
+    mensaje: '',
+    tipo: 'brinder',
+  };
   utils: Utils;
 
   constructor(
@@ -31,6 +36,9 @@ export class BuzonPersonalComponent extends BuzonBaseComponent {
     this.buzon.codigo_origen = this.codigo!;
     this.buzonService.obtenerPersonajes().subscribe((data) => {
       this.personajes = data;
+      this.personajes = this.personajes.filter(
+        (personaje) => personaje.activo === 'activo'
+      );
     });
   }
 
