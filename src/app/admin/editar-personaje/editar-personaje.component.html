@@ -5,11 +5,12 @@
     <div class="image-container">
       <img [src]="personaje.image_url" alt="Imagen de {{personaje.name}}" />
     </div>
-    <label>Nombre:</label>
-    <input type="text" [(ngModel)]="personaje.name" name="name" required />
 
-    <!--<label>Tipo:</label>
-    <input type="text" [(ngModel)]="personaje.tipo" name="tipo" required />-->
+    <label>Nombre:</label>
+    <div class="input-group">
+      <input type="text" [(ngModel)]="personaje.name" name="name" required />
+      <mat-checkbox class="checkbox" [checked]="personaje.activo === 'activo'" (change)="toggleActivo($event)" />
+    </div>
 
     <label>Información:</label>
     <textarea [(ngModel)]="personaje.info_user" name="info_user"></textarea>
@@ -22,11 +23,10 @@
       </button>
     </div>
 
-
     <label>Imagen:</label>
     <input type="text" [(ngModel)]="personaje.image_url" name="image_url" required />
     <br>
-    <input type="text" value="https://lh3.googleusercontent.com/d/" name="image_url_drive" />
+    <span>https://lh3.googleusercontent.com/d/</span>
 
     <button mat-raised-button class="guardar" type="submit">Guardar Cambios</button>
     <button mat-raised-button class="volver" (click)="navegar('admin')">Volver</button>

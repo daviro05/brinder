@@ -6,6 +6,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { BrinderModel } from 'src/app/shared/brinder.model';
 import { BrinderService } from 'src/app/shared/services/brinder.service';
 import { Utils } from 'src/app/shared/utils';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-editar-personaje',
@@ -35,6 +36,12 @@ export class EditarPersonajeComponent {
       });
     }
   }
+
+toggleActivo(event: MatCheckboxChange): void {
+  const checked = event.checked;
+  this.personaje.activo = checked ? 'activo' : 'inactivo';
+}
+
 
   guardarCambios(): void {
     if (this.personaje.id) {
@@ -74,7 +81,7 @@ export class EditarPersonajeComponent {
     this.clipboard.copy(this.personaje.codigo);
     //alert('Código copiado al portapapeles');
   }
-  
+
   navegar(ruta: string) {
     this.utils.navegar(ruta);
   }
