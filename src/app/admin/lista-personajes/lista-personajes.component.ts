@@ -34,10 +34,7 @@ export class ListaPersonajesComponent implements OnInit {
 
   cargarPersonajes(): void {
     this.brinderService.obtenerPersonajes(this.tipo).subscribe((data) => {
-      this.personajes = data.sort((a, b) => a.name.localeCompare(b.name)); // Orden alfabético
-      this.personajes = this.personajes.filter(
-        (personaje) => personaje.tipo === 'brinder'
-      );
+      this.personajes = data; // Orden alfabético
     });
   }
 
