@@ -13,6 +13,7 @@ import { Utils } from 'src/app/shared/utils';
 export class ListaBuzonAdminComponent {
   mensajes: any[] = [];
   utils: Utils;
+  tipo: string = 'brinder';
 
   constructor(
     protected brinderService: BrinderService,
@@ -27,7 +28,7 @@ export class ListaBuzonAdminComponent {
   }
 
   cargarMensajesBuzon(): void {
-    this.brinderService.listarMensajesBuzon().subscribe((data) => {
+    this.brinderService.listarMensajesBuzon(this.tipo).subscribe((data) => {
       console.log(data)
       this.mensajes = data.map((msg) => ({ ...msg, expandido: false }));
     });

@@ -15,6 +15,7 @@ export class EstadisticasComponent implements OnInit {
   personajes: BrinderModel[] = [];
   personajeStats: any[] = [];
   totalMatches: number = 0;
+  tipo: string = 'brinder';
   @ViewChild('chart') private chartContainer: ElementRef | undefined;
   utils: Utils;
 
@@ -30,12 +31,10 @@ export class EstadisticasComponent implements OnInit {
   }
 
   cargarMatches(): void {
-    this.brinderService.obtenerMatches().subscribe((data) => {
+    this.brinderService.obtenerMatches(this.tipo).subscribe((data) => {
       this.matches = data.sort((a, b) =>
         a.personaje1_name.localeCompare(b.personaje1_name)
       ); // Orden alfabético
-      this.matches = this.matches.filter((match) => match.tipo === 'brinder');
-      console.log(this.matches);
       this.totalMatches = this.matches.length; // Total de matches
       this.generarGrafico();
       this.calcularEstadisticasPersonajes();
@@ -43,11 +42,8 @@ export class EstadisticasComponent implements OnInit {
   }
 
   cargarPersonajes(): void {
-    this.brinderService.obtenerPersonajes().subscribe((data) => {
+    this.brinderService.obtenerPersonajes(this.tipo).subscribe((data) => {
       this.personajes = data.sort((a, b) => a.name.localeCompare(b.name)); // Orden alfabético
-      this.personajes = this.personajes.filter(
-        (personaje) => personaje.tipo === 'brinder'
-      );
     });
   }
 

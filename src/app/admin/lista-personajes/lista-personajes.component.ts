@@ -17,6 +17,7 @@ export class ListaPersonajesComponent implements OnInit {
   personajes: BrinderModel[] = [];
   matches: MatchModel[] = [];
   utils: Utils;
+  tipo: string = 'brinder';
 
   constructor(
     private brinderService: BrinderService,
@@ -32,7 +33,7 @@ export class ListaPersonajesComponent implements OnInit {
   }
 
   cargarPersonajes(): void {
-    this.brinderService.obtenerPersonajes().subscribe((data) => {
+    this.brinderService.obtenerPersonajes(this.tipo).subscribe((data) => {
       this.personajes = data.sort((a, b) => a.name.localeCompare(b.name)); // Orden alfabético
       this.personajes = this.personajes.filter(
         (personaje) => personaje.tipo === 'brinder'
@@ -41,7 +42,7 @@ export class ListaPersonajesComponent implements OnInit {
   }
 
   cargarMatches(): void {
-    this.brinderService.obtenerMatches().subscribe((data) => {
+    this.brinderService.obtenerMatches(this.tipo).subscribe((data) => {
       this.matches = data.sort((a, b) =>
         a.personaje1_name.localeCompare(b.personaje1_name)
       ); // Orden alfabético

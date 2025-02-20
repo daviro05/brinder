@@ -10,6 +10,7 @@ export class BuzonService {
   private codigo!: string;
   private nombrePersonaje!: string;
   private aliasPersonaje!: string;
+  tipo: string = 'brinder';
 
   constructor(private brinderService: BrinderService) {}
 
@@ -17,12 +18,9 @@ export class BuzonService {
     // Si forceRefresh es true, ignoramos la caché y volvemos a llamar al servidor
     if (forceRefresh || this.personajes.length === 0) {
       return new Observable((observer) => {
-        this.brinderService.obtenerPersonajes().subscribe(
+        this.brinderService.obtenerPersonajes(this.tipo).subscribe(
           (data) => {
             this.personajes = data; // Actualizamos la caché
-            this.personajes = this.personajes.filter(
-              (personaje) => personaje.tipo === 'brinder'
-            );
             observer.next(this.personajes);
             observer.complete();
           },

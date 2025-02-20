@@ -21,6 +21,7 @@ export class BrinderComponent implements OnInit {
   draggedCharacter: any = null;
   optionalMessage: string = ''; // Nueva propiedad para el mensaje opcional
   selectedCharacterIndex: number | null = null; // Índice del personaje actualmente seleccionado
+  tipo: string = 'brinder';
 
   constructor(
     private http: HttpClient,
@@ -39,12 +40,9 @@ export class BrinderComponent implements OnInit {
 
   // Método para cargar los personajes desde el backend
   loadCharacters() {
-    this.brinderService.obtenerPersonajes().subscribe(
+    this.brinderService.obtenerPersonajes(this.tipo).subscribe(
       (data) => {
         this.characters = data.sort((a, b) => a.name.localeCompare(b.name)); // Orden alfabético
-        this.characters = this.characters.filter(
-          (character) => character.tipo === 'brinder'
-        );
       },
       (error) => {
         console.error('Error al cargar los personajes:', error);
