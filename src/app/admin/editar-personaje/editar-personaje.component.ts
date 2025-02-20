@@ -10,7 +10,7 @@ import { Utils } from 'src/app/shared/utils';
 @Component({
   selector: 'app-editar-personaje',
   templateUrl: './editar-personaje.component.html',
-  styleUrls: ['./editar-personaje.component.css'],
+  styleUrls: ['./editar-personaje.component.scss'],
 })
 export class EditarPersonajeComponent {
   personaje!: BrinderModel;
@@ -72,7 +72,7 @@ export class EditarPersonajeComponent {
 
   copiarAlPortapapeles(): void {
     this.clipboard.copy(this.personaje.codigo);
-    alert('Código copiado al portapapeles');
+    //alert('Código copiado al portapapeles');
   }
   
   navegar(ruta: string) {

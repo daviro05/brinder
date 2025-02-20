@@ -1,6 +1,10 @@
 <div class="editar-container">
   <h1>EDITAR PERSONAJE</h1>
   <form *ngIf="personaje" (ngSubmit)="guardarCambios()">
+
+    <div class="image-container">
+      <img [src]="personaje.image_url" alt="Imagen de {{personaje.name}}" />
+    </div>
     <label>Nombre:</label>
     <input type="text" [(ngModel)]="personaje.name" name="name" required />
 
@@ -12,8 +16,7 @@
 
     <label>Código personal:</label>
     <div class="input-group">
-      <input matInput type="text" [(ngModel)]="personaje.codigo" name="codigo" 
-        readonly />
+      <input matInput type="text" [(ngModel)]="personaje.codigo" name="codigo" readonly />
       <button mat-flac-button type="button" mat-icon-button (click)="copiarAlPortapapeles()">
         <mat-icon>content_copy</mat-icon>
       </button>

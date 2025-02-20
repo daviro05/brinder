@@ -7,13 +7,26 @@
   background: rgb(255, 255, 247); /* Pergamino translúcido */
 }
 
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  img {
+    width: 120px;
+    height: 120px;
+    border-radius: 20%;
+    object-fit: cover;
+  }
+}
+
 h1 {
   font-size: 30px; /* Aumenta el tamaño del texto */
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra suave para darle profundidad */
   letter-spacing: 2px; /* Espaciado entre letras para un estilo más medieval */
   padding: 10px;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 form {
@@ -35,16 +48,18 @@ textarea {
 }
 
 button {
-  margin-top: 15px;
   padding: 10px;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-}
-
-.guardar {
-  border: 1px solid #f7d461;
-  background: #f8e091 !important;
+  &.guardar {
+    margin-top: 15px;
+    border: 1px solid #f7d461;
+    background: #f8e091 !important;
+  }
+  &.volver {
+    margin-top: 15px;
+  }
 }
 
 .input-group {
@@ -54,7 +69,6 @@ button {
 
 .input-group input {
   flex: 1;
-  margin-right: 10px;
 }
 
 .copiar-icono {
