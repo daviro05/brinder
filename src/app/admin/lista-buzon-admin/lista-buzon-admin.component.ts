@@ -29,7 +29,7 @@ export class ListaBuzonAdminComponent {
 
   cargarMensajesBuzon(): void {
     this.brinderService.listarMensajesBuzon(this.tipo).subscribe((data) => {
-      console.log(data)
+      //console.log(data)
       this.mensajes = data.map((msg) => ({ ...msg, expandido: false }));
     });
   }

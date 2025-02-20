@@ -56,7 +56,7 @@ export class ListaBuzonComponent extends BuzonBaseComponent implements OnInit {
 
   actualizarAlias(nuevoAlias: string): void {
 
-    console.log(this.codigo!, nuevoAlias)
+    //console.log(this.codigo!, nuevoAlias)
     this.brinderService
       .actualizarAlias(this.codigo!, nuevoAlias)
       .subscribe({

@@ -40,7 +40,7 @@ export abstract class BuzonBaseComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result, result?.valor);
+      //console.log('The dialog was closed', result, result?.valor);
       if (result && result.valor) {
         this.validarCodigo(result.valor, result.guardar);
       } else {
