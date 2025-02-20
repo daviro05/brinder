@@ -11,6 +11,7 @@ import { Utils } from 'src/app/shared/utils';
 })
 export class ListaContactoComponent implements OnInit {
   mensajes: any[] = [];
+  tipo: string = 'brinder';
   utils: Utils;
 
   constructor(
@@ -26,7 +27,7 @@ export class ListaContactoComponent implements OnInit {
   }
 
   cargarMensajesContacto(): void {
-    this.brinderService.listarMensajesContacto().subscribe((data) => {
+    this.brinderService.listarMensajesContacto(this.tipo).subscribe((data) => {
       this.mensajes = data.map((msg) => ({ ...msg, expandido: false }));
     });
   }

@@ -45,12 +45,12 @@ export class BrinderService {
     return this.http.delete<string>(`${this.BASE_URL}/personajes/borrar/${id}`)
   }
 
-  enviarContacto(contacto: { nombre: string; mensaje: string }) {
+  enviarContacto(contacto: { nombre: string; mensaje: string, tipo: string }) {
     return this.http.post<string>(`${this.BASE_URL}/contacto`, contacto);
   }
 
-  listarMensajesContacto() {
-    return this.http.get<any[]>(`${this.BASE_URL}/contacto`);
+  listarMensajesContacto(tipo: string) {
+    return this.http.get<any[]>(`${this.BASE_URL}/contacto/${tipo}`);
   }
 
   enviarMensaje(buzon: { codigo_origen: string; codigo_destino: string;  mensaje: string }) {

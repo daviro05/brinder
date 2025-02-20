@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./contacto.component.scss'],
 })
 export class ContactoComponent {
-  contacto = { nombre: '', mensaje: '' };
+  contacto = { nombre: '', mensaje: '', tipo: 'brinder' };
   utils: Utils;
 
   constructor(
@@ -28,7 +28,7 @@ export class ContactoComponent {
         'Mensaje enviado',
         'Leeremos tu mensaje lo antes posible'
       );
-      this.contacto = { nombre: '', mensaje: '' };
+      this.contacto = { nombre: '', mensaje: '', tipo: 'brinder' };
     });
   }
 
