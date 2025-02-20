@@ -92,6 +92,7 @@ export class BuzonService {
     codigo_origen: string;
     codigo_destino: string;
     mensaje: string;
+    tipo: string;
   }): Observable<any> {
     return this.brinderService.enviarMensaje(buzon);
   }

@@ -53,7 +53,7 @@ export class BrinderService {
     return this.http.get<any[]>(`${this.BASE_URL}/contacto/${tipo}`);
   }
 
-  enviarMensaje(buzon: { codigo_origen: string; codigo_destino: string;  mensaje: string }) {
+  enviarMensaje(buzon: { codigo_origen: string; codigo_destino: string;  mensaje: string; tipo: string }) {
     return this.http.post<string>(`${this.BASE_URL}/buzon/enviar`, buzon);
   }
 
