@@ -27,14 +27,14 @@
 
     <div class="button-container">
       <button
-        mat-flat-button
+        mat-raised-button
         type="submit"
         class="guardar"
         [disabled]="!contacto.nombre || !contacto.mensaje"
       >
         Enviar
       </button>
-      <button mat-flat-button class="volver" type="button" (click)="navegar('inicio')">
+      <button mat-raised-button class="volver" type="button" (click)="navegar('inicio')">
         Volver
       </button>
     </div>

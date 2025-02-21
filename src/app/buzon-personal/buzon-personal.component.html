@@ -21,13 +21,13 @@
     <textarea id="mensaje" [(ngModel)]="buzon.mensaje" name="mensaje" required></textarea>
 
     <div class="button-container">
-      <button mat-flat-button type="submit" class="guardar" [disabled]="!buzon.codigo_destino || !buzon.mensaje">
+      <button mat-raised-button type="submit" class="guardar" [disabled]="!buzon.codigo_destino || !buzon.mensaje">
         Enviar mensaje
       </button>
-      <button mat-flat-button color="warn" class="boton-cerrar" (click)="cerrarBuzon()">
+      <button mat-raised-button color="warn" class="boton-cerrar" (click)="cerrarBuzon()">
         Cerrar Buzón
       </button>
-      <button mat-flat-button class="volver" type="button" (click)="navegar('buzon/mensajes')">
+      <button mat-raised-button class="volver" type="button" (click)="navegar('buzon/mensajes')">
         Volver
       </button>
     </div>

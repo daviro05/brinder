@@ -43,4 +43,11 @@ h1 {
 
 .button-container {
   margin-top: 20px;
+  display: grid;
+}
+
+.descargar {
+  border: 1px solid #f7d461;
+  background: #f8e091 !important;
+  margin-bottom: 10px;
 }

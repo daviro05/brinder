@@ -19,6 +19,11 @@ export class InfoComponent {
     this.isVisible = !this.isVisible;
   }
 
+  descargarPDF() {
+    const url = '../assets/presentacion.pdf';
+    window.open(url, '_blank');
+  }
+
   navegar(ruta: string) {
     this.utils.navegar(ruta);
   }
