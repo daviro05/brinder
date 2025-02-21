@@ -13,7 +13,6 @@
   cursor: grabbing;
 }
 
-
 .character-selected {
   border-color: #699bf8; /* Azul para resaltar el personaje */
   background-color: rgba(0, 123, 255, 0.1);
@@ -25,11 +24,9 @@
   object-fit: cover;
 }
 
-
 .character-info {
   text-align: center;
 }
-
 
 .selection-slot {
   width: 120px;
@@ -42,7 +39,6 @@
   align-items: center; /* Centra verticalmente */
   text-align: center;
 }
-
 
 .selection-slot img {
   width: 100px;
@@ -69,12 +65,10 @@
   border-radius: 8px; /* Opcional: redondear las esquinas */
 }
 
-
 .drag-area::-webkit-scrollbar-thumb {
   background-color: #888; /* Color de la barra */
   border-radius: 4px;
 }
-
 
 .selection-area {
   display: flex;
@@ -89,37 +83,37 @@
   color: #f44336; /* Rojo */
 }
 
-
 .button-container {
   margin-top: 20px;
   text-align: center;
   display: inline-grid;
 }
 
-.volver{
-  margin-top:20px
+.volver {
+  margin-top: 20px;
 }
 
-.enviar{
+.enviar {
   width: 200px;
   height: 50px;
   font-size: 18px;
 }
 
-button:not(:disabled).enviar{
- border: 1px solid #f7d461;
- background: #f8e091 !important;
+button:not(:disabled).enviar {
+  border: 1px solid #f7d461;
+  background: #f8e091 !important;
 }
 
 h1 {
-  font-size: 60px; /* Aumenta el tamaño del texto */
+  font-size: 4rem;
+  font-weight: bold;
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra suave para darle profundidad */
   margin-top: 40px;
   animation: fadeIn 1s ease-out; /* Añadimos animaciones */
 }
 
-.subtitulo{
+.subtitulo {
   margin-bottom: 10px;
 }
 
@@ -144,7 +138,7 @@ $bordes: (
   azul: #5dade2,
   verde: #52be80,
   amarillo: #f7dc6f,
-  generico: #5dade2
+  generico: #5dade2,
 );
 
 @each $nombre, $color in $bordes {
@@ -152,8 +146,6 @@ $bordes: (
     border: 3px solid $color;
   }
 }
-
-
 
 /* Animación de entrada suave */
 @keyframes fadeIn {
@@ -164,4 +156,3 @@ $bordes: (
     opacity: 1;
   }
 }
-

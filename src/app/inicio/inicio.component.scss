@@ -4,24 +4,20 @@
   box-sizing: border-box;
 }
 
-body,
-html {
-  height: 100%;
-  width: 100%;
-  font-family: "Roboto", serif;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
 
-.container {
+.container-inicio {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   height: 100vh;
   padding: 20px;
-  background: rgb(255, 255, 247); /* Pergamino translúcido */
+  //background: rgb(255, 255, 247); /* Pergamino translúcido */
+  background-image: url("../../assets/back3.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: lighten;
 }
 
 h1 {
@@ -38,29 +34,11 @@ h1 {
   align-items: center;
   width: 100%;
   flex-grow: 1;
-
-  button {
-    background-color: #ffecad;
-    border: 2px solid #774c00;
-    padding: 15px;
-    font-size: 18px;
-    width: 80%;
-    height: 60px;
-    transition: 0.3s;
-    text-transform: uppercase;
-    font-weight: bold;
-    border-radius: inherit;
-  }
-
+}
 
 .icon {
   position: absolute;
   left: 15px;
-}
-
-button:hover {
-    background-color: #ffeab3;
-  }
 }
 
 .admin{
@@ -83,3 +61,57 @@ button:hover {
     font-size: 21px;
   }
 }
+
+// Animaciones titulo
+
+.animated-title {
+  display: flex;
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.animated-title span {
+  animation: colorChange 2s infinite alternate;
+  display: inline-block;
+}
+
+/* Asignamos un retardo diferente a cada letra para que cambien de color de forma independiente */
+.animated-title span:nth-child(1) { animation-delay: 0s; }
+.animated-title span:nth-child(2) { animation-delay: 0.4s; }
+.animated-title span:nth-child(3) { animation-delay: 0.6s; }
+.animated-title span:nth-child(4) { animation-delay: 0.8s; }
+.animated-title span:nth-child(5) { animation-delay: 1s; }
+.animated-title span:nth-child(6) { animation-delay: 1.2s; }
+.animated-title span:nth-child(7) { animation-delay: 1.4s; }
+
+@keyframes colorChange {
+  0% { color: #ffcf33; } /* Rojo */
+  50% { color: #3498db; } /* Azul */
+  100% { color: #9b59b6; } /* Morado */
+}
+
+.pushable {
+    background: #fada72;
+    width: 80%;
+    border-radius: 12px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+  }
+  .front {
+    display: block;
+    padding: 12px 42px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #ffecad;
+    color: black;
+    transform: translateY(-6px);
+    text-transform: uppercase;
+  }
+
+  .pushable:active .front {
+    transform: translateY(-2px);
+  }

@@ -1,29 +1,44 @@
-<div class="container">
-  <h1>BRINDER</h1>
+<div class="container-inicio">
+  <h1 class="animated-title">
+    <span>B</span><span>R</span><span>I</span><span>N</span><span>D</span><span>E</span><span>R</span>
+  </h1>
+
   <span>Uniendo personas...y personajes</span>
 
   <div class="button-container">
-    <button mat-button (click)="navegar('brinder')">
-      <mat-icon class="icon material-icons-outlined">favorite_border</mat-icon>
-      <span class="text">Brinder</span>
+
+    <button class="pushable" (click)="navegar('brinder')">
+      <span class="front">
+        <mat-icon class="icon material-icons-outlined">favorite_border</mat-icon>
+        <span class="text">Brinder</span>
+      </span>
     </button>
-    <button mat-button (click)="navegar('buzon/mensajes')">
-      <mat-icon class="icon material-icons-outlined">email</mat-icon>
-      <span class="text">Mi Buzón</span>
+
+    <button class="pushable" (click)="navegar('buzon/mensajes')">
+      <span class="front">
+        <mat-icon class="icon material-icons-outlined">email</mat-icon>
+        <span class="text">Mi Buzón</span>
+      </span>
     </button>
-    <button mat-button (click)="navegar('info')">
-      <mat-icon class="icon material-icons-outlined">info</mat-icon>
-      <span class="text">Información</span>
+
+    <button class="pushable" (click)="navegar('info')">
+      <span class="front">
+        <mat-icon class="icon material-icons-outlined">info</mat-icon>
+        <span class="text">Información</span>
+      </span>
     </button>
-    <button mat-button (click)="navegar('contacto')">
-      <mat-icon class="icon material-icons-outlined">account_circle</mat-icon>
-      <span class="text">Contacto</span>
+
+    <button class="pushable" (click)="navegar('contacto')">
+      <span class="front">
+        <mat-icon class="icon material-icons-outlined">account_circle</mat-icon>
+        <span class="text">Contacto</span>
+      </span>
     </button>
+
   </div>
 
-
   <footer class="footer">
-    <span>Brinder - V1.5.4 - <a class="admin" (click)="navegar('admin')">DRMDesign</a></span>
+    <span>Brinder - V1.5.6 - <a class="admin" (click)="navegar('admin')">DRMDesign</a></span>
   </footer>
 
 </div>
