@@ -1,17 +1,29 @@
 <div class="container">
   <h1>BRINDER</h1>
   <span>Uniendo personas...y personajes</span>
-  
+
   <div class="button-container">
-    <button (click)="navegar('brinder')">Brinder</button>
-    <button (click)="navegar('info')">Información</button>
-    <button (click)="navegar('buzon/mensajes')">Buzón Personal</button>
-    <button (click)="navegar('contacto')">Contacto</button>
-    <button (click)="navegar('admin')">Administración</button>
+    <button mat-button (click)="navegar('brinder')">
+      <mat-icon class="icon material-icons-outlined">favorite_border</mat-icon>
+      <span class="text">Brinder</span>
+    </button>
+    <button mat-button (click)="navegar('buzon/mensajes')">
+      <mat-icon class="icon material-icons-outlined">email</mat-icon>
+      <span class="text">Mi Buzón</span>
+    </button>
+    <button mat-button (click)="navegar('info')">
+      <mat-icon class="icon material-icons-outlined">info</mat-icon>
+      <span class="text">Información</span>
+    </button>
+    <button mat-button (click)="navegar('contacto')">
+      <mat-icon class="icon material-icons-outlined">account_circle</mat-icon>
+      <span class="text">Contacto</span>
+    </button>
   </div>
 
+
   <footer class="footer">
-    Brinder - V1.5.4 - DRMDesign
+    <span>Brinder - V1.5.4 - <a class="admin" (click)="navegar('admin')">DRMDesign</a></span>
   </footer>
 
 </div>
