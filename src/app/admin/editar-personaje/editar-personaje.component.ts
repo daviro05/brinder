@@ -82,6 +82,14 @@ toggleActivo(event: MatCheckboxChange): void {
     //alert('Código copiado al portapapeles');
   }
 
+  getGoogleDriveImageUrl(url: string): string {
+    const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (match && match[1]) {
+      return `https://lh3.googleusercontent.com/d/${match[1]}`;
+    }
+    return url; // Devuelve la misma caena si no cumple el formato
+  }
+
   navegar(ruta: string) {
     this.utils.navegar(ruta);
   }
