@@ -15,6 +15,7 @@ import { DialogComponent } from 'src/app/dialog/dialog.component';
 export abstract class BuzonBaseComponent implements OnInit {
   nombrePersonaje: string = '';
   aliasPersonaje: string = '';
+  imagenPersonaje: string = '';
   codigo!: string | null;
 
   constructor(
@@ -54,6 +55,7 @@ export abstract class BuzonBaseComponent implements OnInit {
       next: (data) => {
         this.codigo = data.codigo;
         this.nombrePersonaje = data.nombre;
+        this.imagenPersonaje = data.imagen;
         this.aliasPersonaje = data.alias;
         this.onCodigoValidado();
       },

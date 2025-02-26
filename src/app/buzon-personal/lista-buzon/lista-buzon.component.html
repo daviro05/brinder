@@ -3,6 +3,10 @@
         <h2>BANDEJA DE ENTRADA DE {{nombrePersonaje}}</h2>
     </div>
 
+    <div class="image-container">
+      <img [src]="imagenPersonaje" alt="Imagen de {{nombrePersonaje}}" />
+    </div>
+
     <button class="modificar" mat-flat-button (click)="abrirDialogoAlias()">
       Modificar código de acceso
     </button>

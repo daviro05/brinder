@@ -58,6 +58,7 @@ button {
 
 .modificar{
   background-color: #f8e091 !important;
+  border: 1px solid #f7d461;
   margin-bottom: 20px;
 }
 
@@ -70,4 +71,18 @@ button {
   margin-top: 20px;
   text-align: center;
   display: grid;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  img {
+    width: 120px;
+    height: 120px;
+    border: 2px solid #a6775b;
+    border-radius: 20%;
+    object-fit: cover;
+  }
 }

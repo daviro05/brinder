@@ -49,7 +49,7 @@ export class BuzonService {
   validarCodigo(
     codigo: string,
     guardar?: boolean
-  ): Observable<{ codigo: string; nombre: string; alias: string }> {
+  ): Observable<{ codigo: string; nombre: string; alias: string, imagen: string }> {
     return new Observable((observer) => {
       // Realizamos una nueva llamada para obtener los personajes más actualizados
       this.obtenerPersonajes(true).subscribe({
@@ -64,6 +64,7 @@ export class BuzonService {
             this.codigo = personajeEncontrado.codigo;
             this.nombrePersonaje = personajeEncontrado.name.toUpperCase();
             this.aliasPersonaje = personajeEncontrado.alias;
+            this.imagenPersonaje = personajeEncontrado.image_url;
 
             if (guardar) {
               localStorage.setItem('codigo_origen', this.codigo);
@@ -73,6 +74,7 @@ export class BuzonService {
               codigo: this.codigo,
               nombre: this.nombrePersonaje,
               alias: this.aliasPersonaje,
+              imagen: this.imagenPersonaje,
             });
             observer.complete();
           } else {
