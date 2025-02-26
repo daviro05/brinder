@@ -45,6 +45,7 @@ toggleActivo(event: MatCheckboxChange): void {
 
   guardarCambios(): void {
     if (this.personaje.id) {
+      this.personaje.image_url = this.getGoogleDriveImageUrl(this.personaje.image_url);
       this.brinderService
         .updatePersonaje(this.personaje.id, this.personaje)
         .subscribe(
