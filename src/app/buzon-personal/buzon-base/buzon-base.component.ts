@@ -16,6 +16,7 @@ export abstract class BuzonBaseComponent implements OnInit {
   nombrePersonaje: string = '';
   aliasPersonaje: string = '';
   imagenPersonaje: string = '';
+  rolPersonaje: string = '';
   codigo!: string | null;
 
   constructor(
@@ -57,6 +58,7 @@ export abstract class BuzonBaseComponent implements OnInit {
         this.nombrePersonaje = data.nombre;
         this.imagenPersonaje = data.imagen;
         this.aliasPersonaje = data.alias;
+        this.rolPersonaje = data.rol;
         this.onCodigoValidado();
       },
       error: () => {

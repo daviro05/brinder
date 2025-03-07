@@ -4,8 +4,11 @@
     </div>
 
     <div class="image-container">
-      <img [src]="imagenPersonaje" alt="Imagen de {{nombrePersonaje}}" />
+      <img [src]="imagenPersonaje"/>
     </div>
+
+    <div>
+    <p>Eres: <strong class="rol">{{rolPersonaje}}</strong></p></div>
 
     <button class="modificar" mat-flat-button (click)="abrirDialogoAlias()">
       Modificar código de acceso

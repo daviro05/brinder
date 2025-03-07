@@ -15,6 +15,11 @@
     <label>Información:</label>
     <textarea [(ngModel)]="personaje.info_user" name="info_user"></textarea>
 
+    <label>Rol:</label>
+    <div class="input-group">
+      <input type="text" [(ngModel)]="personaje.rol" name="rol" required />
+    </div>
+
     <label>Código personal:</label>
     <div class="input-group">
       <input matInput type="text" [(ngModel)]="personaje.codigo" name="codigo" readonly />

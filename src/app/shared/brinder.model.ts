@@ -8,6 +8,7 @@ export class BrinderModel {
     public activo: string,
     public codigo: string,
     public alias: string,
+    public rol: string,
     public id?: string,
   ) { }
 
