@@ -15,7 +15,7 @@
   </mat-expansion-panel>
 
   <form (ngSubmit)="enviarMensaje()">
-  
+
     <label for="nombre">Destinatario</label>
     <mat-form-field>
       <mat-label>Elige un personaje</mat-label>
@@ -27,6 +27,7 @@
 
     <label for="mensaje">Mensaje</label>
     <textarea id="mensaje" class="mensaje-textarea" [(ngModel)]="buzon.mensaje" name="mensaje" required></textarea>
+
     <div class="emoticonos-container">
       <span class="emoticono" (click)="insertarEmoticono('⚔️')">⚔️</span>
       <span class="emoticono" (click)="insertarEmoticono('🛡️')">🛡️</span>
@@ -46,6 +47,8 @@
       <button mat-raised-button type="submit" class="guardar" [disabled]="!buzon.codigo_destino || !buzon.mensaje">
         Enviar mensaje
       </button>
+    </div>
+    <div class="button-container-secondary">
       <button mat-raised-button color="warn" class="boton-cerrar" (click)="cerrarBuzon()">
         Cerrar Buzón
       </button>

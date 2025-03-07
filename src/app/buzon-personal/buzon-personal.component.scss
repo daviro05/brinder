@@ -3,6 +3,7 @@
   text-align: center;
   background: rgb(255, 255, 247); /* Pergamino translúcido */
   padding: 20px;
+  border-radius: 10px;
 }
 
 h1 {
@@ -49,8 +50,14 @@ input {
   display: inline-grid;
 }
 
+.button-container-secondary {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
 button {
-  margin-top: 15px;
   padding: 10px;
   border: none;
   cursor: pointer;
@@ -60,24 +67,14 @@ button {
 .guardar {
   border: 1px solid #f7d461;
   background: #f8e091 !important;
-}
-
-.volver {
-  margin-top: 20px;
-  background: none !important;
+  height: 40px;
 }
 
 .boton-cerrar {
-  margin-top: 20px;
-  width: 100%;
-  font-weight: bold;
   background-color: #d32f2f;
   color: white;
 }
 
-.boton-cerrar:hover {
-  background-color: #b71c1c;
-}
 
 
 $bordes: (
@@ -136,7 +133,7 @@ $bordes: (
   width: 100%;
   min-height: 150px;
   padding: 12px;
-  border: 1px solid #c2a279;
+  border: 1px solid #f8e091;
   border-radius: 8px;
   font-size: 16px;
   background: rgba(255, 255, 255, 0.8);
@@ -163,11 +160,11 @@ $bordes: (
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #c2a279;
+    background: #f7d461;
     border-radius: 4px;
 
     &:hover {
-      background: #a6775b;
+      background: #f7d461;
     }
   }
 }
@@ -184,7 +181,7 @@ $bordes: (
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  scrollbar-color: #c2a279 #f1f1f1;
+  scrollbar-color: #f7d461 #f1f1f1;
 
   &::-webkit-scrollbar {
     height: 6px;
@@ -196,11 +193,11 @@ $bordes: (
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #c2a279;
+    background: #f7d461;
     border-radius: 3px;
 
     &:hover {
-      background: #a6775b;
+      background: #f7d461;
     }
   }
 }

@@ -92,6 +92,9 @@ export class BuzonPersonalComponent extends BuzonBaseComponent {
       this.buzon.mensaje =
         texto.substring(0, inicio) + emoticono + texto.substring(fin);
 
+      // Hacemos el textarea temporalmente readonly para evitar que se abra el teclado
+      textarea.setAttribute('readonly', 'true');
+
       // Restaurar el foco y la posición del cursor después del emoticono insertado
       setTimeout(() => {
         textarea.focus();
@@ -99,6 +102,10 @@ export class BuzonPersonalComponent extends BuzonBaseComponent {
           inicio + emoticono.length,
           inicio + emoticono.length
         );
+        // Quitamos el readonly después de un momento
+        setTimeout(() => {
+          textarea.removeAttribute('readonly');
+        }, 100);
       });
     }
   }
