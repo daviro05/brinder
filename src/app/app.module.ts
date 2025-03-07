@@ -34,6 +34,8 @@ import { ListaContactoComponent } from './admin/lista-contacto/lista-contacto.co
 import { ListaBuzonAdminComponent } from './admin/lista-buzon-admin/lista-buzon-admin.component';
 import { EstadisticasComponent } from './admin/estadisticas/estadisticas.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { AvisosComponent } from './admin/avisos/avisos.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     ListaContactoComponent,
     ListaBuzonAdminComponent,
     EstadisticasComponent,
+    AvisosComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +77,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatCheckboxModule,
     ClipboardModule,
     MatExpansionModule,
+    SharedModule,
   ],
   exports: [DialogSimpleComponent],
   providers: [],

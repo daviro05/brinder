@@ -2,22 +2,26 @@
   <h1>BRINDER</h1>
   <span>Uniendo personas...y personajes</span>
   <div class="title">
-    <h2>Información de la APP</h2>
+    <h2>Últimas noticias</h2>
   </div>
-  <div class="info">
-    <p>
-      Brinder es una aplicación diseñada para unir
-      personas de una manera divertida. 🎭✨ </p>
-    <br>
-    <p>1️⃣ Elige a dos personas que creas que tienen afinidad, se llevan bien o simplemente porque te apetece.</p>
-    <p>2️⃣ Vota por la pareja y, si quieres, escribe una nota anónima. 💌</p>
-    <p>3️⃣ Las personas nominadas descubrirán sus mensajes tras acabar el juego.</p>
-    <br>
-    Como el "Caldero de los shippeos", pero con un toque romano.🏺 ¡Quién sabe! Tal vez forjes una historia épica de amor. ❤️🔥
+  <div class="avisos-section">
+    <div *ngIf="avisos[currentAvisoIndex]" class="aviso-card"
+      [ngClass]="'prioridad-' + avisos[currentAvisoIndex]!.prioridad" style="max-height: 50vh; overflow-y: auto;">
+      <div class="aviso-content">
+        <p class="aviso-mensaje" [innerHTML]="avisos[currentAvisoIndex].mensaje | newlineToBr"></p>
+        <span class="aviso-fecha">{{avisos[currentAvisoIndex].fecha_envio | date:'dd/MM/yyyy HH:mm'}}</span>
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <button mat-raised-button type="button" class="descargar" *ngIf="currentAvisoIndex > 0" mat-button
+        (click)="prevAviso()">Anterior</button>
+      <button mat-raised-button type="button" class="descargar" *ngIf="currentAvisoIndex < avisos.length - 1" mat-button
+        (click)="nextAviso()">Siguiente</button>
+    </div>
   </div>
   <!-- Botón de enviar más grande -->
   <div class="button-container">
-    <button mat-raised-button type="button" class="descargar" (click)="descargarPDF()">Descargar información</button>
+    <!--<button mat-raised-button type="button" class="descargar" (click)="descargarPDF()">Presentación Brinder</button>-->
     <button mat-raised-button type="button" (click)="navegar('inicio')">Volver</button>
   </div>
 </div>

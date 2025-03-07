@@ -19,7 +19,7 @@ export class BrinderService {
   statusBackend() {
     return this.http.get<string>(this.BASE_URL + '/ping');
   }
-  
+
   obtenerPersonajes(tipo: string): Observable<BrinderModel[]> {
     return this.http
       .get<BrinderModel[]>(`${this.BASE_URL}/personajes/${tipo}`)
@@ -82,6 +82,14 @@ export class BrinderService {
     tipo: string;
   }) {
     return this.http.post<string>(`${this.BASE_URL}/buzon/enviar`, buzon);
+  }
+
+  enviarAviso(aviso: { prioridad: string; mensaje: string; tipo: string }) {
+    return this.http.post<string>(`${this.BASE_URL}/avisos`, aviso);
+  }
+
+  listarAvisos(tipo: string) {
+    return this.http.get<any[]>(`${this.BASE_URL}/avisos/${tipo}`);
   }
 
   listarMensajesBuzon(tipo: string) {

@@ -1,0 +1,26 @@
+<div class="container">
+  <h1>Avisos</h1>
+
+
+  <form (ngSubmit)="enviarMensaje()">
+    <label for="nombre">Prioridad</label>
+    <select id="nombre" [(ngModel)]="aviso.prioridad" name="nombre" required>
+      <option value="">Selecciona una prioridad</option>
+      <option value="baja">Baja</option>
+      <option value="media">Media</option>
+      <option value="alta">Alta</option>
+    </select>
+
+    <label for="mensaje">Mensaje</label>
+    <textarea id="mensaje" [(ngModel)]="aviso.mensaje" name="mensaje" required></textarea>
+
+    <div class="button-container">
+      <button mat-raised-button type="submit" class="guardar" [disabled]="!aviso.prioridad || !aviso.mensaje">
+        Enviar
+      </button>
+      <button mat-raised-button class="volver" type="button" (click)="navegar('admin')">
+        Volver
+      </button>
+    </div>
+  </form>
+</div>

@@ -14,6 +14,7 @@ import { BackendGuard } from './guards/backend.guard';
 import { ListaContactoComponent } from './admin/lista-contacto/lista-contacto.component';
 import { ListaBuzonAdminComponent } from './admin/lista-buzon-admin/lista-buzon-admin.component';
 import { EstadisticasComponent } from './admin/estadisticas/estadisticas.component';
+import { AvisosComponent } from './admin/avisos/avisos.component';
 
 const routes: Routes = [
   { path: 'inicio', component: InicioComponent }, // Ruta específica para "Inicio"
@@ -42,6 +43,7 @@ const routes: Routes = [
       { path: 'buzon', component: ListaBuzonAdminComponent }, // Lista de mensajes de buzón
       { path: 'stats', component: EstadisticasComponent }, // Estadísticas
       { path: 'editar-personaje/:id', component: EditarPersonajeComponent }, // Edición de personajes
+      { path: 'avisos', component: AvisosComponent }, // Avisos
     ],
   },
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' }, // Redirección a la ruta específica

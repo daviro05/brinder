@@ -1,0 +1,98 @@
+.container {
+  margin: auto;
+  height: 100vh;
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 2px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.contacto-info {
+  display: block;
+  margin: 25px 0px;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #c2a279;
+  border-radius: 5px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.8);
+
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #c2a279;
+  border-radius: 5px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  appearance: none;
+  padding-right: 40px;
+
+  &:focus {
+    outline: none;
+    border-color: #f7d461;
+    box-shadow: 0 0 5px rgba(247, 212, 97, 0.3);
+  }
+
+  option {
+    background: #fff;
+    color: #333;
+    padding: 10px;
+  }
+}
+
+textarea {
+  resize: none;
+  height: 150px;
+}
+
+.button-container {
+  margin-top: 20px;
+  text-align: center;
+  display: inline-grid;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.guardar {
+  border: 1px solid #f7d461;
+  background: #f8e091 !important;
+}
+
+.volver {
+  margin-top: 20px;
+  background: none !important;
+}

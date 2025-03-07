@@ -55,17 +55,16 @@ button {
   border-radius: 5px;
 }
 
-.nuevo {
+.btn-base {
   background: #f8e091 !important;
 }
-.stats {
-  background: #f8e091 !important;
-}
-.contacto {
-  background: #f8e091 !important;
-}
-.buzon {
-  background: #f8e091 !important;
+
+.nuevo,
+.stats,
+.contacto,
+.buzon,
+.avisos {
+  @extend .btn-base;
 }
 
 .editar {
