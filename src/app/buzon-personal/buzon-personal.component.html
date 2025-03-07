@@ -1,13 +1,21 @@
 <div class="container">
   <h1>BUZÓN PERSONAL {{ nombrePersonaje }}</h1>
 
-  <div class="buzon-info">
-    <span>Selecciona a un personaje de la lista.</span>
-    <span>Escríbele un mensaje anónimo.</span>
-    <span>RECUERDA: Sólo él podrá leerlo ✨</span>
-  </div>
+  <mat-expansion-panel [expanded]="false" [hideToggle]="true" class="info-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon class="info-icon">info</mat-icon>
+        Información del buzón
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <p class="info-text">Selecciona a un personaje de la lista.
+      <br>Escríbele un mensaje anónimo.
+      <br><strong>RECUERDA:</strong> Sólo él podrá leerlo ✨
+    </p>
+  </mat-expansion-panel>
 
   <form (ngSubmit)="enviarMensaje()">
+  
     <label for="nombre">Destinatario</label>
     <mat-form-field>
       <mat-label>Elige un personaje</mat-label>
@@ -18,7 +26,21 @@
     </mat-form-field>
 
     <label for="mensaje">Mensaje</label>
-    <textarea id="mensaje" [(ngModel)]="buzon.mensaje" name="mensaje" required></textarea>
+    <textarea id="mensaje" class="mensaje-textarea" [(ngModel)]="buzon.mensaje" name="mensaje" required></textarea>
+    <div class="emoticonos-container">
+      <span class="emoticono" (click)="insertarEmoticono('⚔️')">⚔️</span>
+      <span class="emoticono" (click)="insertarEmoticono('🛡️')">🛡️</span>
+      <span class="emoticono" (click)="insertarEmoticono('👑')">👑</span>
+      <span class="emoticono" (click)="insertarEmoticono('🏰')">🏰</span>
+      <span class="emoticono" (click)="insertarEmoticono('❤️')">❤️</span>
+      <span class="emoticono" (click)="insertarEmoticono('💝')">💝</span>
+      <span class="emoticono" (click)="insertarEmoticono('💕')">💕</span>
+      <span class="emoticono" (click)="insertarEmoticono('💖')">💖</span>
+      <span class="emoticono" (click)="insertarEmoticono('💫')">💫</span>
+      <span class="emoticono" (click)="insertarEmoticono('✨')">✨</span>
+      <span class="emoticono" (click)="insertarEmoticono('🌟')">🌟</span>
+      <span class="emoticono" (click)="insertarEmoticono('💌')">💌</span>
+    </div>
 
     <div class="button-container">
       <button mat-raised-button type="submit" class="guardar" [disabled]="!buzon.codigo_destino || !buzon.mensaje">

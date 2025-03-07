@@ -82,4 +82,24 @@ export class BuzonPersonalComponent extends BuzonBaseComponent {
   navegar(ruta: string) {
     this.utils.navegar(ruta);
   }
+
+  insertarEmoticono(emoticono: string): void {
+    const textarea = document.getElementById('mensaje') as HTMLTextAreaElement;
+    if (textarea) {
+      const inicio = textarea.selectionStart;
+      const fin = textarea.selectionEnd;
+      const texto = this.buzon.mensaje;
+      this.buzon.mensaje =
+        texto.substring(0, inicio) + emoticono + texto.substring(fin);
+
+      // Restaurar el foco y la posición del cursor después del emoticono insertado
+      setTimeout(() => {
+        textarea.focus();
+        textarea.setSelectionRange(
+          inicio + emoticono.length,
+          inicio + emoticono.length
+        );
+      });
+    }
+  }
 }
