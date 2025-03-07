@@ -4,34 +4,54 @@
     </div>
 
     <div class="image-container">
-      <img [src]="imagenPersonaje"/>
+        <img [src]="imagenPersonaje" />
     </div>
 
-    <div>
-    <p>Eres: <strong class="rol">{{rolPersonaje}}</strong></p></div>
+    <div class="mensajes-stats">
+        <div class="stat-item">
+            <p>Recibidos: <strong class="rol">{{mensajesRecibidos.length}}</strong></p>
+        </div>
+    </div>
 
     <button class="modificar" mat-flat-button (click)="abrirDialogoAlias()">
-      Modificar código de acceso
+        <mat-icon>vpn_key</mat-icon>
+        Modificar código
     </button>
 
-    <div *ngIf="mensajes.length === 0" class="sin-mensajes">
+    <div *ngIf="mensajesRecibidos.length === 0" class="sin-mensajes">
         No tienes mensajes en tu buzón.
     </div>
 
-    <div *ngFor="let mensaje of mensajes" class="mensaje" [class.expandido]="mensaje.expandido" (click)="toggleMensaje(mensaje)">
-        <div class="mensaje-header">
-            <span class="codigo-origen">De: Anónimo</span>
-            <small class="fecha">{{ mensaje.fecha_envio | date:'dd/MM/yyyy HH:mm' }}</small>
+    <div class="mensajes-section" *ngIf="mensajesRecibidos.length > 0">
+        <h3>Mensajes Recibidos</h3>
+        <div *ngFor="let mensaje of mensajesRecibidos" class="mensaje" [class.expandido]="mensaje.expandido"
+            (click)="toggleMensaje(mensaje)">
+            <div class="mensaje-header">
+                <span class="codigo-origen">De: Anónimo</span>
+                <small class="fecha">{{ mensaje.fecha_envio | date:'dd/MM/yyyy HH:mm' }}</small>
+            </div>
+            <p class="preview" *ngIf="!mensaje.expandido">{{ mensaje.mensaje | slice:0:30 }}...</p>
+            <p class="contenido" *ngIf="mensaje.expandido">{{ mensaje.mensaje }}</p>
         </div>
-
-        <p class="preview" *ngIf="!mensaje.expandido">{{ mensaje.mensaje | slice:0:30 }}...</p>
-        <p class="contenido" *ngIf="mensaje.expandido">{{ mensaje.mensaje }}</p>
     </div>
 
+    <!--<div class="mensajes-section" *ngIf="mensajesEnviados.length > 0">
+        <h3>Mensajes Enviados</h3>
+        <div *ngFor="let mensaje of mensajesEnviados" class="mensaje" [class.expandido]="mensaje.expandido"
+            (click)="toggleMensaje(mensaje)">
+            <div class="mensaje-header">
+                <span class="codigo-origen">Para: Anónimo</span>
+                <small class="fecha">{{ mensaje.fecha_envio | date:'dd/MM/yyyy HH:mm' }}</small>
+            </div>
+            <p class="preview" *ngIf="!mensaje.expandido">{{ mensaje.mensaje | slice:0:30 }}...</p>
+            <p class="contenido" *ngIf="mensaje.expandido">{{ mensaje.mensaje }}</p>
+        </div>
+    </div>-->
+
     <div class="button-container">
-          <button mat-raised-button type="button" class="enviar" (click)="navegar('buzon/inicio')">
-        Escribir mensaje
-      </button>
+        <button mat-raised-button type="button" class="enviar" (click)="navegar('buzon/inicio')">
+            Escribir mensaje
+        </button>
         <button mat-raised-button color="warn" class="boton-cerrar" (click)="cerrarBuzon()">
             Cerrar Buzón
         </button>

@@ -3,22 +3,41 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MatchModel } from '../match.model';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BrinderService {
-
   BASE_URL = environment.BASE_URL;
+  SECRET_KEY = environment.SECRET_KEY;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   statusBackend() {
-    return this.http.get<string>(this.BASE_URL+'/ping');
+    return this.http.get<string>(this.BASE_URL + '/ping');
   }
-
-  obtenerPersonajes(tipo: string) {
-    return this.http.get<BrinderModel[]>(`${this.BASE_URL}/personajes/${tipo}`);
+  
+  obtenerPersonajes(tipo: string): Observable<BrinderModel[]> {
+    return this.http
+      .get<BrinderModel[]>(`${this.BASE_URL}/personajes/${tipo}`)
+      .pipe(
+        map((personajes) =>
+          personajes.map((personaje) => ({
+            ...personaje,
+            codigo: CryptoJS.AES.decrypt(
+              personaje.codigo,
+              this.SECRET_KEY
+            ).toString(CryptoJS.enc.Utf8),
+            alias: CryptoJS.AES.decrypt(
+              personaje.alias,
+              this.SECRET_KEY
+            ).toString(CryptoJS.enc.Utf8),
+          }))
+        )
+      );
   }
 
   obtenerPersonaje(id: string) {
@@ -34,7 +53,10 @@ export class BrinderService {
   }
 
   agregarPersonaje(personaje: FormData) {
-    return this.http.post<string>(`${this.BASE_URL}/personajes/agregar`, personaje);
+    return this.http.post<string>(
+      `${this.BASE_URL}/personajes/agregar`,
+      personaje
+    );
   }
 
   updatePersonaje(id: string, personaje: Partial<BrinderModel>) {
@@ -42,10 +64,10 @@ export class BrinderService {
   }
 
   borrarPersonaje(id: string) {
-    return this.http.delete<string>(`${this.BASE_URL}/personajes/borrar/${id}`)
+    return this.http.delete<string>(`${this.BASE_URL}/personajes/borrar/${id}`);
   }
 
-  enviarContacto(contacto: { nombre: string; mensaje: string, tipo: string }) {
+  enviarContacto(contacto: { nombre: string; mensaje: string; tipo: string }) {
     return this.http.post<string>(`${this.BASE_URL}/contacto`, contacto);
   }
 
@@ -53,7 +75,12 @@ export class BrinderService {
     return this.http.get<any[]>(`${this.BASE_URL}/contacto/${tipo}`);
   }
 
-  enviarMensaje(buzon: { codigo_origen: string; codigo_destino: string;  mensaje: string; tipo: string }) {
+  enviarMensaje(buzon: {
+    codigo_origen: string;
+    codigo_destino: string;
+    mensaje: string;
+    tipo: string;
+  }) {
     return this.http.post<string>(`${this.BASE_URL}/buzon/enviar`, buzon);
   }
 
@@ -62,12 +89,20 @@ export class BrinderService {
   }
 
   listarMensajes(codigoDestino: string) {
-    return this.http.get<{ id: number; codigo_origen: string; mensaje: string; fecha_envio: string }[]>(`${this.BASE_URL}/buzon/${codigoDestino}`);
+    return this.http.get<
+      {
+        id: number;
+        codigo_origen: string;
+        mensaje: string;
+        fecha_envio: string;
+      }[]
+    >(`${this.BASE_URL}/buzon/${codigoDestino}`);
   }
 
   actualizarAlias(codigo: string, alias: string) {
-    return this.http.post<string>(`${this.BASE_URL}/actualizar-alias`, { codigo, alias });
+    return this.http.post<string>(`${this.BASE_URL}/actualizar-alias`, {
+      codigo,
+      alias,
+    });
   }
-
-
 }

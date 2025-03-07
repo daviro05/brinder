@@ -15,6 +15,8 @@ import { DialogComponent } from 'src/app/dialog/dialog.component';
 })
 export class ListaBuzonComponent extends BuzonBaseComponent implements OnInit {
   mensajes: any[] = [];
+  mensajesRecibidos: any[] = [];
+  mensajesEnviados: any[] = [];
   utils: Utils;
   nuevoAlias: string = '';
 
@@ -28,13 +30,11 @@ export class ListaBuzonComponent extends BuzonBaseComponent implements OnInit {
     this.utils = new Utils(this.router);
   }
 
-  OnInit(): void {
-  
-  }
+  OnInit(): void {}
 
   onCodigoValidado(): void {
     this.buzonService.obtenerMensajes(this.codigo!).subscribe((mensajes) => {
-      this.mensajes = mensajes.map((msg) => ({ ...msg, expandido: false }));
+      this.mensajesRecibidos = mensajes.map((msg) => ({ ...msg, expandido: false }));
     });
   }
 
@@ -55,22 +55,19 @@ export class ListaBuzonComponent extends BuzonBaseComponent implements OnInit {
   }
 
   actualizarAlias(nuevoAlias: string): void {
-
     //console.log(this.codigo!, nuevoAlias)
-    this.brinderService
-      .actualizarAlias(this.codigo!, nuevoAlias)
-      .subscribe({
-        next: () => {
-          this.openDialog('Éxito', 'Tu código se ha actualizado correctamente.');
-          //this.nombrePersonaje = nuevoAlias;
-        },
-        error: () => {
-          this.openDialog(
-            'Error',
-            'No se pudo actualizar el código. Inténtalo de nuevo.'
-          );
-        },
-      });
+    this.brinderService.actualizarAlias(this.codigo!, nuevoAlias).subscribe({
+      next: () => {
+        this.openDialog('Éxito', 'Tu código se ha actualizado correctamente.');
+        //this.nombrePersonaje = nuevoAlias;
+      },
+      error: () => {
+        this.openDialog(
+          'Error',
+          'No se pudo actualizar el código. Inténtalo de nuevo.'
+        );
+      },
+    });
   }
 
   openDialog(title: string, message: string): void {
