@@ -24,18 +24,18 @@ export class BuzonPersonalComponent extends BuzonBaseComponent {
   utils: Utils;
 
   emoticonos = [
-    { icono: '⚔️', descripcion: 'Espadas' },
-    { icono: '🛡️', descripcion: 'Escudo' },
-    { icono: '👑', descripcion: 'Corona' },
-    { icono: '🏰', descripcion: 'Castillo' },
+    { icono: '🏛️', descripcion: 'Templo romano' },
+    { icono: '🦅', descripcion: 'Águila romana' },
+    { icono: '🏺', descripcion: 'Ánfora' },
+    { icono: '🍇', descripcion: 'Uvas' },
     { icono: '❤️', descripcion: 'Corazón' },
-    { icono: '💝', descripcion: 'Regalo' },
-    { icono: '💕', descripcion: 'Corazones' },
-    { icono: '💖', descripcion: 'Corazón brillante' },
-    { icono: '💫', descripcion: 'Estrella fugaz' },
+    { icono: '💘', descripcion: 'Flecha de Cupido' },
+    { icono: '🕊️', descripcion: 'Paloma' },
+    { icono: '🌹', descripcion: 'Rosa' },
+    { icono: '💋', descripcion: 'Beso' },
     { icono: '✨', descripcion: 'Brillo' },
-    { icono: '🌟', descripcion: 'Estrella' },
-    { icono: '💌', descripcion: 'Carta' },
+    { icono: '🏆', descripcion: 'Trofeo' },
+    { icono: '📜', descripcion: 'Pergamino' },
   ];
 
   constructor(
