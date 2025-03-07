@@ -23,6 +23,21 @@ export class BuzonPersonalComponent extends BuzonBaseComponent {
   };
   utils: Utils;
 
+  emoticonos = [
+    { icono: '⚔️', descripcion: 'Espadas' },
+    { icono: '🛡️', descripcion: 'Escudo' },
+    { icono: '👑', descripcion: 'Corona' },
+    { icono: '🏰', descripcion: 'Castillo' },
+    { icono: '❤️', descripcion: 'Corazón' },
+    { icono: '💝', descripcion: 'Regalo' },
+    { icono: '💕', descripcion: 'Corazones' },
+    { icono: '💖', descripcion: 'Corazón brillante' },
+    { icono: '💫', descripcion: 'Estrella fugaz' },
+    { icono: '✨', descripcion: 'Brillo' },
+    { icono: '🌟', descripcion: 'Estrella' },
+    { icono: '💌', descripcion: 'Carta' },
+  ];
+
   constructor(
     protected override buzonService: BuzonService,
     protected override router: Router,

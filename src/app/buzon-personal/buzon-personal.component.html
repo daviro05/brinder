@@ -29,18 +29,10 @@
     <textarea id="mensaje" class="mensaje-textarea" [(ngModel)]="buzon.mensaje" name="mensaje" required></textarea>
 
     <div class="emoticonos-container">
-      <span class="emoticono" (click)="insertarEmoticono('⚔️')">⚔️</span>
-      <span class="emoticono" (click)="insertarEmoticono('🛡️')">🛡️</span>
-      <span class="emoticono" (click)="insertarEmoticono('👑')">👑</span>
-      <span class="emoticono" (click)="insertarEmoticono('🏰')">🏰</span>
-      <span class="emoticono" (click)="insertarEmoticono('❤️')">❤️</span>
-      <span class="emoticono" (click)="insertarEmoticono('💝')">💝</span>
-      <span class="emoticono" (click)="insertarEmoticono('💕')">💕</span>
-      <span class="emoticono" (click)="insertarEmoticono('💖')">💖</span>
-      <span class="emoticono" (click)="insertarEmoticono('💫')">💫</span>
-      <span class="emoticono" (click)="insertarEmoticono('✨')">✨</span>
-      <span class="emoticono" (click)="insertarEmoticono('🌟')">🌟</span>
-      <span class="emoticono" (click)="insertarEmoticono('💌')">💌</span>
+      <span class="emoticono" *ngFor="let emoticono of emoticonos" (click)="insertarEmoticono(emoticono.icono)"
+        [title]="emoticono.descripcion">
+        {{ emoticono.icono }}
+      </span>
     </div>
 
     <div class="button-container">

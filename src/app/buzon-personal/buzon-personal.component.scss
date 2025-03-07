@@ -75,8 +75,6 @@ button {
   color: white;
 }
 
-
-
 $bordes: (
   rojo: #f8d3cf,
   azul: #5dade2,
@@ -143,20 +141,35 @@ $bordes: (
   appearance: none;
   box-sizing: border-box;
   transition: border-color 0.3s ease;
+  position: relative;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(transparent, rgba(255, 255, 247, 0.9));
+    pointer-events: none;
+  }
 
   &:focus {
     outline: none;
-    border-color: #a6775b;
+    border-color: #f7d461;
     box-shadow: 0 0 0 2px rgba(166, 119, 91, 0.1);
   }
 
   &::-webkit-scrollbar {
-    width: 10px;
+    width: 12px;
   }
 
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
-    border-radius: 4px;
+    border-radius: 6px;
+    margin: 4px;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -165,6 +178,16 @@ $bordes: (
 
     &:hover {
       background: #f7d461;
+    }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    padding: 16px;
+    min-height: 160px;
+
+    &::-webkit-scrollbar {
+      width: 16px;
     }
   }
 }
