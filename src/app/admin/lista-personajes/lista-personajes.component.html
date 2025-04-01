@@ -23,9 +23,10 @@
   </div>
 
   <ul>
-    <li *ngFor="let personaje of personajes" 
+    <li class="elem_lista" *ngFor="let personaje of personajes" 
     [ngClass]="getBordeClase(personaje)"
-    [ngStyle]="getEstiloBorde(personaje)">
+    [ngStyle]="getEstiloBorde(personaje)"
+    (click)="editarPersonaje(personaje.id!)">
       <img [src]="personaje.image_url" [alt]="personaje.name" class="personaje-img" />
       <div class="info">
         <span>{{ personaje.name }}</span>

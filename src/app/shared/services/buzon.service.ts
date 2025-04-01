@@ -90,9 +90,14 @@ export class BuzonService {
     });
   }
 
-  obtenerMensajes(codigo: string): Observable<any[]> {
-    return this.brinderService.listarMensajes(codigo);
+  obtenerMensajesRecibidos(codigo: string): Observable<any[]> {
+    return this.brinderService.listarMensajesRecibidos(codigo);
   }
+
+  obtenerMensajesEnviados(codigo: string): Observable<any[]> {
+    return this.brinderService.listarMensajesEnviados(codigo);
+  }
+
 
   enviarMensaje(buzon: {
     codigo_origen: string;

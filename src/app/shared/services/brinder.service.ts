@@ -96,7 +96,7 @@ export class BrinderService {
     return this.http.get<any[]>(`${this.BASE_URL}/buzon/todos/${tipo}`);
   }
 
-  listarMensajes(codigoDestino: string) {
+  listarMensajesRecibidos(codigoDestino: string) {
     return this.http.get<
       {
         id: number;
@@ -104,7 +104,18 @@ export class BrinderService {
         mensaje: string;
         fecha_envio: string;
       }[]
-    >(`${this.BASE_URL}/buzon/${codigoDestino}`);
+    >(`${this.BASE_URL}/buzon/recibidos/${codigoDestino}`);
+  }
+
+  listarMensajesEnviados(codigoOrigen: string) {
+    return this.http.get<
+      {
+        id: number;
+        codigo_origen: string;
+        mensaje: string;
+        fecha_envio: string;
+      }[]
+    >(`${this.BASE_URL}/buzon/enviados/${codigoOrigen}`);
   }
 
   actualizarAlias(codigo: string, alias: string) {

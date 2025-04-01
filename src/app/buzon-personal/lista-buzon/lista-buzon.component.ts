@@ -19,6 +19,7 @@ export class ListaBuzonComponent extends BuzonBaseComponent implements OnInit {
   mensajesEnviados: any[] = [];
   utils: Utils;
   nuevoAlias: string = '';
+  bandejaSeleccionada: string = 'recibidos';
 
   constructor(
     protected override buzonService: BuzonService,
@@ -33,13 +34,26 @@ export class ListaBuzonComponent extends BuzonBaseComponent implements OnInit {
   OnInit(): void {}
 
   onCodigoValidado(): void {
-    this.buzonService.obtenerMensajes(this.codigo!).subscribe((mensajes) => {
+    this.buzonService.obtenerMensajesRecibidos(this.codigo!).subscribe((mensajes) => {
       this.mensajesRecibidos = mensajes.map((msg) => ({ ...msg, expandido: false }));
+    });
+
+    this.buzonService.obtenerMensajesEnviados(this.codigo!).subscribe((mensajes) => {
+      this.mensajesEnviados = mensajes.map((msg) => ({ ...msg, expandido: false }));
     });
   }
 
   toggleMensaje(mensaje: any): void {
     mensaje.expandido = !mensaje.expandido;
+  }
+
+  cambiarMensajes(tipo: string): void {
+    if (tipo === 'recibidos') { 
+      this.bandejaSeleccionada = 'recibidos';
+    }
+    if (tipo === 'enviados') {        
+      this.bandejaSeleccionada = 'enviados';
+    }
   }
 
   abrirDialogoAlias(): void {
