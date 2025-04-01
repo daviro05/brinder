@@ -45,16 +45,10 @@
 
   <!-- Área para personajes -->
   <div class="drag-area">
-    <div
-      class="character-slot"
-      *ngFor="let character of characters; let i = index"
-      [ngClass]="getBordeClase(character)"
-      [attr.data-id]="character.id"
-      [class.character-selected]="selectedCharacterIndex === i"
-      draggable="true"
-      (dragstart)="onDragStart($event, character)"
-      (touchstart)="onTouchStart($event, character)"
-    >
+    <div class="character-slot" *ngFor="let character of characters; let i = index" [ngClass]="getBordeClase(character)"
+      [ngStyle]="getEstiloBorde(character)" [attr.data-id]="character.id"
+      [class.character-selected]="selectedCharacterIndex === i" draggable="true"
+      (dragstart)="onDragStart($event, character)" (touchstart)="onTouchStart($event, character)">
       <img [src]="character.image_url" alt="{{ character.name }}">
       <p>{{ character.name }}</p>
     </div>

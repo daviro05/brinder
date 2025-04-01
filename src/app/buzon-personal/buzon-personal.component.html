@@ -20,8 +20,8 @@
     <mat-form-field>
       <mat-label>Elige un personaje</mat-label>
       <mat-select id="nombre" [(ngModel)]="buzon.codigo_destino" name="codigo_destino" required>
-        <mat-option [ngClass]="getBordeClase(personaje)" *ngFor="let personaje of personajes"
-          [value]="personaje.codigo">{{ personaje.name }}</mat-option>
+        <mat-option [ngClass]="getBordeClase(personaje)" [ngStyle]="getEstiloBorde(personaje)"
+          *ngFor="let personaje of personajes" [value]="personaje.codigo">{{ personaje.name }}</mat-option>
       </mat-select>
     </mat-form-field>
 

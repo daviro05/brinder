@@ -23,7 +23,9 @@
   </div>
 
   <ul>
-    <li *ngFor="let personaje of personajes" [ngClass]="getBordeClase(personaje)">
+    <li *ngFor="let personaje of personajes" 
+    [ngClass]="getBordeClase(personaje)"
+    [ngStyle]="getEstiloBorde(personaje)">
       <img [src]="personaje.image_url" [alt]="personaje.name" class="personaje-img" />
       <div class="info">
         <span>{{ personaje.name }}</span>

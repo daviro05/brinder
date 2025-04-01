@@ -18,6 +18,11 @@ ng build --configuration production --base-href=/brinder/
 
 pm2 start npm --name brinder-backend -- run start
 
+## Certs
+
+cd /etc/letsencrypt/live/drmnextcloud.ddns.net
+Renovar certificados con letscrypt con dietpi-launcher
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).

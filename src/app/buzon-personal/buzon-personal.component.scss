@@ -80,8 +80,7 @@ $bordes: (
   rojo: #f8d3cf,
   azul: #5dade2,
   verde: #97dab4,
-  amarillo: #f7dc6f,
-  generico: #a5d0ec
+  generico: #a5d0ec,
 );
 
 @each $nombre, $color in $bordes {
