@@ -14,6 +14,8 @@ export class KillerComponent {
   utils: Utils;
   killer: any[] = [];
   tipo: string = 'brinder';
+  vivos: string = '';
+  muertos: string = ''
 
   constructor(private brinderService: BrinderService, private router: Router) {
     this.utils = new Utils(this.router);
@@ -35,10 +37,19 @@ export class KillerComponent {
         ...character,
         estado: character.rol?.split(';')[3]?.trim(),
       }));
+
+      // Separar personajes en vivos y muertos
+      this.vivos = this.characters.filter(
+        (character) => character.estado === 'vivo'
+      ).length.toString();
+      this.muertos = this.characters.filter(
+        (character) => character.estado === 'muerto'
+      ).length.toString();
     });
   }
 
   navegar(ruta: string) {
     this.utils.navegar(ruta);
   }
+
 }
