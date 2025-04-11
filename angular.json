@@ -37,6 +37,9 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json",
+
             "scripts": []
           },
           "configurations": {

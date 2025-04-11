@@ -37,6 +37,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { AvisosComponent } from './admin/avisos/avisos.component';
 import { SharedModule } from './shared/shared.module';
 import { KillerComponent } from './killer/killer.component';
+import { environment } from 'src/environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,9 @@ import { KillerComponent } from './killer/killer.component';
     ClipboardModule,
     MatExpansionModule,
     SharedModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
+    })
   ],
   exports: [DialogSimpleComponent],
   providers: [],
