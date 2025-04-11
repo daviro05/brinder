@@ -17,6 +17,7 @@ export class EditarPersonajeComponent {
   personaje!: BrinderModel;
   texto: string = '';
   utils: Utils;
+  mostrarPassword: boolean = false;
 
   constructor(
     private route: ActivatedRoute,

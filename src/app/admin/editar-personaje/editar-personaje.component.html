@@ -20,7 +20,8 @@
 
     <label>Código personal:</label>
     <div class="input-group">
-      <input matInput type="text" [(ngModel)]="personaje.codigo" name="codigo" readonly />
+      <input matInput [type]="!mostrarPassword ? 'password' : 'text'" [(ngModel)]="personaje.codigo" name="codigo"
+        readonly />
       <button mat-flac-button type="button" mat-icon-button (click)="copiarAlPortapapeles()">
         <mat-icon>content_copy</mat-icon>
       </button>

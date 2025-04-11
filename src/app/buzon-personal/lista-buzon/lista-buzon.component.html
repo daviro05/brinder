@@ -17,7 +17,7 @@
                 (click)="cambiarMensajes('enviados')">
                 <mat-icon class="material-symbols-outlined">unarchive</mat-icon>Enviados: {{mensajesEnviados.length}}
             </button>
-            <button mat-button [class.selected]="bandejaSeleccionada === 'killer'" (click)="cambiarMensajes('killer')" [disabled]="killer[5]?.trim() !== 'activo'">
+            <button mat-button [class.selected]="bandejaSeleccionada === 'killer'" (click)="cambiarMensajes('killer')" *ngIf="killer[5]?.trim() === 'activo'">
                 <mat-icon class="material-symbols-outlined">skull</mat-icon>
                 Killer
             </button>

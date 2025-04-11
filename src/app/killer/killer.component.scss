@@ -87,3 +87,14 @@
   color: green;
   font-weight: bolder;
 }
+
+.button-container {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+
+  .seleccionado{
+      border: 1px solid #a6775b;
+      background-color: #e3ccb7;
+  }
+}
