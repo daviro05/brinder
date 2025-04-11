@@ -38,7 +38,6 @@ export class MiEspacioComponent extends BuzonBaseComponent implements OnInit {
         ...match,
       }));
       this.mensajesMatches = matches.map((match) => match.mensaje).filter((mensaje) => mensaje !== '');
-      console.log(this.mensajesMatches);
 
       // Contar las veces que se realiza cada match
       const matchCounts = matches.reduce((acc, match) => {
@@ -64,7 +63,6 @@ export class MiEspacioComponent extends BuzonBaseComponent implements OnInit {
       };
 
       this.mejorMatch = mostFrequentMatch;
-      console.log('Array con el match más realizado:', this.mejorMatch);
       });
   }
 
