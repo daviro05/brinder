@@ -16,11 +16,13 @@ import { ListaBuzonAdminComponent } from './admin/lista-buzon-admin/lista-buzon-
 import { EstadisticasComponent } from './admin/estadisticas/estadisticas.component';
 import { AvisosComponent } from './admin/avisos/avisos.component';
 import { KillerComponent } from './killer/killer.component';
+import { MiEspacioComponent } from './mi-espacio/mi-espacio.component';
 
 const routes: Routes = [
   { path: 'inicio', component: InicioComponent }, // Ruta específica para "Inicio"
   { path: 'brinder', component: BrinderComponent, canActivate: [BackendGuard] }, // Ruta específica para "Brinder"
   { path: 'info', component: InfoComponent, canActivate: [BackendGuard] }, // Ruta específica para "Info"
+  { path: 'mi-espacio', component: MiEspacioComponent, canActivate: [BackendGuard] }, // Ruta específica para "Mi Espacio"
   {
     path: 'buzon',
     canActivate: [BackendGuard],

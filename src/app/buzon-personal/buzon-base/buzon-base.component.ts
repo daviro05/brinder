@@ -18,6 +18,7 @@ export abstract class BuzonBaseComponent implements OnInit {
   imagenPersonaje: string = '';
   rolPersonaje: string = '';
   codigo!: string | null;
+  id!: string | null;
 
   constructor(
     protected buzonService: BuzonService,
@@ -54,6 +55,7 @@ export abstract class BuzonBaseComponent implements OnInit {
   validarCodigo(codigo: string, guardar?: boolean): void {
     this.buzonService.validarCodigo(codigo, guardar).subscribe({
       next: (data) => {
+        this.id = data.id;
         this.codigo = data.codigo;
         this.nombrePersonaje = data.nombre;
         this.imagenPersonaje = data.imagen;

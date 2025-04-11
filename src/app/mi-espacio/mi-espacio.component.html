@@ -1,0 +1,57 @@
+<div class="chat-container">
+    <div class="title-container">
+        <h2>ESPACIO DE {{nombrePersonaje}}</h2>
+    </div>
+
+    <div class="image-container">
+        <img [src]="imagenPersonaje" />
+    </div>
+
+    <div class="button-container">
+        <button mat-raised-button (click)="navegar('buzon/mensajes')" class="buzon">
+            <mat-icon class="material-symbols-outlined">email</mat-icon>
+            Mi Buzón
+        </button>
+        <button mat-raised-button disabled class="killer">
+            <mat-icon class="material-symbols-outlined">skull</mat-icon>
+            Mi Killer
+        </button>
+        <button mat-raised-button disabled class="medallas">
+            <mat-icon class="material-symbols-outlined">social_leaderboard</mat-icon>
+            Medallas
+        </button>
+        <button mat-raised-button disabled class="retos">
+            <mat-icon class="material-symbols-outlined">person_play</mat-icon>
+            Retos
+        </button>
+    </div>
+
+    <div class="stats">
+        <h2>Tus estadísticas</h2>
+        <div class="pill">
+            <p>Matches recibidos:</p><span class="valor">{{matches.length}}</span>
+        </div>
+        <div class="pill">
+            <p>Mensajes en matches:</p><span class="valor">{{mensajesMatches.length}}</span>
+        </div>
+        <div class="pill">
+            <p>Mejor match:</p><span class="valor">{{mejorMatch?.personaje1}} ❤ {{mejorMatch?.personaje2}}</span>
+        </div>
+        <div class="pill">
+            <p>Veces mejor match:</p><span class="valor">{{mejorMatch?.veces}}</span>
+        </div>
+        <div class="pill">
+            <p>Mensajes:</p><span class="valor">Próximamente</span>
+        </div>
+    </div>
+
+    <div class="button-container-secondary">
+
+        <button mat-raised-button color="warn" class="boton-cerrar" (click)="cerrarBuzon()">
+            Cerrar Mi espacio
+        </button>
+        <button mat-raised-button class="volver" type="button" (click)="navegar('inicio')">
+            Volver
+        </button>
+    </div>
+</div>

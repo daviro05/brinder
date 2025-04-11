@@ -39,6 +39,7 @@ import { SharedModule } from './shared/shared.module';
 import { KillerComponent } from './killer/killer.component';
 import { environment } from 'src/environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { MiEspacioComponent } from './mi-espacio/mi-espacio.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     EstadisticasComponent,
     AvisosComponent,
     KillerComponent,
+    MiEspacioComponent,
   ],
   imports: [
     BrowserModule,

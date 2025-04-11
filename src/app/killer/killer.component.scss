@@ -93,13 +93,14 @@
   gap: 5px;
   justify-content: center;
 
-  .seleccionado{
-      border:1px solid #f7d461;
-      background-color: #f8e091;
+  .seleccionado {
+    border: 1px solid #f7d461;
+    background-color: #f8e091;
   }
 }
 
-.proximamente{
-  margin: 100px 0px;
-  font-size: 20px;
+.proximamente {
+  .loading-gif {
+    margin: 20px;
+  }
 }

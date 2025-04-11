@@ -7,12 +7,13 @@ import { Observable, of, tap } from 'rxjs';
 })
 export class BuzonService {
   private personajes: BrinderModel[] = [];
+  private id!: string;
   private codigo!: string;
   private nombrePersonaje!: string;
   private aliasPersonaje!: string;
   private imagenPersonaje!: string;
   private rolPersonaje!: string;
-  tipo: string = 'brinder';
+  private tipo: string = 'brinder';
 
   constructor(private brinderService: BrinderService) {}
 
@@ -51,7 +52,7 @@ export class BuzonService {
   validarCodigo(
     codigo: string,
     guardar?: boolean
-  ): Observable<{ codigo: string; nombre: string; alias: string, imagen: string, rol: string }> {
+  ): Observable<{ codigo: string; nombre: string; alias: string, imagen: string, rol: string, id: string }> {
     return new Observable((observer) => {
       // Realizamos una nueva llamada para obtener los personajes más actualizados
       this.obtenerPersonajes(true).subscribe({
@@ -63,6 +64,7 @@ export class BuzonService {
           }
 
           if (personajeEncontrado) {
+            this.id = personajeEncontrado.id;
             this.codigo = personajeEncontrado.codigo;
             this.nombrePersonaje = personajeEncontrado.name.toUpperCase();
             this.aliasPersonaje = personajeEncontrado.alias;
@@ -74,6 +76,7 @@ export class BuzonService {
             }
 
             observer.next({
+              id: this.id,
               codigo: this.codigo,
               nombre: this.nombrePersonaje,
               alias: this.aliasPersonaje,

@@ -48,6 +48,10 @@ export class BrinderService {
     return this.http.get<any[]>(`${this.BASE_URL}/matches/todos/${tipo}`);
   }
 
+  obtenerMatchesPersonaje(tipo: string, personaje_id: string) {
+    return this.http.get<any[]>(`${this.BASE_URL}/matches/personaje/${tipo}/${personaje_id}`);
+  }
+
   sendMatch(matchData: MatchModel) {
     return this.http.post(`${this.BASE_URL}/matches`, matchData);
   }

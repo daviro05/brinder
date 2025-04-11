@@ -29,6 +29,7 @@
     </div>
 
     <div *ngIf="filteredCharacters.length === 0" class="proximamente">
+        <img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">
         <p [innerHTML]="mensajeProximamente"></p>
     </div>
 
