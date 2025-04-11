@@ -1,15 +1,18 @@
 <div class="container">
     <div class="title-container">
-        <h2>KILLER</h2>
+        <h2><mat-icon class="icon material-symbols-outlined">skull</mat-icon> KILLER</h2>
+        <p>Estado de los personajes en el juego</p>
     </div>
 
     <div class="characters-table">
         <div class="character-row"
-            *ngFor="let row of characters | slice:0:characters.length; let i = index; let even = even">
+            *ngFor="let row of characters; let i = index; let even = even">
             <div class="character-card" [class.muerto]="row.estado === 'muerto'">
                 <div class="red-cross"></div>
                 <img [src]="row.image_url" class="character-image">
                 <p>{{ row.name }}</p>
+                <span *ngIf="row.estado === 'vivo'">VIVO</span>
+                <span *ngIf="row.estado === 'muerto'">MUERTO</span>
             </div>
         </div>
     </div>

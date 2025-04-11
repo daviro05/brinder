@@ -29,11 +29,11 @@ export class KillerComponent {
     this.brinderService.obtenerPersonajes(this.tipo).subscribe((data) => {
       this.characters = data;
       this.characters = this.characters.filter(
-        (character) => character.activo === 'activo'
+        (character) => character.activo === 'activo' && character.rol !== ''
       );
       this.characters = this.characters.map((character) => ({
         ...character,
-        estado: character.rol.split(';')[3]?.trim(),
+        estado: character.rol?.split(';')[3]?.trim(),
       }));
     });
   }

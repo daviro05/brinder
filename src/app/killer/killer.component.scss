@@ -73,6 +73,7 @@
 
 .muerto {
   opacity: 0.5;
+  color: red;
 }
 
 .characters-table {
@@ -83,4 +84,6 @@
 
 .character-row {
   display: contents; // Permitir que las tarjetas se distribuyan en las columnas
+  color: green;
+  font-weight: bolder;
 }
