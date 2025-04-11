@@ -2,20 +2,21 @@
     <div class="title-container">
         <h2><mat-icon class="icon material-symbols-outlined">skull</mat-icon> KILLER</h2>
         <p>Estado de los personajes en el juego</p>
-        <div class="button-container">
+        <div class="button-container" *ngIf="filteredCharacters.length > 0">
             <!--<button mat-button (click)="seleccionarEstado('todos')" [class.seleccionado]="estadoSeleccionado === 'todos'">
                 Todos
             </button>-->
             <button mat-button (click)="seleccionarEstado('vivo')" [class.seleccionado]="estadoSeleccionado === 'vivo'">
                 Vivos: {{ vivos }}
             </button>
-            <button mat-button (click)="seleccionarEstado('muerto')" [class.seleccionado]="estadoSeleccionado === 'muerto'">
+            <button mat-button (click)="seleccionarEstado('muerto')"
+                [class.seleccionado]="estadoSeleccionado === 'muerto'">
                 Muertos: {{ muertos }}
             </button>
         </div>
     </div>
 
-    <div class="characters-table">
+    <div class="characters-table" *ngIf="filteredCharacters.length > 0">
         <div class="character-row" *ngFor="let row of filteredCharacters">
             <div class="character-card" [class.muerto]="row.estado === 'muerto'">
                 <div class="red-cross"></div>
@@ -25,6 +26,10 @@
                 <span *ngIf="row.estado === 'muerto'">MUERTO</span>
             </div>
         </div>
+    </div>
+
+    <div *ngIf="filteredCharacters.length === 0" class="proximamente">
+        <p [innerHTML]="mensajeProximamente"></p>
     </div>
 
     <div>

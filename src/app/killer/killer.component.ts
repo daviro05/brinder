@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Utils } from '../shared/utils';
 import { BrinderService } from '../shared/services/brinder.service';
@@ -18,6 +17,7 @@ export class KillerComponent {
   vivos: string = '';
   muertos: string = '';
   estadoSeleccionado: string = 'vivo'; // Nuevo estado seleccionado
+  mensajeProximamente: string = '<b>Próximamente...</b><br>Para más información puedes echar un vistazo a la sección de noticias.';
 
   constructor(private brinderService: BrinderService, private router: Router) {
     this.utils = new Utils(this.router);
