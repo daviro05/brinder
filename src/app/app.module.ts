@@ -36,6 +36,7 @@ import { EstadisticasComponent } from './admin/estadisticas/estadisticas.compone
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { AvisosComponent } from './admin/avisos/avisos.component';
 import { SharedModule } from './shared/shared.module';
+import { KillerComponent } from './killer/killer.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { SharedModule } from './shared/shared.module';
     ListaBuzonAdminComponent,
     EstadisticasComponent,
     AvisosComponent,
+    KillerComponent,
   ],
   imports: [
     BrowserModule,

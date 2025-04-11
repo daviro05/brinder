@@ -100,15 +100,27 @@ button {
   display: flex;
   justify-content: center;
   gap: 20px;
+  margin-bottom: 20px;
 
-  .stat-item{
-    display: contents;
+  .stat-item {
+    display: inline;
 
     .selected{
       border:1px solid #f7d461;
       background-color: #f8e091;
     }
   }
+}
+
+.killer-container {
+  text-align: left;
+  margin-top: 30px;
+  padding: 20px;
+}
+
+.muerto{
+  opacity: 0.4;
+    color: red;
 }
 
 .button-container-secondary {

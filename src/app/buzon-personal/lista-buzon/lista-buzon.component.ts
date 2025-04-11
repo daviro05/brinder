@@ -20,6 +20,7 @@ export class ListaBuzonComponent extends BuzonBaseComponent implements OnInit {
   utils: Utils;
   nuevoAlias: string = '';
   bandejaSeleccionada: string = 'recibidos';
+  killer: any[] = [];
 
   constructor(
     protected override buzonService: BuzonService,
@@ -34,13 +35,27 @@ export class ListaBuzonComponent extends BuzonBaseComponent implements OnInit {
   OnInit(): void {}
 
   onCodigoValidado(): void {
-    this.buzonService.obtenerMensajesRecibidos(this.codigo!).subscribe((mensajes) => {
-      this.mensajesRecibidos = mensajes.map((msg) => ({ ...msg, expandido: false }));
-    });
+    this.buzonService
+      .obtenerMensajesRecibidos(this.codigo!)
+      .subscribe((mensajes) => {
+        this.mensajesRecibidos = mensajes.map((msg) => ({
+          ...msg,
+          expandido: false,
+        }));
+      });
 
-    this.buzonService.obtenerMensajesEnviados(this.codigo!).subscribe((mensajes) => {
-      this.mensajesEnviados = mensajes.map((msg) => ({ ...msg, expandido: false }));
-    });
+    this.buzonService
+      .obtenerMensajesEnviados(this.codigo!)
+      .subscribe((mensajes) => {
+        this.mensajesEnviados = mensajes.map((msg) => ({
+          ...msg,
+          expandido: false,
+        }));
+      });
+
+      this.killer = this.rolPersonaje.split(';').map((rol) => {
+        return rol;
+      });
   }
 
   toggleMensaje(mensaje: any): void {
@@ -48,11 +63,14 @@ export class ListaBuzonComponent extends BuzonBaseComponent implements OnInit {
   }
 
   cambiarMensajes(tipo: string): void {
-    if (tipo === 'recibidos') { 
+    if (tipo === 'recibidos') {
       this.bandejaSeleccionada = 'recibidos';
     }
-    if (tipo === 'enviados') {        
+    if (tipo === 'enviados') {
       this.bandejaSeleccionada = 'enviados';
+    }
+    if (tipo === 'killer') {
+      this.bandejaSeleccionada = 'killer';
     }
   }
 

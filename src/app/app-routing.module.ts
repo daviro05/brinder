@@ -15,6 +15,7 @@ import { ListaContactoComponent } from './admin/lista-contacto/lista-contacto.co
 import { ListaBuzonAdminComponent } from './admin/lista-buzon-admin/lista-buzon-admin.component';
 import { EstadisticasComponent } from './admin/estadisticas/estadisticas.component';
 import { AvisosComponent } from './admin/avisos/avisos.component';
+import { KillerComponent } from './killer/killer.component';
 
 const routes: Routes = [
   { path: 'inicio', component: InicioComponent }, // Ruta específica para "Inicio"
@@ -33,6 +34,11 @@ const routes: Routes = [
     component: ContactoComponent,
     canActivate: [BackendGuard],
   }, // Ruta específica para "Contacto"
+  {
+    path: 'killer',
+    component: KillerComponent,
+    canActivate: [BackendGuard],
+  },
   {
     path: 'admin',
     canActivate: [AuthGuard, BackendGuard],

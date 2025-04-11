@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="title-container">
+        <h2>KILLER</h2>
+    </div>
+
+    <div class="characters-table">
+        <div class="character-row"
+            *ngFor="let row of characters | slice:0:characters.length; let i = index; let even = even">
+            <div class="character-card" [class.muerto]="row.estado === 'muerto'">
+                <div class="red-cross"></div>
+                <img [src]="row.image_url" class="character-image">
+                <p>{{ row.name }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="button-container-secondary">
+        <button mat-raised-button class="volver" type="button" (click)="navegar('inicio')">
+            Volver
+        </button>
+    </div>
+
+</div>

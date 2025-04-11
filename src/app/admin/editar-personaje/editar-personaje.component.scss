@@ -1,10 +1,10 @@
 .editar-container {
-  width: 100%;
-  max-width: 500px;
-  margin: auto;
-  height: 100vh;
+  margin: 10px auto;
+  text-align: center;
+  background: rgb(255, 255, 247);
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  background: rgb(255, 255, 247); /* Pergamino translúcido */
 }
 
 .image-container {
@@ -26,7 +26,6 @@ h1 {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra suave para darle profundidad */
   letter-spacing: 2px; /* Espaciado entre letras para un estilo más medieval */
   padding: 10px;
-  margin-top: 30px;
 }
 
 form {
@@ -78,4 +77,8 @@ button {
 
 .checkbox{
   transform: scale(1.5); /* Aumenta el tamaño del checkbox */
+}
+
+.bletal {
+  height: 100px;
 }

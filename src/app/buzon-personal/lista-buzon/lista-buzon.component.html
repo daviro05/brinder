@@ -1,6 +1,6 @@
 <div class="chat-container">
     <div class="title-container">
-        <h2>BANDEJA DE ENTRADA DE {{nombrePersonaje}}</h2>
+        <h2>BUZÓN DE {{nombrePersonaje}}</h2>
     </div>
 
     <div class="image-container">
@@ -11,31 +11,27 @@
         <div class="stat-item">
             <button mat-button [class.selected]="bandejaSeleccionada === 'recibidos'"
                 (click)="cambiarMensajes('recibidos')">
-                Recibidos: {{mensajesRecibidos.length}}
+                <mat-icon class="material-symbols-outlined">archive</mat-icon>Recibidos: {{mensajesRecibidos.length}}
             </button>
             <button mat-button [class.selected]="bandejaSeleccionada === 'enviados'"
                 (click)="cambiarMensajes('enviados')">
-                Enviados: {{mensajesEnviados.length}}
+                <mat-icon class="material-symbols-outlined">unarchive</mat-icon>Enviados: {{mensajesEnviados.length}}
+            </button>
+            <button mat-button [class.selected]="bandejaSeleccionada === 'killer'" (click)="cambiarMensajes('killer')" [disabled]="killer[5]?.trim() !== 'activo'">
+                <mat-icon class="material-symbols-outlined">skull</mat-icon>
+                Killer
             </button>
         </div>
     </div>
 
-    <div class="button-container">
-        <button class="modificar" mat-flat-button (click)="abrirDialogoAlias()">
-            <mat-icon>vpn_key</mat-icon>
-            Modificar código
-        </button>
-    </div>
-
-
     <div *ngIf="bandejaSeleccionada === 'recibidos'">
-
+        <h3>Mensajes Recibidos</h3>
         <div *ngIf="mensajesRecibidos.length === 0" class="sin-mensajes">
             No tienes mensajes en tu buzón.
         </div>
 
         <div class="mensajes-section" *ngIf="mensajesRecibidos.length > 0">
-            <h3>Mensajes Recibidos</h3>
+
             <div *ngFor="let mensaje of mensajesRecibidos" class="mensaje" [class.expandido]="mensaje.expandido"
                 (click)="toggleMensaje(mensaje)">
                 <div class="mensaje-header">
@@ -49,12 +45,13 @@
     </div>
 
     <div *ngIf="bandejaSeleccionada === 'enviados'">
+        <h3>Mensajes Enviados</h3>
         <div *ngIf="mensajesEnviados.length === 0" class="sin-mensajes">
             No tienes mensajes en tu buzón.
         </div>
 
         <div class="mensajes-section" *ngIf="mensajesEnviados.length > 0">
-            <h3>Mensajes Enviados</h3>
+
             <div *ngFor="let mensaje of mensajesEnviados" class="mensaje" [class.expandido]="mensaje.expandido"
                 (click)="toggleMensaje(mensaje)">
                 <div class="mensaje-header">
@@ -67,11 +64,27 @@
         </div>
     </div>
 
+    <div *ngIf="bandejaSeleccionada === 'killer'">
+        <h3>Killer</h3>
+        <div class="killer-container" [class.muerto]="killer[3].trim() === 'muerto'">
+            <p><strong>Objetivo: </strong> {{killer[1]}}</p>
+            <p><strong>Deberás matar a tu objetivo: </strong> {{killer[2]}}</p>
+            <p><strong>Estás:</strong> {{killer[3]}}</p>
+            <p><strong>Asesinatos: </strong> {{killer[4]}}</p>
+        </div>
+    </div>
 
-    <div class="button-container">
-        <button mat-raised-button type="button" class="enviar" (click)="navegar('buzon/inicio')">
-            Escribir mensaje
-        </button>
+
+    <div *ngIf="bandejaSeleccionada != 'killer'">
+        <div class="button-container">
+            <button mat-raised-button type="button" class="enviar" (click)="navegar('buzon/inicio')">
+                Escribir mensaje
+            </button>
+            <button class="modificar" mat-flat-button (click)="abrirDialogoAlias()">
+                <mat-icon>vpn_key</mat-icon>
+                Modificar código
+            </button>
+        </div>
     </div>
 
     <div class="button-container-secondary">
