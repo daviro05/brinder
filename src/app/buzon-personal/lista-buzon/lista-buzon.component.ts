@@ -53,9 +53,9 @@ export class ListaBuzonComponent extends BuzonBaseComponent implements OnInit {
         }));
       });
 
-      this.killer = this.rolPersonaje.split(';').map((rol) => {
+      this.killer = this.rolPersonaje ? this.rolPersonaje.split(';').map((rol) => {
         return rol;
-      });
+      }) : [];
   }
 
   toggleMensaje(mensaje: any): void {
