@@ -1,12 +1,20 @@
 .character-slot {
   display: inline-block;
-  margin: 10px;
+  margin: 0px 10px;
   padding: 10px;
   border: 2px solid #ccc;
   border-radius: 8px;
   text-align: center;
+  background-color: white ;
   cursor: grab;
   transition: border-color 0.3s ease;
+  position: relative; /* Asegura que los elementos hijos se limiten al contenedor */
+  overflow: hidden; /* Evita que el contenido salga del contenedor */
+  width: 120px; /* Ancho fijo para los slots */
+
+  p{
+    margin-bottom: 0;
+  }
 }
 
 .character-slot:active {
@@ -167,6 +175,18 @@ textarea {
   text-align: center;
 }
 
+.nick {
+  display: inline-block;
+  max-width: 100%; /* Asegura que el texto no exceda el ancho del contenedor */
+  white-space: nowrap;
+  position: relative;
+  color: #888;
+  /* Solo aplica animación si el texto supera los 15 caracteres */
+  &.scroll {
+    animation: scrollText 5s linear infinite;
+  }
+}
+
 /* Animación de entrada suave */
 @keyframes fadeIn {
   from {
@@ -174,5 +194,14 @@ textarea {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes scrollText {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }

@@ -43,6 +43,9 @@
       (dragstart)="onDragStart($event, character)" (touchstart)="onTouchStart($event, character)">
       <img [src]="character.image_url" alt="{{ character.name }}">
       <p>{{ character.name }}</p>
+      <span class="nick" [ngClass]="{'scroll': (character.nick != '' ? character.nick : '(Sin nick)').length > 12}">
+        {{ character.nick != '' ? character.nick : ' ' }}
+      </span>
     </div>
   </div>
 

@@ -1,6 +1,7 @@
 <div class="chat-container">
     <div class="title-container">
         <h2>ESPACIO DE {{nombrePersonaje}}</h2>
+        <span>{{personaje.nick}}</span>
     </div>
 
     <mat-menu #menu="matMenu" xPosition="before">
@@ -72,6 +73,10 @@
             <div class="pill">
                 <p>Mostrarse en Brinder:</p><mat-checkbox class="checkbox" [checked]="personaje.activo === 'activo'"
                     (change)="toggleActivo($event)" />
+            </div>
+            <div class="pill">
+                <p>Nickname:</p>
+                <input type="text" [(ngModel)]="personaje.nick" name="nick" placeholder="Escribe tu nick" maxlength="20"/>
             </div>
             <div class="pill">
                 <p>Tipo de perfil:</p>

@@ -7,7 +7,6 @@ import { BrinderService } from '../shared/services/brinder.service';
 import { BuzonService } from '../shared/services/buzon.service';
 import { Utils } from '../shared/utils';
 import { BuzonBaseComponent } from '../buzon-personal/buzon-base/buzon-base.component';
-import { BrinderModel } from '../shared/brinder.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
@@ -86,6 +85,7 @@ export class MiEspacioComponent extends BuzonBaseComponent implements OnInit {
         this.personaje.info_user
       );
       this.comprobarPerfil(this.personaje.info_user);
+      this.personaje.nick = this.personaje.nick || '';
     });
   }
 
@@ -124,6 +124,13 @@ export class MiEspacioComponent extends BuzonBaseComponent implements OnInit {
   }
 
   guardarPreferencias() {
+    if (this.personaje.nick.length > 20) {
+      this.openDialog(
+        'Error',
+        'El nickname no puede exceder los 20 caracteres.'
+      );
+      return;
+    }
     this.brinderService
       .updatePersonaje(this.personaje.id, this.personaje)
       .subscribe(

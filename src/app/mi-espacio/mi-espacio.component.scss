@@ -8,7 +8,7 @@
 }
 
 .title-container {
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -17,8 +17,6 @@
 
   h2 {
     margin: 0;
-    font-size: 1.5rem;
-    font-weight: bold;
   }
 
   .menu-button {
@@ -173,6 +171,16 @@ input[type="color"] {
   margin-left: 10px;
   border-radius: 5px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+input[type="text"] {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  width: 150px;
+  margin-left: 10px;
+  text-align: center;
 }
 
 mat-select {

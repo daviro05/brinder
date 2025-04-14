@@ -10,6 +10,7 @@ export class BrinderModel {
     public alias: string,
     public rol: string,
     public id: string,
+    public nick: string,
   ) { }
 
 }
