@@ -28,6 +28,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/manifest.webmanifest",
+              "src/custom-service-worker.js",
               {
                 "glob": "_redirects",
                 "input": "src",
@@ -38,7 +39,7 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
-            "serviceWorker": true,
+            "serviceWorker": false,
             "ngswConfigPath": "ngsw-config.json",
 
             "scripts": []

@@ -85,7 +85,7 @@ import { MiEspacioComponent } from './mi-espacio/mi-espacio.component';
     MatExpansionModule,
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production
+      enabled: true//environment.production
     })
   ],
   exports: [DialogSimpleComponent],

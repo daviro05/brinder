@@ -25,6 +25,11 @@ export class InicioComponent implements OnInit {
 
   ngOnInit(): void {
     this.verificarBackend();
+    this.enableNotifications();
+  }
+
+  private enableNotifications() {
+    this.brinderService.subscribeToNotifications();
   }
 
   private verificarBackend(): void {

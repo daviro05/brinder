@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
 import { environment } from 'src/environments/environment';
+import { SwPush } from '@angular/service-worker';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,9 @@ import { environment } from 'src/environments/environment';
 export class BrinderService {
   BASE_URL = environment.BASE_URL;
   SECRET_KEY = environment.SECRET_KEY;
+  VAPID_PUBLIC_KEY = environment.VAPID_PUBLIC_KEY;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private swPush: SwPush) {}
 
   statusBackend() {
     return this.http.get<string>(this.BASE_URL + '/ping');
@@ -127,5 +129,24 @@ export class BrinderService {
       codigo,
       alias,
     });
+  }
+
+  /* NOTIFICACIONES */
+
+  subscribeToNotifications() {
+    if (!this.swPush.isEnabled) {
+      console.warn('Las notificaciones push no están habilitadas');
+      return;
+    }
+
+    this.swPush.requestSubscription({
+      serverPublicKey: this.VAPID_PUBLIC_KEY
+    })
+    .then(sub => {
+      console.log('Suscripción realizada:', sub);
+      // Enviar la suscripción al servidor
+      this.http.post(`${this.BASE_URL}/subscribe`,sub).subscribe();
+    })
+    .catch(err => console.error('Error al suscribirse', err));
   }
 }
