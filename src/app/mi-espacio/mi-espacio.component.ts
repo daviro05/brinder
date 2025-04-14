@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CodigoDialogComponent } from '../dialog/codigo-dialog/codigo-dialog.component';
 import { DialogComponent } from '../dialog/dialog.component';
 import { BrinderService } from '../shared/services/brinder.service';
@@ -28,10 +28,19 @@ export class MiEspacioComponent extends BuzonBaseComponent implements OnInit {
     protected override buzonService: BuzonService,
     protected override router: Router,
     protected override dialog: MatDialog,
-    protected brinderService: BrinderService
+    protected brinderService: BrinderService,
+    private route: ActivatedRoute // Agregado para leer parámetros de la URL
   ) {
     super(buzonService, router, dialog);
     this.utils = new Utils(this.router);
+
+    // Leer parámetros de la URL y establecer la sección activa
+    this.route.queryParams.subscribe((params) => {
+      const seccion = params['seccion'];
+      if (seccion === 'estadisticas' || seccion === 'preferencias') {
+        this.seccionActiva = seccion;
+      }
+    });
   }
 
   onCodigoValidado(): void {
@@ -100,6 +109,10 @@ export class MiEspacioComponent extends BuzonBaseComponent implements OnInit {
 
   cambiarSeccion(seccion: string) {
     this.seccionActiva = seccion;
+    this.router.navigate([], {
+      queryParams: { seccion },
+      queryParamsHandling: 'merge',
+    });
   }
 
   cambioColor(event: any) {

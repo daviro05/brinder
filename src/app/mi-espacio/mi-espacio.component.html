@@ -1,7 +1,7 @@
 <div class="chat-container">
     <div class="title-container">
         <h2>ESPACIO DE {{nombrePersonaje}}</h2>
-        <span>{{personaje.nick}}</span>
+        <span>{{personaje ? personaje.nick : ''}}</span>
     </div>
 
     <mat-menu #menu="matMenu" xPosition="before">
@@ -28,8 +28,7 @@
             <mat-icon class="material-symbols-outlined">email</mat-icon>
             Mi Buzón
         </button>
-        <button mat-raised-button [matMenuTriggerFor]="menu" (click)="cambiarSeccion('estadisticas')"
-            class="menu-button">
+        <button mat-raised-button [matMenuTriggerFor]="menu" class="menu-button">
             <mat-icon class="material-symbols-outlined">menu</mat-icon>
             Secciones
         </button>
@@ -67,7 +66,7 @@
         </div>
     </div>
 
-    <div class="prefs" *ngIf="seccionActiva === 'preferencias'">
+    <div class="prefs" *ngIf="personaje && seccionActiva === 'preferencias'">
         <form (ngSubmit)="guardarPreferencias()">
             <h2>Tus preferencias</h2>
             <div class="pill">
@@ -76,7 +75,8 @@
             </div>
             <div class="pill">
                 <p>Nickname:</p>
-                <input type="text" [(ngModel)]="personaje.nick" name="nick" placeholder="Escribe tu nick" maxlength="20"/>
+                <input type="text" [(ngModel)]="personaje.nick" name="nick" placeholder="Escribe tu nick"
+                    maxlength="20" />
             </div>
             <div class="pill">
                 <p>Tipo de perfil:</p>
