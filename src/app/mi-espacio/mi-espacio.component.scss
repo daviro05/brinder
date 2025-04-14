@@ -8,14 +8,47 @@
 }
 
 .title-container {
+  display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
   margin-bottom: 20px;
   text-align: center;
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .menu-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    mat-icon {
+      font-size: 24px;
+      color: #555;
+    }
+
+    &:hover mat-icon {
+      color: #000;
+    }
+  }
 }
 
 .buzon {
   background-color: #f8e091 !important;
   border: 1px solid #f7d461;
+}
+
+.config {
+  width: auto !important;
+
+  &.active {
+    background-color: #f8e091 !important;
+    border: 1px solid #f7d461;
+  }
 }
 
 .image-container {
@@ -26,7 +59,6 @@
   img {
     width: 120px;
     height: 120px;
-    border: 2px solid #f8e091;
     border-radius: 20%;
     object-fit: cover;
   }
@@ -44,6 +76,33 @@
     align-items: center;
     border: 1px solid #f7d461;
     background-color: #f8e5a6;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 14px;
+
+    p {
+      margin: 0;
+    }
+
+    .valor {
+      font-weight: bold;
+    }
+  }
+}
+
+.prefs {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  flex-direction: column;
+
+  .pill {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #f8e5a6;
+    background-color: white;
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
@@ -88,4 +147,39 @@
     cursor: pointer;
     border-radius: 5px;
   }
+}
+
+.menu-button {
+  background-color: #d1e8f2 !important;
+  border: 1px solid #a3d0e5;
+}
+
+.separator {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 15px 0;
+}
+
+.checkbox {
+  transform: scale(1.5); /* Aumenta el tamaño del checkbox */
+}
+
+input[type="color"] {
+  border: none;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+mat-select {
+  width: 150px;
+  margin-left: 10px;
+}
+
+mat-option {
+  font-size: 14px;
 }

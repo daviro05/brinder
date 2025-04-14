@@ -3,30 +3,51 @@
         <h2>ESPACIO DE {{nombrePersonaje}}</h2>
     </div>
 
-    <div class="image-container">
-        <img [src]="imagenPersonaje" />
-    </div>
-
-    <div class="button-container">
-        <button mat-raised-button (click)="navegar('buzon/mensajes')" class="buzon">
-            <mat-icon class="material-symbols-outlined">email</mat-icon>
-            Mi Buzón
-        </button>
-        <button mat-raised-button disabled class="killer">
+    <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item disabled>
             <mat-icon class="material-symbols-outlined">skull</mat-icon>
             Mi Killer
         </button>
-        <button mat-raised-button disabled class="medallas">
+        <button mat-menu-item disabled>
             <mat-icon class="material-symbols-outlined">social_leaderboard</mat-icon>
             Medallas
         </button>
-        <button mat-raised-button disabled class="retos">
+        <button mat-menu-item disabled>
             <mat-icon class="material-symbols-outlined">person_play</mat-icon>
             Retos
         </button>
+    </mat-menu>
+
+    <div class="image-container">
+        <img [src]="imagenPersonaje" [ngStyle]="utils.getBordeStyle(personaje)" />
     </div>
 
-    <div class="stats">
+    <div class="button-container">
+        <button mat-raised-button class="buzon" (click)="utils.navegar('buzon/mensajes')">
+            <mat-icon class="material-symbols-outlined">email</mat-icon>
+            Mi Buzón
+        </button>
+        <button mat-raised-button [matMenuTriggerFor]="menu" (click)="cambiarSeccion('estadisticas')"
+            class="menu-button">
+            <mat-icon class="material-symbols-outlined">menu</mat-icon>
+            Secciones
+        </button>
+    </div>
+    <hr class="separator" />
+    <div class="button-container">
+        <button mat-raised-button [class.active]="seccionActiva === 'estadisticas'"
+            (click)="cambiarSeccion('estadisticas')" class="config">
+            <mat-icon class="material-symbols-outlined">monitoring</mat-icon>
+            Estadísticas
+        </button>
+        <button mat-raised-button [class.active]="seccionActiva === 'preferencias'"
+            (click)="cambiarSeccion('preferencias')" class="config">
+            <mat-icon class="material-symbols-outlined">settings</mat-icon>
+            Preferencias
+        </button>
+    </div>
+
+    <div class="stats" *ngIf="seccionActiva === 'estadisticas'">
         <h2>Tus estadísticas</h2>
         <div class="pill">
             <p>Matches recibidos:</p><span class="valor">{{matches.length}}</span>
@@ -41,8 +62,35 @@
             <p>Veces mejor match:</p><span class="valor">{{mejorMatch?.veces}}</span>
         </div>
         <div class="pill">
-            <p>Mensajes:</p><span class="valor">Próximamente</span>
+            <p>Mensajes:</p><span class="valor">Próximamente...</span>
         </div>
+    </div>
+
+    <div class="prefs" *ngIf="seccionActiva === 'preferencias'">
+        <form (ngSubmit)="guardarPreferencias()">
+            <h2>Tus preferencias</h2>
+            <div class="pill">
+                <p>Mostrarse en Brinder:</p><mat-checkbox class="checkbox" [checked]="personaje.activo === 'activo'"
+                    (change)="toggleActivo($event)" />
+            </div>
+            <div class="pill">
+                <p>Tipo de perfil:</p>
+                <mat-select [(value)]="tipoConexion" name="tipoConexion" (selectionChange)="tipoPerfil($event.value)">
+                    <mat-option value="amistad">Amistad</mat-option>
+                    <mat-option value="surja">Lo que surja</mat-option>
+                    <mat-option value="romantico">Romántico</mat-option>
+                    <mat-option value="otro">Otro</mat-option>
+                </mat-select>
+            </div>
+            <div class="pill">
+                <p>Color:</p>
+                <input type="color" [(ngModel)]="colorSeleccionado" (input)="cambioColor($event)" name="color" />
+            </div>
+            <hr class="separator" />
+            <button mat-raised-button class="menu-button" type="submit">
+                Guardar Preferencias
+            </button>
+        </form>
     </div>
 
     <div class="button-container-secondary">
@@ -50,7 +98,7 @@
         <button mat-raised-button color="warn" class="boton-cerrar" (click)="cerrarBuzon()">
             Cerrar Mi espacio
         </button>
-        <button mat-raised-button class="volver" type="button" (click)="navegar('inicio')">
+        <button mat-raised-button class="volver" type="button" (click)="utils.navegar('inicio')">
             Volver
         </button>
     </div>

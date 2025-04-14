@@ -13,6 +13,7 @@ export class BuzonService {
   private aliasPersonaje!: string;
   private imagenPersonaje!: string;
   private rolPersonaje!: string;
+  private activo!: string;
   private tipo: string = 'brinder';
 
   constructor(private brinderService: BrinderService) {}
@@ -52,7 +53,7 @@ export class BuzonService {
   validarCodigo(
     codigo: string,
     guardar?: boolean
-  ): Observable<{ codigo: string; nombre: string; alias: string, imagen: string, rol: string, id: string }> {
+  ): Observable<{ codigo: string; nombre: string; alias: string, imagen: string, rol: string, id: string, activo: string }> {
     return new Observable((observer) => {
       // Realizamos una nueva llamada para obtener los personajes más actualizados
       this.obtenerPersonajes(true).subscribe({
@@ -70,6 +71,7 @@ export class BuzonService {
             this.aliasPersonaje = personajeEncontrado.alias;
             this.imagenPersonaje = personajeEncontrado.image_url;
             this.rolPersonaje = personajeEncontrado.rol;
+            this.activo = personajeEncontrado.activo;
 
             if (guardar) {
               localStorage.setItem('codigo_origen', this.codigo);
@@ -81,7 +83,8 @@ export class BuzonService {
               nombre: this.nombrePersonaje,
               alias: this.aliasPersonaje,
               imagen: this.imagenPersonaje,
-              rol: this.rolPersonaje
+              rol: this.rolPersonaje,
+              activo: this.activo,
             });
             observer.complete();
           } else {
