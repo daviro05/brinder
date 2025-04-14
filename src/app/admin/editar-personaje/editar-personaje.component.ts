@@ -56,7 +56,7 @@ toggleActivo(event: MatCheckboxChange): void {
               'Personaje editado con éxito'
             );
             dialogRef.afterClosed().subscribe(() => {
-              this.navegar('admin');
+              this.utils.navegar('admin');
             });
           },
           (error) => {
@@ -90,9 +90,5 @@ toggleActivo(event: MatCheckboxChange): void {
       return `https://lh3.googleusercontent.com/d/${match[1]}`;
     }
     return url; // Devuelve la misma caena si no cumple el formato
-  }
-
-  navegar(ruta: string) {
-    this.utils.navegar(ruta);
   }
 }

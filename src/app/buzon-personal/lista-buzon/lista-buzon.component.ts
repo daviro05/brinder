@@ -56,6 +56,10 @@ export class ListaBuzonComponent extends BuzonBaseComponent implements OnInit {
       this.killer = this.rolPersonaje ? this.rolPersonaje.split(';').map((rol) => {
         return rol;
       }) : [];
+
+      this.brinderService.obtenerPersonaje(this.id!).subscribe((personaje) => {
+        this.personaje = personaje[0];
+      });
   }
 
   toggleMensaje(mensaje: any): void {
@@ -111,7 +115,4 @@ export class ListaBuzonComponent extends BuzonBaseComponent implements OnInit {
     });
   }
 
-  navegar(ruta: string) {
-    this.utils.navegar(ruta);
-  }
 }

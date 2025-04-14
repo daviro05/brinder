@@ -1,40 +1,24 @@
 <div class="container">
   <h1>Contacto</h1>
-  
+
   <div class="contacto-info">
     <p>¿Tienes alguna duda o sugerencia?</p>
     <p>¿Hay algún error en la aplicación?</p>
     <p>Ya sabes, no te lo pienses. ¡Escríbenos!</p>
   </div>
-  
+
   <form (ngSubmit)="enviarMensaje()">
     <label for="nombre">Nombre</label>
-    <input
-      type="text"
-      id="nombre"
-      [(ngModel)]="contacto.nombre"
-      name="nombre"
-      required
-    />
+    <input type="text" id="nombre" [(ngModel)]="contacto.nombre" name="nombre" required />
 
     <label for="mensaje">Mensaje</label>
-    <textarea
-      id="mensaje"
-      [(ngModel)]="contacto.mensaje"
-      name="mensaje"
-      required
-    ></textarea>
+    <textarea id="mensaje" [(ngModel)]="contacto.mensaje" name="mensaje" required></textarea>
 
     <div class="button-container">
-      <button
-        mat-raised-button
-        type="submit"
-        class="guardar"
-        [disabled]="!contacto.nombre || !contacto.mensaje"
-      >
+      <button mat-raised-button type="submit" class="guardar" [disabled]="!contacto.nombre || !contacto.mensaje">
         Enviar
       </button>
-      <button mat-raised-button class="volver" type="button" (click)="navegar('inicio')">
+      <button mat-raised-button class="volver" type="button" (click)="utils.navegar('inicio')">
         Volver
       </button>
     </div>

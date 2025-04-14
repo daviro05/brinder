@@ -4,7 +4,7 @@
     </div>
 
     <div class="image-container">
-        <img [src]="imagenPersonaje" />
+        <img [src]="imagenPersonaje" [ngStyle]="utils.getBordeStyle(personaje)" />
     </div>
 
     <div class="mensajes-stats">
@@ -17,7 +17,8 @@
                 (click)="cambiarMensajes('enviados')">
                 <mat-icon class="material-symbols-outlined">unarchive</mat-icon>Enviados: {{mensajesEnviados.length}}
             </button>
-            <button mat-button [class.selected]="bandejaSeleccionada === 'killer'" (click)="cambiarMensajes('killer')" *ngIf="killer[5]?.trim() === 'activo'">
+            <button mat-button [class.selected]="bandejaSeleccionada === 'killer'" (click)="cambiarMensajes('killer')"
+                *ngIf="killer[5]?.trim() === 'activo'">
                 <mat-icon class="material-symbols-outlined">skull</mat-icon>
                 Killer
             </button>
@@ -77,7 +78,7 @@
 
     <div *ngIf="bandejaSeleccionada != 'killer'">
         <div class="button-container">
-            <button mat-raised-button type="button" class="enviar" (click)="navegar('buzon/inicio')">
+            <button mat-raised-button type="button" class="enviar" (click)="utils.navegar('buzon/inicio')" [disabled]="activo !== 'activo'">
                 Escribir mensaje
             </button>
             <button class="modificar" mat-raised-button (click)="abrirDialogoAlias()">
@@ -91,7 +92,7 @@
         <button mat-raised-button color="warn" class="boton-cerrar" (click)="cerrarBuzon()">
             Cerrar Buzón
         </button>
-        <button mat-raised-button class="volver" type="button" (click)="navegar('mi-espacio')">
+        <button mat-raised-button class="volver" type="button" (click)="utils.navegar('mi-espacio')">
             Volver
         </button>
     </div>

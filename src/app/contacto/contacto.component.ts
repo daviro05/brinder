@@ -41,7 +41,4 @@ export class ContactoComponent {
     });
   }
 
-  navegar(ruta: string) {
-    this.utils.navegar(ruta);
-  }
 }

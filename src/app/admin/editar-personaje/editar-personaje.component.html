@@ -3,7 +3,7 @@
   <form *ngIf="personaje" (ngSubmit)="guardarCambios()">
 
     <div class="image-container">
-      <img [src]="personaje.image_url" alt="Imagen de {{personaje.name}}" />
+      <img [src]="personaje.image_url" [ngStyle]="utils.getBordeStyle(personaje)" />
     </div>
 
     <label>Nombre:</label>
@@ -16,7 +16,8 @@
     <textarea [(ngModel)]="personaje.info_user" name="info_user"></textarea>
 
     <label>Killer:</label>
-    <textarea class="bletal" [(ngModel)]="personaje.rol" name="rol" required placeholder="Personaje; Objetivo; Misión; vivo; 0; activo"></textarea>
+    <textarea class="bletal" [(ngModel)]="personaje.rol" name="rol" required
+      placeholder="Personaje; Objetivo; Misión; vivo; 0; activo"></textarea>
 
     <label>Código personal:</label>
     <div class="input-group">
@@ -31,6 +32,6 @@
     <input type="text" [(ngModel)]="personaje.image_url" name="image_url" required />
 
     <button mat-raised-button class="guardar" type="submit">Guardar Cambios</button>
-    <button mat-raised-button class="volver" (click)="navegar('admin')">Volver</button>
+    <button mat-raised-button class="volver" (click)="utils.navegar('admin')">Volver</button>
   </form>
 </div>

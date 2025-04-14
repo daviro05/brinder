@@ -29,15 +29,37 @@
 }
 
 .selection-slot {
-  width: 120px;
-  height: 140px;
+  width: 140px; /* Aumentar el ancho */
+  height: 160px; /* Aumentar la altura */
   margin: 10px;
-  border: 2px dashed #ccc;
+  border: 3px solid transparent;
+  background-color: white;
+  animation: colorChange 3s ease-in-out infinite;
+
+  @keyframes colorChange {
+    0% {
+      border-color: #f7d461;
+    }
+    50% {
+      border-color: #f8e091;
+    }
+    100% {
+      border-color: #f7d461;
+    }
+  }
   border-radius: 8px;
   display: flex;
   justify-content: center; /* Centra horizontalmente */
   align-items: center; /* Centra verticalmente */
   text-align: center;
+
+  img {
+    width: 120px; /* Ajustar el tamaño de la imagen */
+    height: 120px;
+    margin-top: 10px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
 }
 
 .selection-slot img {
@@ -45,6 +67,7 @@
   height: 100px;
   margin-top: 15px;
   object-fit: cover;
+  border-radius: 8px; /* Opcional: redondear las esquinas */
 }
 
 .drag-area {
@@ -79,8 +102,19 @@
 
 .heart-icon {
   margin: 0 20px;
-  font-size: 36px;
+  font-size: 48px; /* Aumentar el tamaño del corazón */
   color: #f44336; /* Rojo */
+  animation: heartbeat 1.5s infinite; /* Animación de latido */
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2); /* Aumentar el tamaño temporalmente */
+  }
 }
 
 .button-container {
@@ -131,20 +165,6 @@ textarea {
   padding: 10px;
   font-size: 14px;
   text-align: center;
-}
-
-$bordes: (
-  rojo: #ec7063,
-  azul: #5dade2,
-  verde: #52be80,
-  amarillo: #f7dc6f,
-  generico: #5dade2,
-);
-
-@each $nombre, $color in $bordes {
-  .borde-#{$nombre} {
-    border: 3px solid $color;
-  }
 }
 
 /* Animación de entrada suave */

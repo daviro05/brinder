@@ -7,35 +7,35 @@
 
   <div class="button-container">
 
-    <button class="pushable" (click)="navegar('brinder')">
+    <button class="pushable" (click)="utils.navegar('brinder')">
       <span class="front">
         <mat-icon class="icon material-icons-outlined">favorite_border</mat-icon>
         <span class="text">Brinder</span>
       </span>
     </button>
 
-    <button class="pushable" (click)="navegar('mi-espacio')">
+    <button class="pushable" (click)="utils.navegar('mi-espacio')">
       <span class="front">
         <mat-icon class="icon material-icons-outlined">folder_shared</mat-icon>
         <span class="text">Mi Espacio</span>
       </span>
     </button>
 
-    <button class="pushable" (click)="navegar('killer')"> <!--blood-effect-->
+    <button class="pushable" (click)="utils.navegar('killer')"> <!--blood-effect-->
       <span class="front">
         <mat-icon class="icon material-symbols-outlined">skull</mat-icon>
         <span class="text">Killer</span>
       </span>
     </button>
 
-    <button class="pushable" (click)="navegar('info')">
+    <button class="pushable" (click)="utils.navegar('info')">
       <span class="front">
         <mat-icon class="icon material-icons-outlined">info</mat-icon>
         <span class="text">Noticias</span>
       </span>
     </button>
 
-    <button class="pushable" (click)="navegar('contacto')">
+    <button class="pushable" (click)="utils.navegar('contacto')">
       <span class="front">
         <mat-icon class="icon material-icons-outlined">account_circle</mat-icon>
         <span class="text">Contacto</span>
@@ -45,7 +45,7 @@
   </div>
 
   <footer class="footer">
-    <span>Brinder - V1.8.7 - <a class="admin" (click)="navegar('admin')">DRMDesign</a></span>
+    <span>Brinder - V1.8.7 - <a class="admin" (click)="utils.navegar('admin')">DRMDesign</a></span>
   </footer>
 
 </div>

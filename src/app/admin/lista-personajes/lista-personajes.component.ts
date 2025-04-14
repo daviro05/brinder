@@ -76,34 +76,6 @@ export class ListaPersonajesComponent implements OnInit {
     });
   }
 
-getBordeClase(character: any): string {
-  if (this.esColorHexadecimal(character.info_user)) {
-    return ''; // No asignamos clase si es un color personalizado
-  }
-  
-  switch (character.info_user) {
-    case 'romantico':
-      return 'borde-rojo';
-    case 'amistad':
-      return 'borde-azul';
-    case 'surja':
-      return 'borde-verde';
-    default:
-      return 'borde-azul';
-  }
-}
-
-getEstiloBorde(character: any): { [key: string]: string } | null {
-  if (this.esColorHexadecimal(character.info_user)) {
-    return { border: `2px solid ${character.info_user}` };
-  }
-  return null;
-}
-
-esColorHexadecimal(valor: string): boolean {
-  return /^#([0-9A-Fa-f]{3}){1,2}$/.test(valor);
-}
-
 
   navegar(ruta: string) {
     if (ruta === 'admin/buzon') {

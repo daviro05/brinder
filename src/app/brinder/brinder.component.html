@@ -1,33 +1,25 @@
 <div id="app" class="container">
   <h1>BRINDER</h1>
   <p class="subtitulo">Uniendo personas...y personajes</p>
-  
+
   <!-- Área de selección de personajes -->
   <div class="selection-area">
-    <div
-      class="selection-slot"
-      (drop)="onDrop($event, 0)"
-      (dragover)="onDragOver($event)"
-      (touchend)="onTouchEnd($event, 0)"
-    >
+    <div class="selection-slot" (drop)="onDrop($event, 0)" (dragover)="onDragOver($event)"
+      (touchend)="onTouchEnd($event, 0)">
       <p *ngIf="!selectedCharacters[0]">Elige un personaje</p>
       <div *ngIf="selectedCharacters[0]" class="character-info">
         <img [src]="selectedCharacters[0].image_url" alt="{{ selectedCharacters[0].name }}">
         <p>{{ selectedCharacters[0].name }}</p>
       </div>
     </div>
-    
+
     <!-- Corazón entre los personajes -->
     <div class="heart-icon">
       <mat-icon>favorite</mat-icon>
     </div>
 
-    <div
-      class="selection-slot"
-      (drop)="onDrop($event, 1)"
-      (dragover)="onDragOver($event)"
-      (touchend)="onTouchEnd($event, 1)"
-    >
+    <div class="selection-slot" (drop)="onDrop($event, 1)" (dragover)="onDragOver($event)"
+      (touchend)="onTouchEnd($event, 1)">
       <p *ngIf="!selectedCharacters[1]">Elige un personaje</p>
       <div *ngIf="selectedCharacters[1]" class="character-info">
         <img [src]="selectedCharacters[1].image_url" alt="{{ selectedCharacters[1].name }}">
@@ -45,8 +37,8 @@
 
   <!-- Área para personajes -->
   <div class="drag-area">
-    <div class="character-slot" *ngFor="let character of characters; let i = index" [ngClass]="getBordeClase(character)"
-      [ngStyle]="getEstiloBorde(character)" [attr.data-id]="character.id"
+    <div class="character-slot" *ngFor="let character of characters; let i = index"
+      [ngStyle]="utils.getBordeStyle(character)" [attr.data-id]="character.id"
       [class.character-selected]="selectedCharacterIndex === i" draggable="true"
       (dragstart)="onDragStart($event, character)" (touchstart)="onTouchStart($event, character)">
       <img [src]="character.image_url" alt="{{ character.name }}">
@@ -57,6 +49,6 @@
   <!-- Botón de enviar más grande -->
   <div class="button-container">
     <button class="enviar" mat-raised-button (click)="sendMatch()" [disabled]="!canSubmit">ENVIAR</button>
-    <button class="volver" mat-raised-button type="button" (click)="navegar('inicio')">Volver</button>
+    <button class="volver" mat-raised-button type="button" (click)="utils.navegar('inicio')">Volver</button>
   </div>
 </div>

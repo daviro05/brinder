@@ -35,8 +35,4 @@ export class ListaContactoComponent implements OnInit {
   toggleMensaje(mensaje: any): void {
     mensaje.expandido = !mensaje.expandido;
   }
-
-  navegar(ruta: string) {
-    this.utils.navegar(ruta);
-  }
 }

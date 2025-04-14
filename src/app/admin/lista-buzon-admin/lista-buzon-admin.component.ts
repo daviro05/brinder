@@ -37,8 +37,4 @@ export class ListaBuzonAdminComponent {
   toggleMensaje(mensaje: any): void {
     mensaje.expandido = !mensaje.expandido;
   }
-
-  navegar(ruta: string) {
-    this.utils.navegar(ruta);
-  }
 }

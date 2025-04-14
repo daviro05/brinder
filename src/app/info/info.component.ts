@@ -43,10 +43,6 @@ export class InfoComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  navegar(ruta: string) {
-    this.utils.navegar(ruta);
-  }
-
   prevAviso() {
     if (this.currentAvisoIndex > 0) {
       this.currentAvisoIndex--;

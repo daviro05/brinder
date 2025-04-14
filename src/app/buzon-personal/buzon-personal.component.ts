@@ -5,8 +5,6 @@ import { BuzonBaseComponent } from './buzon-base/buzon-base.component';
 import { BuzonService } from '../shared/services/buzon.service';
 import { Utils } from '../shared/utils';
 import { DialogComponent } from '../dialog/dialog.component';
-import { BrinderService } from '../shared/services/brinder.service';
-import { CodigoDialogComponent } from '../dialog/codigo-dialog/codigo-dialog.component';
 
 @Component({
   selector: 'app-buzon-personal',
@@ -70,33 +68,6 @@ export class BuzonPersonalComponent extends BuzonBaseComponent {
     }
   }
 
-getBordeClase(character: any): string {
-  if (this.esColorHexadecimal(character.info_user)) {
-    return ''; // No asignamos clase si es un color personalizado
-  }
-  
-  switch (character.info_user) {
-    case 'romantico':
-      return 'borde-rojo';
-    case 'amistad':
-      return 'borde-azul';
-    case 'surja':
-      return 'borde-verde';
-    default:
-      return 'borde-azul';
-  }
-}
-
-getEstiloBorde(character: any): { [key: string]: string } | null {
-  if (this.esColorHexadecimal(character.info_user)) {
-    return { 'background-color': `${character.info_user}` };
-  }
-  return null;
-}
-
-esColorHexadecimal(valor: string): boolean {
-  return /^#([0-9A-Fa-f]{3}){1,2}$/.test(valor);
-}
 
   openDialog(title: string, message: string): void {
     this.dialog.open(DialogComponent, {
@@ -107,9 +78,6 @@ esColorHexadecimal(valor: string): boolean {
     });
   }
 
-  navegar(ruta: string) {
-    this.utils.navegar(ruta);
-  }
 
   insertarEmoticono(emoticono: string): void {
     const textarea = document.getElementById('mensaje') as HTMLTextAreaElement;

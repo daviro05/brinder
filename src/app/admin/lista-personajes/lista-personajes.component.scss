@@ -103,16 +103,3 @@ h1 {
 .elem_lista{
   cursor: pointer;
 }
-
-$bordes: (
-  rojo: #ec7063,
-  azul: #5dade2,
-  verde: #52be80,
-  custom: #5dade2,
-);
-
-@each $nombre, $color in $bordes {
-  .borde-#{$nombre} {
-    border: 2px solid $color;
-  }
-}

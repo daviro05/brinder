@@ -207,7 +207,4 @@ esColorHexadecimal(valor: string): boolean {
     });
   }
 
-  navegar(ruta: string) {
-    this.utils.navegar(ruta);
-  }
 }

@@ -17,7 +17,7 @@ export class KillerComponent {
   vivos: string = '';
   muertos: string = '';
   estadoSeleccionado: string = 'vivo'; // Nuevo estado seleccionado
-  mensajeProximamente: string = '<b>Próximamente...</b><br><br>Muy pronto copmenzará el juego...<br>Para más información puedes echar un vistazo a la sección de noticias.';
+  mensajeProximamente: string = '<b>Próximamente...</b><br><br>Muy pronto comenzará el juego...<br>Para más información, puedes echar un vistazo a la sección de noticias.';
 
   constructor(private brinderService: BrinderService, private router: Router) {
     this.utils = new Utils(this.router);
@@ -67,9 +67,5 @@ export class KillerComponent {
   seleccionarEstado(estado: string) {
     this.estadoSeleccionado = estado;
     this.filtrarPersonajes();
-  }
-
-  navegar(ruta: string) {
-    this.utils.navegar(ruta);
   }
 }

@@ -6,11 +6,11 @@ import { CodigoDialogComponent } from '../../dialog/codigo-dialog/codigo-dialog.
 import { Component } from '@angular/core';
 import { InfoDialogComponent } from 'src/app/info-dialog/info-dialog.component';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
+import { BrinderModel } from 'src/app/shared/brinder.model';
 
 @Component({
   selector: 'app-buzon-base',
-  templateUrl: './buzon-base.component.html',
-  styleUrls: ['./buzon-base.component.css'],
+  template: '',
 })
 export abstract class BuzonBaseComponent implements OnInit {
   nombrePersonaje: string = '';
@@ -19,6 +19,8 @@ export abstract class BuzonBaseComponent implements OnInit {
   rolPersonaje: string = '';
   codigo!: string | null;
   id!: string | null;
+  activo: string = '';
+  personaje!: BrinderModel
 
   constructor(
     protected buzonService: BuzonService,
@@ -61,6 +63,7 @@ export abstract class BuzonBaseComponent implements OnInit {
         this.imagenPersonaje = data.imagen;
         this.aliasPersonaje = data.alias;
         this.rolPersonaje = data.rol;
+        this.activo = data.activo;
         this.onCodigoValidado();
       },
       error: () => {

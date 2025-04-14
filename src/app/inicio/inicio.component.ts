@@ -47,7 +47,4 @@ export class InicioComponent implements OnInit {
     });
   }
 
-  navegar(ruta: string) {
-    this.utils.navegar(ruta);
-  }
 }

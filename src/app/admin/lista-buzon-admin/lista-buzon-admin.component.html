@@ -7,7 +7,8 @@
         No hay mensajes en los buzones.
     </div>
 
-    <div *ngFor="let mensaje of mensajes" class="mensaje" [class.expandido]="mensaje.expandido" (click)="toggleMensaje(mensaje)">
+    <div *ngFor="let mensaje of mensajes" class="mensaje" [class.expandido]="mensaje.expandido"
+        (click)="toggleMensaje(mensaje)">
         <div class="mensaje-header">
             <span class="codigo-origen">De: {{mensaje.codigo_origen}}</span>
             <small class="fecha">{{ mensaje.fecha_envio | date:'dd/MM/yyyy HH:mm' }}</small>
@@ -18,7 +19,7 @@
     </div>
 
     <div class="button-container">
-        <button mat-raised-button class="volver" type="button" (click)="navegar('admin')">
+        <button mat-raised-button class="volver" type="button" (click)="utils.navegar('admin')">
             Volver
         </button>
     </div>

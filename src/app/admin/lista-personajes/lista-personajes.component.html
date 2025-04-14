@@ -23,10 +23,8 @@
   </div>
 
   <ul>
-    <li class="elem_lista" *ngFor="let personaje of personajes" 
-    [ngClass]="getBordeClase(personaje)"
-    [ngStyle]="getEstiloBorde(personaje)"
-    (click)="editarPersonaje(personaje.id!)">
+    <li class="elem_lista" *ngFor="let personaje of personajes" [ngStyle]="utils.getBordeStyle(personaje)"
+      (click)="editarPersonaje(personaje.id!)">
       <img [src]="personaje.image_url" [alt]="personaje.name" class="personaje-img" />
       <div class="info">
         <span>{{ personaje.name }}</span>
@@ -38,7 +36,7 @@
     </li>
   </ul>
   <div class="button-container">
-    <button mat-raised-button type="button" (click)="navegar('inicio')">
+    <button mat-raised-button type="button" (click)="utils.navegar('inicio')">
       Volver
     </button>
   </div>

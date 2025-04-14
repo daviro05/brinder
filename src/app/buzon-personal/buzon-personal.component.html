@@ -1,54 +1,59 @@
 <div class="container">
-    <div class="title-container">
-        <h2>BUZÓN DE {{nombrePersonaje}}</h2>
-    </div>
+  <div class="title-container">
+    <h2>BUZÓN DE {{nombrePersonaje}}</h2>
+  </div>
+  <div *ngIf="activo === 'activo'">
+    <mat-expansion-panel [expanded]="false" [hideToggle]="true" class="info-panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon class="info-icon">info</mat-icon>
+          Información del buzón
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p class="info-text">Selecciona a un personaje de la lista.
+        <br>Escríbele un mensaje anónimo.
+        <br><strong>RECUERDA:</strong> Sólo él podrá leerlo ✨
+      </p>
+    </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="false" [hideToggle]="true" class="info-panel">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <mat-icon class="info-icon">info</mat-icon>
-        Información del buzón
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <p class="info-text">Selecciona a un personaje de la lista.
-      <br>Escríbele un mensaje anónimo.
-      <br><strong>RECUERDA:</strong> Sólo él podrá leerlo ✨
-    </p>
-  </mat-expansion-panel>
+    <form (ngSubmit)="enviarMensaje()">
 
-  <form (ngSubmit)="enviarMensaje()">
+      <label for="nombre">Destinatario</label>
+      <mat-form-field>
+        <mat-label>Elige un personaje</mat-label>
+        <mat-select id="nombre" [(ngModel)]="buzon.codigo_destino" name="codigo_destino" required>
+          <mat-option [ngStyle]="utils.getBordeClaroStyle(personaje)" *ngFor="let personaje of personajes"
+            [value]="personaje.codigo">{{ personaje.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <label for="nombre">Destinatario</label>
-    <mat-form-field>
-      <mat-label>Elige un personaje</mat-label>
-      <mat-select id="nombre" [(ngModel)]="buzon.codigo_destino" name="codigo_destino" required>
-        <mat-option [ngClass]="getBordeClase(personaje)" [ngStyle]="getEstiloBorde(personaje)"
-          *ngFor="let personaje of personajes" [value]="personaje.codigo">{{ personaje.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <label for="mensaje">Mensaje</label>
+      <textarea id="mensaje" class="mensaje-textarea" [(ngModel)]="buzon.mensaje" name="mensaje" required></textarea>
 
-    <label for="mensaje">Mensaje</label>
-    <textarea id="mensaje" class="mensaje-textarea" [(ngModel)]="buzon.mensaje" name="mensaje" required></textarea>
+      <div class="emoticonos-container">
+        <span class="emoticono" *ngFor="let emoticono of emoticonos" (click)="insertarEmoticono(emoticono.icono)"
+          [title]="emoticono.descripcion">
+          {{ emoticono.icono }}
+        </span>
+      </div>
+      <div class="button-container">
+        <button mat-raised-button type="submit" class="guardar" [disabled]="!buzon.codigo_destino || !buzon.mensaje">
+          Enviar mensaje
+        </button>
+      </div>
+    </form>
+  </div>
 
-    <div class="emoticonos-container">
-      <span class="emoticono" *ngFor="let emoticono of emoticonos" (click)="insertarEmoticono(emoticono.icono)"
-        [title]="emoticono.descripcion">
-        {{ emoticono.icono }}
-      </span>
-    </div>
+  <div *ngIf="activo !== 'activo'" class="inactive-message">
+    <p>Tu personaje no está activo. No puedes enviar mensajes.</p>
+  </div>
 
-    <div class="button-container">
-      <button mat-raised-button type="submit" class="guardar" [disabled]="!buzon.codigo_destino || !buzon.mensaje">
-        Enviar mensaje
-      </button>
-    </div>
-    <div class="button-container-secondary">
-      <button mat-raised-button color="warn" class="boton-cerrar" (click)="cerrarBuzon()">
-        Cerrar Buzón
-      </button>
-      <button mat-raised-button class="volver" type="button" (click)="navegar('buzon/mensajes')">
-        Volver
-      </button>
-    </div>
-  </form>
+  <div class="button-container-secondary">
+    <button mat-raised-button color="warn" class="boton-cerrar" (click)="cerrarBuzon()">
+      Cerrar Buzón
+    </button>
+    <button mat-raised-button class="volver" type="button" (click)="utils.navegar('buzon/mensajes')">
+      Volver
+    </button>
+  </div>
 </div>
