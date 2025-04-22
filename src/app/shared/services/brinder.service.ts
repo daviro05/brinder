@@ -41,7 +41,7 @@ export class BrinderService {
   }
 
   obtenerPersonaje(id: string) {
-    return this.http.get<BrinderModel[]>(`${this.BASE_URL}/personaje/${id}`);
+    return this.http.get<BrinderModel[]>(`${this.BASE_URL}/personajes/personaje/${id}`);
   }
 
   obtenerMatches(tipo: string) {
@@ -49,7 +49,7 @@ export class BrinderService {
   }
 
   obtenerMatchesPersonaje(tipo: string, personaje_id: string) {
-    return this.http.get<any[]>(`${this.BASE_URL}/matches/personaje/${tipo}/${personaje_id}`);
+    return this.http.get<any[]>(`${this.BASE_URL}/matches/personajes/${tipo}/${personaje_id}`);
   }
 
   sendMatch(matchData: MatchModel) {
@@ -123,7 +123,7 @@ export class BrinderService {
   }
 
   actualizarAlias(codigo: string, alias: string) {
-    return this.http.post<string>(`${this.BASE_URL}/actualizar-alias`, {
+    return this.http.post<string>(`${this.BASE_URL}/buzon/actualizar-alias`, {
       codigo,
       alias,
     });
