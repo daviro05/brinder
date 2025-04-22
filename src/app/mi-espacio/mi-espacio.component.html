@@ -9,7 +9,7 @@
             <mat-icon class="material-symbols-outlined">skull</mat-icon>
             Mi Killer
         </button>
-        <button mat-menu-item (click)="utils.navegar('medallas')">
+        <button mat-menu-item (click)="utils.navegar('medallas')" [disabled]="personaje && personaje.rol !== 'medallas'">
             <mat-icon class="material-symbols-outlined">social_leaderboard</mat-icon>
             Medallas
         </button>
