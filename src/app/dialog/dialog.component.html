@@ -5,6 +5,7 @@
       <div class="dialog-medalla">
         <img [src]="'/assets/medallas/' + data.medalla.icono_url" alt="Medalla" class="dialog-image" />
         <p><strong>Nombre:</strong> {{ data.medalla.nombre }}</p>
+        <p><strong>Descripción: </strong> {{data.medalla.descripcion}}</p>
         <p><strong>Asignada por:</strong> {{ data.medalla.asignado_por_nombre }}</p>
         <p><strong>Mensaje:</strong> {{ data.medalla.titulo }}</p>
         <p><strong>Fecha:</strong> {{ data.medalla.fecha_asignacion | date: 'dd/MM/yy' }}</p>

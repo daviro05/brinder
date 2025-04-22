@@ -64,11 +64,9 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
 
     this.brinderService.obtenerPersonajes('brinder').subscribe((data) => {
       this.personajes = data;
-      console.log('personajes', this.personajes);
     });
 
     this.brinderService.tiposMedalla().subscribe((data) => {
-      console.log('tiposMedalla', data);
       this.tiposMedalla = data;
     });
   }
