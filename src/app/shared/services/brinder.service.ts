@@ -146,4 +146,8 @@ export class BrinderService {
   asignarMedalla(medalla: { personaje_id: string, medalla_id: string, asignado_por: string, titulo: string }) {
     return this.http.post<string>(`${this.BASE_URL}/medallas/asignar-medalla`, medalla);
   }
+
+  crearMedalla(medalla: { nombre: string, descripcion: string, icono_url: string }){
+    return this.http.post<string>(`${this.BASE_URL}/medallas/crear-medalla`, medalla);
+  }
 }

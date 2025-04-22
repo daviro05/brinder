@@ -18,6 +18,7 @@ import { AvisosComponent } from './admin/avisos/avisos.component';
 import { KillerComponent } from './killer/killer.component';
 import { MiEspacioComponent } from './mi-espacio/mi-espacio.component';
 import { MedallasComponent } from './medallas/medallas.component';
+import { MedallasAdminComponent } from './admin/medallas/medallas.component';
 
 const routes: Routes = [
   { path: 'inicio', component: InicioComponent }, // Ruta específica para "Inicio"
@@ -62,6 +63,7 @@ const routes: Routes = [
       { path: 'stats', component: EstadisticasComponent }, // Estadísticas
       { path: 'editar-personaje/:id', component: EditarPersonajeComponent }, // Edición de personajes
       { path: 'avisos', component: AvisosComponent }, // Avisos
+      { path: 'medallas', component: MedallasAdminComponent }, // Medallas
     ],
   },
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' }, // Redirección a la ruta específica

@@ -1,0 +1,24 @@
+<div class="container">
+    <h1>Crear Medalla</h1>
+
+    <form (ngSubmit)="crearMedalla()">
+        <label for="nombre">Nombre</label>
+        <input matInput id="nombre" [(ngModel)]="medalla.nombre" name="nombre" required />
+
+        <label for="mensaje">Descripción</label>
+        <textarea id="mensaje" [(ngModel)]="medalla.descripcion" name="mensaje" required></textarea>
+
+        <label for="icono">Nombre imagen</label>
+        <input matInput id="icono" [(ngModel)]="medalla.icono_url" name="icono" required />
+
+        <div class="button-container">
+            <button mat-raised-button type="submit" class="guardar"
+                [disabled]="!medalla.nombre || !medalla.descripcion || !medalla.icono_url">
+                Enviar
+            </button>
+            <button mat-raised-button class="volver" type="button" (click)="utils.navegar('admin')">
+                Volver
+            </button>
+        </div>
+    </form>
+</div>
