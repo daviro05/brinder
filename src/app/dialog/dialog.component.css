@@ -19,3 +19,28 @@
   width: 100%;
   margin-top: 20px;
 }
+
+.dialog-html-content img {
+  max-width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+  border-radius: 10%;
+  display: block; /* Centra la imagen dentro del contenedor */
+  margin: 0 auto; /* Centra horizontalmente */
+}
+
+.dialog-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10%;
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+.dialog-medalla {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dialog-medalla p {
+  margin: 5px 0;
+}

@@ -1,0 +1,87 @@
+<div class="chat-container">
+    <div class="title-container">
+        <h2>MEDALLAS DE {{nombrePersonaje}}</h2>
+        <span>{{personaje ? personaje.nick : ''}}</span>
+    </div>
+
+    <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="utils.navegar('buzon/mensajes')">
+            <mat-icon class="material-symbols-outlined">email</mat-icon>
+            Mi Buzón
+        </button>
+        <button mat-menu-item disabled>
+            <mat-icon class="material-symbols-outlined">skull</mat-icon>
+            Mi Killer
+        </button>
+        <button mat-menu-item disabled>
+            <mat-icon class="material-symbols-outlined">person_play</mat-icon>
+            Retos
+        </button>
+    </mat-menu>
+
+    <div class="image-container">
+        <img [src]="imagenPersonaje" [ngStyle]="utils.getBordeStyle(personaje)" />
+    </div>
+
+    <div class="button-container">
+        <button mat-raised-button class="buzon" (click)="utils.navegar('mi-espacio')">
+            <mat-icon class="material-symbols-outlined">folder_shared</mat-icon>
+            Mi Espacio
+        </button>
+        <button mat-raised-button [matMenuTriggerFor]="menu" class="menu-button">
+            <mat-icon class="material-symbols-outlined">menu</mat-icon>
+            Secciones
+        </button>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="button-container" *ngIf="personaje && personaje.rol === 'medallas'">
+        <button mat-raised-button [class.active]="seccionActiva === 'mis-medallas'"
+            (click)="cambiarSeccion('mis-medallas')" class="config">
+            <mat-icon class="material-symbols-outlined">social_leaderboard</mat-icon>
+            Mis medallas
+        </button>
+        <button mat-raised-button [class.active]="seccionActiva === 'dar-medallas'"
+            (click)="cambiarSeccion('dar-medallas')" class="config">
+            <mat-icon class="material-symbols-outlined">workspace_premium</mat-icon>
+            Dar medallas
+        </button>
+    </div>
+
+    <div class="stats" *ngIf="personaje && seccionActiva === 'mis-medallas'">
+        <h2>Mis medallas</h2>
+        <div class="medallas-grid">
+            <div class="medalla" *ngFor="let medalla of medallas">
+                <img [src]="'/assets/medallas/' + medalla.icono_url" alt="Medalla"
+                    (click)="abrirDialogoMedalla(medalla)" />
+                <div class="medalla-info">
+                    <p><strong>{{ medalla.nombre }}</strong></p>
+                    <p><strong>Asignada:</strong> {{ medalla.asignado_por_nombre }}</p>
+                    <p><strong>Fecha:</strong> {{ medalla.fecha_asignacion | date: 'dd/MM/yy' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="prefs" *ngIf="personaje && personaje.rol === 'medallas' && seccionActiva === 'dar-medallas'">
+        <form (ngSubmit)="guardarPreferencias()">
+            <h2>Dar medallas</h2>
+
+            <hr class="separator" />
+            <button mat-raised-button class="menu-button" type="submit">
+                Guardar Preferencias
+            </button>
+        </form>
+    </div>
+
+    <div class="button-container-secondary">
+
+        <button mat-raised-button color="warn" class="boton-cerrar" (click)="cerrarBuzon()">
+            Cerrar Mi espacio
+        </button>
+        <button mat-raised-button class="volver" type="button" (click)="utils.navegar('inicio')">
+            Volver
+        </button>
+    </div>
+</div>

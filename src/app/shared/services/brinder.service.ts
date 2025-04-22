@@ -128,4 +128,12 @@ export class BrinderService {
       alias,
     });
   }
+
+  obtenerMedallas(id: string) {
+    return this.http.get<any[]>(`${this.BASE_URL}/medallas/${id}`);
+  }
+
+  tipoMedalla(id: string) {
+    return this.http.get<any[]>(`${this.BASE_URL}/medallas/obtener-medalla/${id}`);
+  }
 }

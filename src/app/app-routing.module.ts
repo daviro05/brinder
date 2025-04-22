@@ -17,12 +17,22 @@ import { EstadisticasComponent } from './admin/estadisticas/estadisticas.compone
 import { AvisosComponent } from './admin/avisos/avisos.component';
 import { KillerComponent } from './killer/killer.component';
 import { MiEspacioComponent } from './mi-espacio/mi-espacio.component';
+import { MedallasComponent } from './medallas/medallas.component';
 
 const routes: Routes = [
   { path: 'inicio', component: InicioComponent }, // Ruta específica para "Inicio"
   { path: 'brinder', component: BrinderComponent, canActivate: [BackendGuard] }, // Ruta específica para "Brinder"
   { path: 'info', component: InfoComponent, canActivate: [BackendGuard] }, // Ruta específica para "Info"
-  { path: 'mi-espacio', component: MiEspacioComponent, canActivate: [BackendGuard] }, // Ruta específica para "Mi Espacio"
+  {
+    path: 'mi-espacio',
+    component: MiEspacioComponent,
+    canActivate: [BackendGuard],
+  }, // Ruta específica para "Mi Espacio"
+  {
+    path: 'medallas',
+    component: MedallasComponent,
+    canActivate: [BackendGuard],
+  }, // Ruta específica para "Medallas"
   {
     path: 'buzon',
     canActivate: [BackendGuard],
