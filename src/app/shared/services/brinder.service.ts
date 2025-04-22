@@ -41,7 +41,9 @@ export class BrinderService {
   }
 
   obtenerPersonaje(id: string) {
-    return this.http.get<BrinderModel[]>(`${this.BASE_URL}/personajes/personaje/${id}`);
+    return this.http.get<BrinderModel[]>(
+      `${this.BASE_URL}/personajes/personaje/${id}`
+    );
   }
 
   obtenerMatches(tipo: string) {
@@ -49,7 +51,9 @@ export class BrinderService {
   }
 
   obtenerMatchesPersonaje(tipo: string, personaje_id: string) {
-    return this.http.get<any[]>(`${this.BASE_URL}/matches/personajes/${tipo}/${personaje_id}`);
+    return this.http.get<any[]>(
+      `${this.BASE_URL}/matches/personajes/${tipo}/${personaje_id}`
+    );
   }
 
   sendMatch(matchData: MatchModel) {
@@ -133,7 +137,13 @@ export class BrinderService {
     return this.http.get<any[]>(`${this.BASE_URL}/medallas/${id}`);
   }
 
-  tipoMedalla(id: string) {
-    return this.http.get<any[]>(`${this.BASE_URL}/medallas/obtener-medalla/${id}`);
+  tiposMedalla() {
+    return this.http.get<any[]>(
+      `${this.BASE_URL}/medallas/tipos/medalla`
+    );
+  }
+
+  asignarMedalla(medalla: { personaje_id: string, medalla_id: string, asignado_por: string, titulo: string }) {
+    return this.http.post<string>(`${this.BASE_URL}/medallas/asignar-medalla`, medalla);
   }
 }

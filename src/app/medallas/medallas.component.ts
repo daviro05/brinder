@@ -20,6 +20,14 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
   seccionActiva: string = 'mis-medallas';
   colorSeleccionado: string = '#ffffff'; // Valor inicial en hexadecimal
   tipoConexion: string = 'romantico'; // Valor inicial
+  medallaForm = {
+    personaje_id: '',
+    medalla_id: '',
+    titulo: '',
+  };
+  personajes: any[] = [];
+  tiposMedalla: any[] = [];
+  medallaSeleccionada: any = null;
 
   constructor(
     protected override buzonService: BuzonService,
@@ -43,7 +51,6 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
   onCodigoValidado(): void {
     this.brinderService.obtenerMedallas(this.id!).subscribe((data) => {
       this.medallas = data;
-      console.log('medallas', this.medallas);
     });
 
     this.brinderService.obtenerPersonaje(this.id!).subscribe((data) => {
@@ -53,6 +60,16 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
       );
       this.comprobarPerfil(this.personaje.info_user);
       this.personaje.nick = this.personaje.nick || '';
+    });
+
+    this.brinderService.obtenerPersonajes('brinder').subscribe((data) => {
+      this.personajes = data;
+      console.log('personajes', this.personajes);
+    });
+
+    this.brinderService.tiposMedalla().subscribe((data) => {
+      console.log('tiposMedalla', data);
+      this.tiposMedalla = data;
     });
   }
 
@@ -68,7 +85,7 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
   abrirDialogoMedalla(medalla: any): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      title: 'Información de la Medalla',
+      title: 'Información de la medalla',
       medalla: medalla,
     };
     this.dialog.open(DialogComponent, dialogConfig);
@@ -79,6 +96,9 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
     this.router.navigate([], {
       queryParams: { seccion },
       queryParamsHandling: 'merge',
+    });
+    this.brinderService.obtenerMedallas(this.id!).subscribe((data) => {
+      this.medallas = data;
     });
   }
 
@@ -125,5 +145,34 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
           );
         }
       );
+  }
+
+  asignarMedalla(): void {
+    if (
+      !this.medallaForm.personaje_id ||
+      !this.medallaForm.medalla_id ||
+      !this.medallaForm.titulo
+    ) {
+      this.openDialog('Error', 'Todos los campos son obligatorios.');
+      return;
+    }
+
+    const medalla = {
+      personaje_id: this.medallaForm.personaje_id,
+      medalla_id: this.medallaForm.medalla_id,
+      asignado_por: this.personaje.id,
+      titulo: this.medallaForm.titulo,
+    };
+
+    this.brinderService.asignarMedalla(medalla).subscribe(
+      () => {
+        this.openDialog('Éxito', 'Medalla asignada correctamente.');
+        this.medallaForm = { personaje_id: '', medalla_id: '', titulo: '' };
+      },
+      (error) => {
+        console.error('Error al asignar la medalla:', error);
+        this.openDialog('Error', 'Hubo un error al asignar la medalla.');
+      }
+    );
   }
 }

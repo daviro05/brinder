@@ -51,26 +51,57 @@
 
     <div class="stats" *ngIf="personaje && seccionActiva === 'mis-medallas'">
         <h2>Mis medallas</h2>
-        <div class="medallas-grid">
+        <div class="medallas-grid" *ngIf="medallas.length > 0; else noMedallas">
             <div class="medalla" *ngFor="let medalla of medallas">
                 <img [src]="'/assets/medallas/' + medalla.icono_url" alt="Medalla"
                     (click)="abrirDialogoMedalla(medalla)" />
                 <div class="medalla-info">
                     <p><strong>{{ medalla.nombre }}</strong></p>
-                    <p><strong>Asignada:</strong> {{ medalla.asignado_por_nombre }}</p>
-                    <p><strong>Fecha:</strong> {{ medalla.fecha_asignacion | date: 'dd/MM/yy' }}</p>
+                    <p><strong>{{ medalla.asignado_por_nombre }}</strong> </p>
+                    <p><strong>{{ medalla.fecha_asignacion | date: 'dd/MM/yy' }}</strong> </p>
                 </div>
             </div>
         </div>
+        <ng-template #noMedallas>
+            <p>Aún no tienes medallas</p>
+        </ng-template>
     </div>
 
     <div class="prefs" *ngIf="personaje && personaje.rol === 'medallas' && seccionActiva === 'dar-medallas'">
-        <form (ngSubmit)="guardarPreferencias()">
+        <form (ngSubmit)="asignarMedalla()">
             <h2>Dar medallas</h2>
 
+            <mat-form-field appearance="fill">
+                <mat-label>Personaje</mat-label>
+                <mat-select [(ngModel)]="medallaForm.personaje_id" name="personaje_id" required>
+                    <mat-option *ngFor="let personaje of personajes" [value]="personaje.id">
+                        {{ personaje.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Tipo de medalla</mat-label>
+                <mat-select [(ngModel)]="medallaForm.medalla_id" name="medalla_id" required>
+                    <mat-option *ngFor="let tipo of tiposMedalla" [value]="tipo.id"
+                        (click)="medallaSeleccionada = tipo">
+                        {{ tipo.nombre }}
+                    </mat-option>
+                </mat-select>
+                <div class="tipo-medalla-preview" *ngIf="medallaSeleccionada">
+                    <img [src]="'/assets/medallas/' + medallaSeleccionada.icono_url" alt="Vista previa de medalla" />
+                </div>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Descripción</mat-label>
+                <input matInput [(ngModel)]="medallaForm.titulo" name="titulo" required />
+            </mat-form-field>
+
             <hr class="separator" />
-            <button mat-raised-button class="menu-button" type="submit">
-                Guardar Preferencias
+            <button mat-raised-button class="menu-button" type="submit"
+                [disabled]="!medallaForm.personaje_id || !medallaForm.medalla_id || !medallaForm.titulo">
+                Asignar Medalla
             </button>
         </form>
     </div>
