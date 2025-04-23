@@ -72,8 +72,8 @@
             <h2>Dar medallas</h2>
 
             <mat-form-field appearance="fill">
-                <mat-label>Personaje</mat-label>
-                <mat-select [(ngModel)]="medallaForm.personaje_id" name="personaje_id" required>
+                <mat-label>Personajes</mat-label>
+                <mat-select [(ngModel)]="medallaForm.personajes_ids" name="personajes_ids" multiple required>
                     <mat-option *ngFor="let personaje of personajes" [value]="personaje.id">
                         {{ personaje.name }}
                     </mat-option>
@@ -100,7 +100,7 @@
 
             <hr class="separator" />
             <button mat-raised-button class="menu-button" type="submit"
-                [disabled]="!medallaForm.personaje_id || !medallaForm.medalla_id || !medallaForm.titulo">
+                [disabled]="!medallaForm.personajes_ids || !medallaForm.medalla_id || !medallaForm.titulo">
                 Asignar Medalla
             </button>
         </form>

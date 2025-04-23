@@ -137,17 +137,40 @@ export class BrinderService {
     return this.http.get<any[]>(`${this.BASE_URL}/medallas/${id}`);
   }
 
+  obtenerAllMedallas() {
+    return this.http.get<any[]>(`${this.BASE_URL}/medallas/todas`);
+  }
+
   tiposMedalla() {
-    return this.http.get<any[]>(
-      `${this.BASE_URL}/medallas/tipos/medalla`
+    return this.http.get<any[]>(`${this.BASE_URL}/medallas/tipos/medalla`);
+  }
+
+  crearMedalla(medalla: {
+    nombre: string;
+    descripcion: string;
+    icono_url: string;
+  }) {
+    return this.http.post<string>(
+      `${this.BASE_URL}/medallas/crear-medalla`,
+      medalla
     );
   }
 
-  asignarMedalla(medalla: { personaje_id: string, medalla_id: string, asignado_por: string, titulo: string }) {
-    return this.http.post<string>(`${this.BASE_URL}/medallas/asignar-medalla`, medalla);
+  asignarMedalla(medalla: {
+    personaje_id: string;
+    medalla_id: string;
+    asignado_por: string;
+    titulo: string;
+  }) {
+    return this.http.post<string>(
+      `${this.BASE_URL}/medallas/asignar-medalla`,
+      medalla
+    );
   }
 
-  crearMedalla(medalla: { nombre: string, descripcion: string, icono_url: string }){
-    return this.http.post<string>(`${this.BASE_URL}/medallas/crear-medalla`, medalla);
+  eliminarMedalla(id: string) {
+    return this.http.delete<string>(
+      `${this.BASE_URL}/medallas/eliminar-medalla/${id}`
+    );
   }
 }

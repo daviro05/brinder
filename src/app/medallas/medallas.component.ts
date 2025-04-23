@@ -21,7 +21,7 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
   colorSeleccionado: string = '#ffffff'; // Valor inicial en hexadecimal
   tipoConexion: string = 'romantico'; // Valor inicial
   medallaForm = {
-    personaje_id: '',
+    personajes_ids: [], // Cambiado a un array para múltiples IDs
     medalla_id: '',
     titulo: '',
   };
@@ -147,7 +147,7 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
 
   asignarMedalla(): void {
     if (
-      !this.medallaForm.personaje_id ||
+      !this.medallaForm.personajes_ids.length || // Verifica que haya al menos un personaje seleccionado
       !this.medallaForm.medalla_id ||
       !this.medallaForm.titulo
     ) {
@@ -155,22 +155,24 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
       return;
     }
 
-    const medalla = {
-      personaje_id: this.medallaForm.personaje_id,
-      medalla_id: this.medallaForm.medalla_id,
-      asignado_por: this.personaje.id,
-      titulo: this.medallaForm.titulo,
-    };
+    const asignaciones = this.medallaForm.personajes_ids.map((personaje_id) => {
+      const medalla = {
+        personaje_id,
+        medalla_id: this.medallaForm.medalla_id,
+        asignado_por: this.personaje.id,
+        titulo: this.medallaForm.titulo,
+      };
+      return this.brinderService.asignarMedalla(medalla).toPromise();
+    });
 
-    this.brinderService.asignarMedalla(medalla).subscribe(
-      () => {
-        this.openDialog('Éxito', 'Medalla asignada correctamente.');
-        this.medallaForm = { personaje_id: '', medalla_id: '', titulo: '' };
-      },
-      (error) => {
-        console.error('Error al asignar la medalla:', error);
-        this.openDialog('Error', 'Hubo un error al asignar la medalla.');
-      }
-    );
+    Promise.all(asignaciones)
+      .then(() => {
+        this.openDialog('Éxito', 'Medallas asignadas correctamente.');
+        this.medallaForm = { personajes_ids: [], medalla_id: '', titulo: '' };
+      })
+      .catch((error) => {
+        console.error('Error al asignar las medallas:', error);
+        this.openDialog('Error', 'Hubo un error al asignar las medallas.');
+      });
   }
 }
