@@ -24,6 +24,7 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
     personajes_ids: [], // Cambiado a un array para múltiples IDs
     medalla_id: '',
     titulo: '',
+    nombre_personalizado: '', // Nuevo campo para medallas personalizadas
   };
   personajes: any[] = [];
   tiposMedalla: any[] = [];
@@ -146,10 +147,18 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
   }
 
   asignarMedalla(): void {
+    // Aplicar trim a los campos del formulario
+    this.medallaForm.titulo = this.medallaForm.titulo.trim();
+    this.medallaForm.nombre_personalizado =
+      this.medallaForm.nombre_personalizado.trim();
+
     if (
       !this.medallaForm.personajes_ids.length || // Verifica que haya al menos un personaje seleccionado
       !this.medallaForm.medalla_id ||
-      !this.medallaForm.titulo
+      !this.medallaForm.titulo ||
+      (this.medallaSeleccionada?.nombre === 'Personalizada' &&
+        (!this.medallaForm.nombre_personalizado ||
+          this.medallaForm.nombre_personalizado.trim() === '')) // Verifica el nombre personalizado
     ) {
       this.openDialog('Error', 'Todos los campos son obligatorios.');
       return;
@@ -161,6 +170,10 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
         medalla_id: this.medallaForm.medalla_id,
         asignado_por: this.personaje.id,
         titulo: this.medallaForm.titulo,
+        nombre_personalizado:
+          this.medallaSeleccionada?.nombre === 'Personalizada'
+            ? this.medallaForm.nombre_personalizado
+            : '', // Incluye el nombre personalizado si aplica
       };
       return this.brinderService.asignarMedalla(medalla).toPromise();
     });
@@ -168,7 +181,12 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
     Promise.all(asignaciones)
       .then(() => {
         this.openDialog('Éxito', 'Medallas asignadas correctamente.');
-        this.medallaForm = { personajes_ids: [], medalla_id: '', titulo: '' };
+        this.medallaForm = {
+          personajes_ids: [],
+          medalla_id: '',
+          titulo: '',
+          nombre_personalizado: '',
+        };
       })
       .catch((error) => {
         console.error('Error al asignar las medallas:', error);

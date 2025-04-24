@@ -161,6 +161,7 @@ export class BrinderService {
     medalla_id: string;
     asignado_por: string;
     titulo: string;
+    nombre_personalizado: string;
   }) {
     return this.http.post<string>(
       `${this.BASE_URL}/medallas/asignar-medalla`,

@@ -56,7 +56,7 @@
                 <img [src]="'/assets/medallas/' + medalla.icono_url" alt="Medalla"
                     (click)="abrirDialogoMedalla(medalla)" />
                 <div class="medalla-info">
-                    <p><strong>{{ medalla.nombre }}</strong></p>
+                    <p><strong>{{ medalla.nombre === 'Personalizada' ? medalla.nombre_personalizado : medalla.nombre }}</strong></p>
                     <p><strong>De: {{ medalla.asignado_por_nombre }}</strong> </p>
                     <p><strong>{{ medalla.fecha_asignacion | date: 'dd/MM/yy' }}</strong> </p>
                 </div>
@@ -91,6 +91,11 @@
                 <div class="tipo-medalla-preview" *ngIf="medallaSeleccionada">
                     <img [src]="'/assets/medallas/' + medallaSeleccionada.icono_url" alt="Vista previa de medalla" />
                 </div>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" *ngIf="medallaSeleccionada?.nombre === 'Personalizada'">
+                <mat-label>Nombre medalla</mat-label>
+                <input matInput [(ngModel)]="medallaForm.nombre_personalizado" name="nombre_personalizado" required />
             </mat-form-field>
 
             <mat-form-field appearance="fill">
