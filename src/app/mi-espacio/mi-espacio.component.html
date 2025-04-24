@@ -5,7 +5,7 @@
     </div>
 
     <mat-menu #menu="matMenu" xPosition="before">
-        <button mat-menu-item disabled>
+        <button mat-menu-item (click)="utils.navegar('mi-killer')">
             <mat-icon class="material-symbols-outlined">skull</mat-icon>
             Mi Killer
         </button>

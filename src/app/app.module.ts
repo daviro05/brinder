@@ -42,6 +42,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { MiEspacioComponent } from './mi-espacio/mi-espacio.component';
 import { MedallasComponent } from './medallas/medallas.component';
 import { MedallasAdminComponent } from './admin/medallas/medallas.component';
+import { MiKillerComponent } from './mi-killer/mi-killer.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { MedallasAdminComponent } from './admin/medallas/medallas.component';
     KillerComponent,
     MiEspacioComponent,
     MedallasComponent,
-    MedallasAdminComponent
+    MedallasAdminComponent,
+    MiKillerComponent
   ],
   imports: [
     BrowserModule,

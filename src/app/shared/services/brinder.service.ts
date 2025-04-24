@@ -174,4 +174,23 @@ export class BrinderService {
       `${this.BASE_URL}/medallas/eliminar-medalla/${id}`
     );
   }
+
+  /* KILLER */
+
+  asignarEquipo(personaje_id: string, killer_id: string) {
+    return this.http.post<{ equipo: string }>(
+      `${this.BASE_URL}/killer/asignar-equipo`,
+      {
+        personaje_id,
+        killer_id,
+      }
+    );
+  }
+
+getEquipoAsignado(killerId: string, personaje_id?: string) {
+  return this.http.get<{ asignado: boolean; equipo?: string }>(
+    `${this.BASE_URL}/killer/${killerId}/${personaje_id}`
+  );
+}
+
 }

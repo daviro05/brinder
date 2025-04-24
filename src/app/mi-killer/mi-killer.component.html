@@ -1,0 +1,84 @@
+<div class="chat-container">
+    <div class="title-container">
+        <h2>KILLER DE {{nombrePersonaje}}</h2>
+        <span>{{personaje ? personaje.nick : ''}}</span>
+    </div>
+
+    <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="utils.navegar('buzon/mensajes')">
+            <mat-icon class="material-symbols-outlined">email</mat-icon>
+            Mi Buzón
+        </button>
+        <button mat-menu-item (click)="utils.navegar('medallas')">
+            <mat-icon class="material-symbols-outlined">social_leaderboard</mat-icon>
+            Medallas
+        </button>
+        <button mat-menu-item disabled>
+            <mat-icon class="material-symbols-outlined">person_play</mat-icon>
+            Retos
+        </button>
+    </mat-menu>
+
+    <div class="image-container">
+        <img [src]="imagenPersonaje" [ngStyle]="utils.getBordeStyle(personaje)" />
+    </div>
+
+    <div class="button-container">
+        <button mat-raised-button class="buzon" (click)="utils.navegar('mi-espacio')">
+            <mat-icon class="material-symbols-outlined">folder_shared</mat-icon>
+            Mi Espacio
+        </button>
+        <button mat-raised-button [matMenuTriggerFor]="menu" class="menu-button">
+            <mat-icon class="material-symbols-outlined">menu</mat-icon>
+            Secciones
+        </button>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="button-container" *ngIf="personaje && personaje.rol === 'medallas'">
+        <button mat-raised-button [class.active]="seccionActiva === 'estado'" (click)="cambiarSeccion('estado')"
+            class="config">
+            <mat-icon class="material-symbols-outlined">social_leaderboard</mat-icon>
+            Estado
+        </button>
+        <button mat-raised-button [class.active]="seccionActiva === 'mi-equipo'" (click)="cambiarSeccion('mi-equipo')"
+            class="config">
+            <mat-icon class="material-symbols-outlined">workspace_premium</mat-icon>
+            Mi equipo
+        </button>
+    </div>
+
+    <div class="stats" *ngIf="personaje && seccionActiva === 'estado'">
+        <h2>Estado</h2>
+
+        <p>El juego aún no ha comenzado</p>
+    </div>
+
+    <div class="prefs" *ngIf="personaje && personaje.rol === 'medallas' && seccionActiva === 'mi-equipo'">
+        <h2>Mi equipo</h2>
+
+        <div *ngIf="!asignado">
+            <button mat-raised-button class="unirse" (click)="unirseEquipo()">
+                Unirse
+            </button>
+
+            <p class="copy">Te unirás a un equipo aleatoriamente</p>
+        </div>
+
+        <div *ngIf="asignado">
+            <p class="equipo">Tu equipo es el {{equipo | uppercase}}</p>
+        </div>
+
+    </div>
+
+    <div class="button-container-secondary">
+
+        <button mat-raised-button color="warn" class="boton-cerrar" (click)="cerrarBuzon()">
+            Cerrar Mi espacio
+        </button>
+        <button mat-raised-button class="volver" type="button" (click)="utils.navegar('inicio')">
+            Volver
+        </button>
+    </div>
+</div>

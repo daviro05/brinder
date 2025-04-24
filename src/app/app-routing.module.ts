@@ -19,6 +19,7 @@ import { KillerComponent } from './killer/killer.component';
 import { MiEspacioComponent } from './mi-espacio/mi-espacio.component';
 import { MedallasComponent } from './medallas/medallas.component';
 import { MedallasAdminComponent } from './admin/medallas/medallas.component';
+import { MiKillerComponent } from './mi-killer/mi-killer.component';
 
 const routes: Routes = [
   { path: 'inicio', component: InicioComponent }, // Ruta específica para "Inicio"
@@ -34,6 +35,11 @@ const routes: Routes = [
     component: MedallasComponent,
     canActivate: [BackendGuard],
   }, // Ruta específica para "Medallas"
+  {
+    path: 'mi-killer',
+    component: MiKillerComponent,
+    canActivate: [BackendGuard],
+  },
   {
     path: 'buzon',
     canActivate: [BackendGuard],
