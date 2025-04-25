@@ -11,6 +11,16 @@
   align-items: center;
   margin-bottom: 20px;
   text-align: center;
+
+  h2 {
+    display: flex;
+    justify-content: center;
+
+    .icon {
+      vertical-align: middle;
+      font-size: 25px;
+    }
+  }
 }
 
 .character-card {
@@ -27,6 +37,10 @@
 
   p {
     margin-top: 20px;
+  }
+
+  .label-name {
+    margin-top: 5px;
   }
 
   .red-cross {
@@ -69,6 +83,7 @@
   height: 100px;
   border-radius: 10px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  object-fit: cover; // Mantener proporciones sin distorsión
 }
 
 .muerto {
@@ -101,6 +116,54 @@
 
 .proximamente {
   .loading-gif {
+    width: 150px;
     margin: 20px;
+  }
+}
+
+.unirte {
+  margin: 1rem;
+  background: linear-gradient(90deg, rgb(255, 87, 87), rgb(144, 144, 255));
+  color: white !important;
+}
+
+.team-container {
+  margin: 20px 0;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  border: 1px solid grey;
+  padding: 1rem;
+  border-radius: 20px;
+
+  h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); // Tres columnas por fila
+    gap: 5px; // Espaciado entre las tarjetas
+    justify-items: center;
+  }
+
+  .character-card {
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;
+
+    img.character-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 4px;
+    }
+
+    span {
+      font-size: small;
+    }
   }
 }

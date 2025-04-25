@@ -1,7 +1,8 @@
 <div class="container">
     <div class="title-container">
-        <h2><mat-icon class="icon material-symbols-outlined">skull</mat-icon> KILLER</h2>
-        <p>Estado de los personajes en el juego</p>
+        <h2><span>KILLER X EQUIP</span><mat-icon class="icon material-symbols-outlined">skull</mat-icon><span>S</span>
+        </h2>
+        <p></p>
         <div class="button-container" *ngIf="filteredCharacters.length > 0">
             <!--<button mat-button (click)="seleccionarEstado('todos')" [class.seleccionado]="estadoSeleccionado === 'todos'">
                 Todos
@@ -28,9 +29,34 @@
         </div>
     </div>
 
-    <div *ngIf="filteredCharacters.length === 0" class="proximamente">
+    <div class="proximamente">
         <img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">
-        <p [innerHTML]="mensajeProximamente"></p>
+        <p><b>FASE DE EQUIPOS</b><br>Los equipos se están conformando.</p>
+
+        <div>
+            <div class="team-container">
+                <h3>Equipo Rojo ({{equipoRojo.length}})</h3>
+                <div class="team-grid">
+                    <div class="character-card" *ngFor="let character of equipoRojo">
+                        <img [src]="character.image_url" alt="{{ character.name }}" class="character-image">
+                        <span class="label-name">{{ character.name }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-container">
+                <h3>Equipo Azul ({{equipoAzul.length}})</h3>
+                <div class="team-grid">
+                    <div class="character-card" *ngFor="let character of equipoAzul">
+                        <img [src]="character.image_url" alt="{{ character.name }}" class="character-image">
+                        <span class="label-name">{{ character.name }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button mat-raised-button class="unirte" type="button" (click)="utils.navegar('mi-killer')">
+            Unirte a un equipo
+        </button>
     </div>
 
     <div>

@@ -17,7 +17,8 @@ export class KillerComponent {
   vivos: string = '';
   muertos: string = '';
   estadoSeleccionado: string = 'vivo'; // Nuevo estado seleccionado
-  mensajeProximamente: string = '<b>Próximamente...</b><br><br>Muy pronto comenzará el juego...<br>Para más información, puedes echar un vistazo a la sección de noticias.';
+  equipoRojo: any[] = [];
+  equipoAzul: any[] = [];
 
   constructor(private brinderService: BrinderService, private router: Router) {
     this.utils = new Utils(this.router);
@@ -25,7 +26,44 @@ export class KillerComponent {
 
   // Este método se ejecuta cuando el componente se inicializa
   ngOnInit() {
-    this.loadCharacters();
+    //this.loadCharacters();
+    this.getPersonajesEquipo(); // Llamar al método para obtener personajes del equipo
+  }
+
+  getPersonajesEquipo() {
+    this.brinderService.getPersonajesEquipo('1', 'rojo').subscribe((data) => {
+      this.equipoRojo = data.personajes.sort((a: any, b: any) => {
+        const nombreA =
+          a.name
+            ?.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '') || '';
+        const nombreB =
+          b.name
+            ?.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '') || '';
+        return nombreA > nombreB ? 1 : nombreA < nombreB ? -1 : 0;
+      });
+      console.log('Equipo Rojo:', this.equipoRojo);
+    });
+
+    this.brinderService.getPersonajesEquipo('1', 'azul').subscribe((data) => {
+      this.equipoAzul = data.personajes.sort((a: any, b: any) => {
+        const nombreA =
+          a.name
+            ?.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '') || '';
+        const nombreB =
+          b.name
+            ?.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '') || '';
+        return nombreA > nombreB ? 1 : nombreA < nombreB ? -1 : 0;
+      });
+      console.log('Equipo Azul:', this.equipoAzul);
+    });
   }
 
   // Método para cargar los personajes desde el backend

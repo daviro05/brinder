@@ -192,4 +192,10 @@ export class BrinderService {
       `${this.BASE_URL}/killer/${killerId}/${personaje_id}`
     );
   }
+
+  getPersonajesEquipo(killerId: string, equipo: string) {
+    return this.http.get<any>(
+      `${this.BASE_URL}/killer/${killerId}/equipo/${equipo}`
+    );
+  }
 }
