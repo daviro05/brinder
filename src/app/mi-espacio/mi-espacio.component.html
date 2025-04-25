@@ -62,7 +62,10 @@
             <p>Veces mejor match:</p><span class="valor">{{mejorMatch?.veces}}</span>
         </div>
         <div class="pill">
-            <p>Mensajes:</p><span class="valor">Próximamente...</span>
+            <p>Mensajes:</p><span class="valor"> <button mat-raised-button class="menu-button" (click)="abrirDialogoMensajes()">
+            <mat-icon class="material-symbols-outlined">message</mat-icon>
+            Ver mensajes
+        </button></span>
         </div>
     </div>
 

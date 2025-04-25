@@ -8,6 +8,7 @@ import { BuzonService } from '../shared/services/buzon.service';
 import { Utils } from '../shared/utils';
 import { BuzonBaseComponent } from '../buzon-personal/buzon-base/buzon-base.component';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MensajesDialogComponent } from '../dialog/mensajes-dialog/mensajes-dialog.component';
 
 @Component({
   selector: 'app-mi-espacio',
@@ -51,8 +52,14 @@ export class MiEspacioComponent extends BuzonBaseComponent implements OnInit {
           ...match,
         }));
         this.mensajesMatches = matches
-          .map((match) => match.mensaje)
-          .filter((mensaje) => mensaje !== '');
+          .map((match) => ({
+            mensaje: match.mensaje,
+            personaje1_name: match.personaje1_name,
+            personaje2_name: match.personaje2_name,
+          }))
+          .filter((item) => item.mensaje !== '');
+
+        console.log(this.mensajesMatches);
 
         // Contar las veces que se realiza cada match
         const matchCounts = matches.reduce((acc, match) => {
@@ -161,5 +168,13 @@ export class MiEspacioComponent extends BuzonBaseComponent implements OnInit {
           );
         }
       );
+  }
+
+  abrirDialogoMensajes(): void {
+    this.dialog.open(MensajesDialogComponent, {
+      data: { mensajes: this.mensajesMatches },
+      width: '440px',
+      autoFocus: false, // Deshabilita el enfoque automático
+    });
   }
 }

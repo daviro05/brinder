@@ -1,0 +1,20 @@
+<div class="chat-container" #chatContainer>
+    <h2>Mensajes en matches</h2>
+    <div *ngIf="data.mensajes.length; else noMensajes">
+        <ul>
+            <li *ngFor="let mensaje of data.mensajes">
+                <p><b>{{mensaje.personaje1_name}} - {{mensaje.personaje2_name}}</b></p>
+                {{ mensaje.mensaje }}
+            </li>
+        </ul>
+    </div>
+    <ng-template #noMensajes>
+        <p>No hay mensajes disponibles.</p>
+    </ng-template>
+    <div class="button-container-secondary">
+
+        <button mat-raised-button class="boton-cerrar" (click)="cerrar()">
+            Cerrar
+        </button>
+    </div>
+</div>

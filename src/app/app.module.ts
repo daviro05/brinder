@@ -44,6 +44,7 @@ import { MiEspacioComponent } from './mi-espacio/mi-espacio.component';
 import { MedallasComponent } from './medallas/medallas.component';
 import { MedallasAdminComponent } from './admin/medallas/medallas.component';
 import { MiKillerComponent } from './mi-killer/mi-killer.component';
+import { MensajesDialogComponent } from './dialog/mensajes-dialog/mensajes-dialog.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { MiKillerComponent } from './mi-killer/mi-killer.component';
     MiEspacioComponent,
     MedallasComponent,
     MedallasAdminComponent,
-    MiKillerComponent
+    MiKillerComponent,
+    MensajesDialogComponent 
   ],
   imports: [
     BrowserModule,
