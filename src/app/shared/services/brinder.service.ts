@@ -187,10 +187,9 @@ export class BrinderService {
     );
   }
 
-getEquipoAsignado(killerId: string, personaje_id?: string) {
-  return this.http.get<{ asignado: boolean; equipo?: string }>(
-    `${this.BASE_URL}/killer/${killerId}/${personaje_id}`
-  );
-}
-
+  getEquipoAsignado(killerId: string, personaje_id?: string) {
+    return this.http.get<{ asignado: boolean; equipo?: string }>(
+      `${this.BASE_URL}/killer/${killerId}/${personaje_id}`
+    );
+  }
 }

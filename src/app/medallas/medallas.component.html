@@ -56,7 +56,8 @@
                 <img [src]="'/assets/medallas/' + medalla.icono_url" alt="Medalla"
                     (click)="abrirDialogoMedalla(medalla)" />
                 <div class="medalla-info">
-                    <p><strong>{{ medalla.nombre === 'Personalizada' ? medalla.nombre_personalizado : medalla.nombre }}</strong></p>
+                    <p><strong>{{ medalla.nombre === 'Personalizada' ? medalla.nombre_personalizado : medalla.nombre
+                            }}</strong></p>
                     <p><strong>De: {{ medalla.asignado_por_nombre }}</strong> </p>
                     <p><strong>{{ medalla.fecha_asignacion | date: 'dd/MM/yy' }}</strong> </p>
                 </div>

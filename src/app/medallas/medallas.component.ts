@@ -82,12 +82,12 @@ export class MedallasComponent extends BuzonBaseComponent implements OnInit {
   }
 
   abrirDialogoMedalla(medalla: any): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      title: 'Información de la medalla',
-      medalla: medalla,
-    };
-    this.dialog.open(DialogComponent, dialogConfig);
+    this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Información de la medalla',
+        medalla: medalla,
+      },
+    });
   }
 
   cambiarSeccion(seccion: string) {

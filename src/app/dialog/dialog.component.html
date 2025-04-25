@@ -4,12 +4,12 @@
     <ng-container *ngIf="data.medalla; else defaultContent">
       <div class="dialog-medalla">
         <img [src]="'/assets/medallas/' + data.medalla.icono_url" alt="Medalla" class="dialog-image" />
-        <p><strong>Tipo:</strong> {{ data.medalla.nombre === 'Personalizada' ? data.medalla.nombre_personalizado : data.medalla.nombre }}</p>
-        <p><strong>Descripción: </strong> {{data.medalla.descripcion}}</p>
+        <p><strong>Tipo:</strong> {{ data.medalla.nombre === 'Personalizada' ? data.medalla.nombre_personalizado :
+          data.medalla.nombre }}</p>
+        <p><strong>Descripción:</strong> {{ data.medalla.descripcion }}</p>
         <p><strong>Asignada por:</strong> {{ data.medalla.asignado_por_nombre }}</p>
         <p><strong>Mensaje:</strong> {{ data.medalla.titulo }}</p>
         <p><strong>Fecha:</strong> {{ data.medalla.fecha_asignacion | date: 'dd/MM/yy' }}</p>
-
       </div>
     </ng-container>
     <ng-template #defaultContent>
@@ -22,6 +22,7 @@
     </ng-template>
   </div>
   <div mat-dialog-actions>
-    <button color="primary" mat-button mat-dialog-close>Aceptar</button>
+    <button mat-button mat-dialog-close="false" *ngIf="data.showCancel">Cancelar</button>
+    <button mat-button mat-dialog-close="true">Aceptar</button>
   </div>
 </div>

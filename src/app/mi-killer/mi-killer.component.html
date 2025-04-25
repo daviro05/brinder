@@ -36,40 +36,64 @@
 
     <hr class="separator" />
 
-    <div class="button-container" *ngIf="personaje && personaje.rol === 'medallas'">
+    <div class="button-container" *ngIf="personaje">
         <button mat-raised-button [class.active]="seccionActiva === 'estado'" (click)="cambiarSeccion('estado')"
             class="config">
-            <mat-icon class="material-symbols-outlined">social_leaderboard</mat-icon>
             Estado
         </button>
         <button mat-raised-button [class.active]="seccionActiva === 'mi-equipo'" (click)="cambiarSeccion('mi-equipo')"
             class="config">
-            <mat-icon class="material-symbols-outlined">workspace_premium</mat-icon>
             Mi equipo
+        </button>
+        <button mat-raised-button [class.active]="seccionActiva === 'inventario'" (click)="cambiarSeccion('inventario')"
+            class="config">
+            Inventario
         </button>
     </div>
 
     <div class="stats" *ngIf="personaje && seccionActiva === 'estado'">
         <h2>Estado</h2>
 
-        <p>El juego aún no ha comenzado</p>
+        <div class="estado">
+            <p>El juego aún no ha comenzado</p>
+            <p class="copy">Únete a un equipo en la pestaña de 'Mi equipo'</p>
+        </div>
     </div>
 
-    <div class="prefs" *ngIf="personaje && personaje.rol === 'medallas' && seccionActiva === 'mi-equipo'">
+    <div class="prefs" *ngIf="personaje && seccionActiva === 'mi-equipo'">
         <h2>Mi equipo</h2>
 
         <div *ngIf="!asignado">
-            <button mat-raised-button class="unirse" (click)="unirseEquipo()">
-                Unirse
+            <button mat-raised-button class="unirse" (click)="confirmarUnirse()" *ngIf="!mostrandoCuentaAtras">
+                UNIRSE
             </button>
+
+            <div *ngIf="mostrandoCuentaAtras" class="spinner-container">
+                <mat-spinner diameter="50"></mat-spinner>
+                <p>Uniéndose en {{ cuentaAtras }}</p>
+            </div>
 
             <p class="copy">Te unirás a un equipo aleatoriamente</p>
         </div>
 
         <div *ngIf="asignado">
-            <p class="equipo">Tu equipo es el {{equipo | uppercase}}</p>
+            <p class="equipo">
+                Tu equipo es el
+                <span [ngStyle]="{'color': equipo === 'rojo' ? 'red' : equipo === 'azul' ? 'blue' : 'black'}">
+                    {{equipo | uppercase}}
+                </span>
+            </p>
         </div>
 
+    </div>
+
+    <div class="inventario" *ngIf="personaje && seccionActiva === 'inventario'">
+        <h2>Inventario</h2>
+
+        <div class="estado">
+            <p>El juego aún no ha comenzado</p>
+            <p class="copy">Únete a un equipo en la pestaña de 'Mi equipo'</p>
+        </div>
     </div>
 
     <div class="button-container-secondary">

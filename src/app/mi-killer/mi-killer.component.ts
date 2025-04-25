@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DialogComponent } from '../dialog/dialog.component';
 import { BrinderService } from '../shared/services/brinder.service';
@@ -23,6 +27,8 @@ export class MiKillerComponent extends BuzonBaseComponent {
   personajes: any[] = [];
   asignado: boolean = false;
   equipo: string = '';
+  mostrandoCuentaAtras: boolean = false;
+  cuentaAtras: number = 5;
 
   constructor(
     protected override buzonService: BuzonService,
@@ -37,7 +43,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
     // Leer parámetros de la URL y establecer la sección activa
     this.route.queryParams.subscribe((params) => {
       const seccion = params['seccion'];
-      if (seccion === 'estado' || seccion === 'mi-equipo') {
+      if (seccion === 'estado' || seccion === 'mi-equipo' || seccion === 'inventario') {
         this.seccionActiva = seccion;
       }
     });
@@ -117,39 +123,43 @@ export class MiKillerComponent extends BuzonBaseComponent {
     this.personaje.activo = checked ? 'activo' : 'inactivo';
   }
 
-  guardarPreferencias() {
-    if (this.personaje.rol !== 'medallas') {
-      this.openDialog('Error', 'No puedes otorgar medallas');
-      return;
-    }
-    this.brinderService
-      .updatePersonaje(this.personaje.id, this.personaje)
-      .subscribe(
-        () => {
-          const dialogRef = this.openDialog(
-            'Edición correcta',
-            'Preferencias editadas con éxito'
-          );
-        },
-        (error) => {
-          console.error('Error al editar las preferencias:', error);
-          this.openDialog(
-            'Error',
-            'Hubo un error al editar las preferencias. Contacta con el Centurión.'
-          );
-        }
-      );
+  confirmarUnirse() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Confirmar',
+        message:
+          '¿Estás seguro de que deseas unirte a un equipo?',
+        showCancel: true,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmado) => {
+      if (confirmado === "true") {
+        this.unirseEquipo();
+      }
+    });
   }
 
   unirseEquipo() {
-    this.brinderService.asignarEquipo(this.personaje.id, '1').subscribe({
-      next: (res) => {
-        console.log('Asignado a:', res.equipo);
-        // Mostrarlo en la UI
-      },
-      error: (err) => {
-        console.error('Error al asignar equipo:', err);
-      },
-    });
+    this.mostrandoCuentaAtras = true;
+    this.cuentaAtras = 5;
+
+    const intervalo = setInterval(() => {
+      this.cuentaAtras--;
+      if (this.cuentaAtras === 0) {
+        clearInterval(intervalo);
+        this.brinderService.asignarEquipo(this.personaje.id, '1').subscribe({
+          next: (res) => {
+            this.asignado = true;
+            this.equipo = res.equipo || '';
+            this.mostrandoCuentaAtras = false;
+          },
+          error: (err) => {
+            console.error('Error al asignar equipo:', err);
+            this.mostrandoCuentaAtras = false;
+          },
+        });
+      }
+    }, 1000);
   }
 }
