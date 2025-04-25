@@ -33,8 +33,8 @@
         <img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">
         <p><b>FASE DE EQUIPOS</b><br>Los equipos se están conformando.</p>
 
-        <div>
-            <div class="team-container">
+        <div class="team-slider">
+            <div class="team-container team-rojo">
                 <h3>Equipo Rojo ({{equipoRojo.length}})</h3>
                 <div class="team-grid">
                     <div class="character-card" *ngFor="let character of equipoRojo">
@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <div class="team-container">
+            <div class="team-container team-azul">
                 <h3>Equipo Azul ({{equipoAzul.length}})</h3>
                 <div class="team-grid">
                     <div class="character-card" *ngFor="let character of equipoAzul">
@@ -54,6 +54,7 @@
                 </div>
             </div>
         </div>
+
         <button mat-raised-button class="unirte" type="button" (click)="utils.navegar('mi-killer')">
             Unirte a un equipo
         </button>

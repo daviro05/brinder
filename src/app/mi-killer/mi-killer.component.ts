@@ -138,8 +138,8 @@ export class MiKillerComponent extends BuzonBaseComponent {
 
     dialogRef.afterClosed().subscribe((confirmado) => {
       if (confirmado === 'true') {
-        this.unirseEquipo();
-        //this.unirPersonajesMasivamente();
+        //this.unirseEquipo();
+        this.unirPersonajesMasivamente();
       }
     });
   }

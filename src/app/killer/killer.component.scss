@@ -116,8 +116,28 @@
 
 .proximamente {
   .loading-gif {
-    width: 150px;
+    width: 120px;
     margin: 20px;
+  }
+
+  .team-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+
+    .team-container {
+      scroll-snap-align: center;
+      flex: 0 0 auto;
+      width: 90%; // Ajustar el ancho para que se vea como un slider
+    }
+
+    .team-rojo {
+      background-color: rgba(255, 0, 0, 0.1); // Rojo claro
+    }
+    .team-azul {
+      background-color: rgba(0, 0, 255, 0.1); // Azul claro
+    }
   }
 }
 
@@ -128,7 +148,7 @@
 }
 
 .team-container {
-  margin: 20px 0;
+  margin: 10px 0;
   display: grid;
   gap: 10px;
   justify-items: center;
@@ -144,9 +164,11 @@
 
   .team-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); // Tres columnas por fila
-    gap: 5px; // Espaciado entre las tarjetas
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
     justify-items: center;
+    max-height: 300px;
+    overflow-y: auto;
   }
 
   .character-card {
