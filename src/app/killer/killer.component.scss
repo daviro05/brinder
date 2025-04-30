@@ -189,3 +189,16 @@
     }
   }
 }
+
+.captain {
+  grid-column: span 3; // Ocupa toda la fila
+  background-color: rgba(255, 215, 0, 0.2); // Fondo dorado claro
+  border: 2px solid gold; // Borde dorado
+  text-align: center;
+  font-weight: bold;
+
+  .character-image {
+    width: 70px;
+    height: 70px;
+  }
+}

@@ -56,7 +56,7 @@ export class ListaPersonajesComponent implements OnInit {
           console.error('Error al editar al personaje:', error);
           this.openDialog(
             'Error',
-            'Hubo un error al editar al personaje. Contacta con el Centurión.'
+            'Hubo un error al editar al personaje. Inténtalo de nuevo o contacta con el Centurión.'
           );
         }
       );
@@ -76,12 +76,11 @@ export class ListaPersonajesComponent implements OnInit {
     });
   }
 
-
   navegar(ruta: string) {
     if (ruta === 'admin/buzon') {
       const dialogRef = this.dialog.open(CodigoDialogComponent, {
         disableClose: true,
-        data: {recordar: false, tipo: 'codigo'}
+        data: { recordar: false, tipo: 'codigo' },
       });
 
       dialogRef.afterClosed().subscribe((result) => {

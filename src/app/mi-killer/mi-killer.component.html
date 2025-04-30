@@ -63,7 +63,7 @@
     <div class="prefs" *ngIf="personaje && seccionActiva === 'mi-equipo'">
         <h2>Mi equipo</h2>
 
-        <div *ngIf="!asignado">
+        <div *ngIf="!asignado && !personaje.rol.includes('inactivo')">
             <button mat-raised-button class="unirse" (click)="confirmarUnirse()" *ngIf="!mostrandoCuentaAtras">
                 UNIRSE
             </button>
@@ -83,6 +83,10 @@
                     {{equipo | uppercase}}
                 </span>
             </p>
+        </div>
+
+        <div *ngIf="personaje.rol.includes('inactivo')">
+            <p class="copy">No participas en el Killer por equipos</p>
         </div>
 
     </div>

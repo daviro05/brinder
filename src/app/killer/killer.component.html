@@ -31,13 +31,28 @@
 
     <div class="proximamente">
         <img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">
-        <p><b>FASE DE EQUIPOS</b><br>Los equipos se están conformando.</p>
+        <p><b>FASE DE EQUIPOS</b></p>
+        <div *ngIf="personajesPendientes.length > 0">
+            <span>Los equipos se están conformando.</span>
+            <p>Personajes pendientes (<b>{{personajesPendientes.length}}</b>)<br>
+                <span class="copy">{{personajesPendientesName}}</span>
+            </p>
+        </div>
+        <div *ngIf="personajesPendientes.length === 0">
+            <p>Elección de capitán o capitana</p>
+        </div>
 
         <div class="team-slider">
             <div class="team-container team-rojo">
                 <h3>Equipo Rojo ({{equipoRojo.length}})</h3>
                 <div class="team-grid">
-                    <div class="character-card" *ngFor="let character of equipoRojo">
+                    <!-- Capitán del equipo rojo -->
+                    <div class="character-card captain" *ngIf="getCapitan(equipoRojo) as capitanRojo">
+                        <img [src]="capitanRojo.image_url" alt="{{ capitanRojo.name }}" class="character-image">
+                        <span class="label-name">{{ capitanRojo.name }}<br>(Capi)</span>
+                    </div>
+                    <!-- Resto del equipo rojo -->
+                    <div class="character-card" *ngFor="let character of getMiembrosSinCapitan(equipoRojo)">
                         <img [src]="character.image_url" alt="{{ character.name }}" class="character-image">
                         <span class="label-name">{{ character.name }}</span>
                     </div>
@@ -47,7 +62,13 @@
             <div class="team-container team-azul">
                 <h3>Equipo Azul ({{equipoAzul.length}})</h3>
                 <div class="team-grid">
-                    <div class="character-card" *ngFor="let character of equipoAzul">
+                    <!-- Capitán del equipo azul -->
+                    <div class="character-card captain" *ngIf="getCapitan(equipoAzul) as capitanAzul">
+                        <img [src]="capitanAzul.image_url" alt="{{ capitanAzul.name }}" class="character-image">
+                        <span class="label-name">{{ capitanAzul.name }}<br>(Capi)</span>
+                    </div>
+                    <!-- Resto del equipo azul -->
+                    <div class="character-card" *ngFor="let character of getMiembrosSinCapitan(equipoAzul)">
                         <img [src]="character.image_url" alt="{{ character.name }}" class="character-image">
                         <span class="label-name">{{ character.name }}</span>
                     </div>

@@ -19,6 +19,8 @@ export class KillerComponent {
   estadoSeleccionado: string = 'vivo'; // Nuevo estado seleccionado
   equipoRojo: any[] = [];
   equipoAzul: any[] = [];
+  personajesPendientes: any[] = []; // Arreglo para personajes pendientes
+  personajesPendientesName: string = '';
 
   constructor(private brinderService: BrinderService, private router: Router) {
     this.utils = new Utils(this.router);
@@ -26,7 +28,7 @@ export class KillerComponent {
 
   // Este método se ejecuta cuando el componente se inicializa
   ngOnInit() {
-    //this.loadCharacters();
+    this.loadCharacters();
     this.getPersonajesEquipo(); // Llamar al método para obtener personajes del equipo
   }
 
@@ -45,7 +47,8 @@ export class KillerComponent {
             .replace(/[\u0300-\u036f]/g, '') || '';
         return nombreA > nombreB ? 1 : nombreA < nombreB ? -1 : 0;
       });
-      console.log('Equipo Rojo:', this.equipoRojo);
+      //console.log('Equipo Rojo:', this.equipoRojo);
+      this.obtenerPersonajesFaltantes();
     });
 
     this.brinderService.getPersonajesEquipo('1', 'azul').subscribe((data) => {
@@ -62,17 +65,22 @@ export class KillerComponent {
             .replace(/[\u0300-\u036f]/g, '') || '';
         return nombreA > nombreB ? 1 : nombreA < nombreB ? -1 : 0;
       });
-      console.log('Equipo Azul:', this.equipoAzul);
+      //console.log('Equipo Azul:', this.equipoAzul);
+      this.obtenerPersonajesFaltantes();
     });
   }
 
   // Método para cargar los personajes desde el backend
   loadCharacters() {
     this.brinderService.obtenerPersonajes(this.tipo).subscribe((data) => {
+      //this.characters = data;
+
       this.characters = data.filter(
-        (character) => character.activo === 'activo' && character.rol !== ''
+        (character) =>
+          character.activo === 'activo' && !character.rol.includes('inactivo')
       );
-      this.characters = this.characters.map((character) => ({
+
+      /*this.characters = this.characters.map((character) => ({
         ...character,
         estado: character.rol?.split(';')[3]?.trim(),
       }));
@@ -85,7 +93,21 @@ export class KillerComponent {
         .length.toString();
 
       this.filtrarPersonajes(); // Filtrar personajes al cargar
+      */
     });
+  }
+
+  obtenerPersonajesFaltantes() {
+    const idsEquipos = [
+      ...this.equipoRojo.map((personaje) => personaje.id),
+      ...this.equipoAzul.map((personaje) => personaje.id),
+    ];
+    this.personajesPendientes = this.characters.filter(
+      (personaje) => !idsEquipos.includes(personaje.id)
+    );
+    this.personajesPendientesName = this.personajesPendientes
+      .map((personaje) => personaje.name)
+      .join(', ');
   }
 
   filtrarPersonajes() {
@@ -105,5 +127,14 @@ export class KillerComponent {
   seleccionarEstado(estado: string) {
     this.estadoSeleccionado = estado;
     this.filtrarPersonajes();
+  }
+
+
+  getCapitan(equipo: any[]): any {
+    return equipo.find((c) => c.rol?.includes('capitan'));
+  }
+
+  getMiembrosSinCapitan(equipo: any[]): any[] {
+    return equipo.filter((c) => !c.rol?.includes('capitan'));
   }
 }

@@ -62,7 +62,7 @@ export class AltaPersonajeComponent {
         console.error('Error al registrar al personaje:', error);
         this.openDialog(
           'Error',
-          'Hubo un error al registrar al personaje. Contacta con el Centurión.'
+          'Hubo un error al registrar al personaje. Inténtalo de nuevo o contacta con el Centurión.'
         );
       }
     );

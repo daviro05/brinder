@@ -38,15 +38,16 @@ export class EditarPersonajeComponent {
     }
   }
 
-toggleActivo(event: MatCheckboxChange): void {
-  const checked = event.checked;
-  this.personaje.activo = checked ? 'activo' : 'inactivo';
-}
-
+  toggleActivo(event: MatCheckboxChange): void {
+    const checked = event.checked;
+    this.personaje.activo = checked ? 'activo' : 'inactivo';
+  }
 
   guardarCambios(): void {
     if (this.personaje.id) {
-      this.personaje.image_url = this.getGoogleDriveImageUrl(this.personaje.image_url);
+      this.personaje.image_url = this.getGoogleDriveImageUrl(
+        this.personaje.image_url
+      );
       this.brinderService
         .updatePersonaje(this.personaje.id, this.personaje)
         .subscribe(
@@ -63,7 +64,7 @@ toggleActivo(event: MatCheckboxChange): void {
             console.error('Error al editar al personaje:', error);
             this.openDialog(
               'Error',
-              'Hubo un error al editar al personaje. Contacta con el Centurión.'
+              'Hubo un error al editar al personaje. Inténtalo de nuevo o contacta con el Centurión.'
             );
           }
         );

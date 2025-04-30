@@ -78,7 +78,7 @@ export class BrinderComponent implements OnInit {
           console.error('Error al registrar la pareja:', error);
           this.openDialog(
             'Error',
-            'Hubo un error al enviar la pareja. Contacta con el Zorro Negro.'
+            'Hubo un error al enviar la pareja. Inténtalo de nuevo o contacta con el Centurión.'
           );
         }
       );
@@ -153,33 +153,33 @@ export class BrinderComponent implements OnInit {
     return crypto.randomUUID();
   }
 
-getBordeClase(character: any): string {
-  if (this.esColorHexadecimal(character.info_user)) {
-    return ''; // No asignamos clase si es un color personalizado
-  }
-  
-  switch (character.info_user) {
-    case 'romantico':
-      return 'borde-rojo';
-    case 'amistad':
-      return 'borde-azul';
-    case 'surja':
-      return 'borde-verde';
-    default:
-      return 'borde-azul';
-  }
-}
+  getBordeClase(character: any): string {
+    if (this.esColorHexadecimal(character.info_user)) {
+      return ''; // No asignamos clase si es un color personalizado
+    }
 
-getEstiloBorde(character: any): { [key: string]: string } | null {
-  if (this.esColorHexadecimal(character.info_user)) {
-    return { border: `3px solid ${character.info_user}` };
+    switch (character.info_user) {
+      case 'romantico':
+        return 'borde-rojo';
+      case 'amistad':
+        return 'borde-azul';
+      case 'surja':
+        return 'borde-verde';
+      default:
+        return 'borde-azul';
+    }
   }
-  return null;
-}
 
-esColorHexadecimal(valor: string): boolean {
-  return /^#([0-9A-Fa-f]{3}){1,2}$/.test(valor);
-}
+  getEstiloBorde(character: any): { [key: string]: string } | null {
+    if (this.esColorHexadecimal(character.info_user)) {
+      return { border: `3px solid ${character.info_user}` };
+    }
+    return null;
+  }
+
+  esColorHexadecimal(valor: string): boolean {
+    return /^#([0-9A-Fa-f]{3}){1,2}$/.test(valor);
+  }
   mostrarPanelInformativo() {
     const noMostrarMas = localStorage.getItem('brinder_noMostrarInfo');
     if (!noMostrarMas) {
@@ -206,5 +206,4 @@ esColorHexadecimal(valor: string): boolean {
       },
     });
   }
-
 }

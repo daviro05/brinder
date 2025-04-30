@@ -36,7 +36,7 @@
 
     <hr class="separator" />
 
-    <div class="button-container" *ngIf="personaje && personaje.rol === 'medallas'">
+    <div class="button-container" *ngIf="personaje && personaje.rol.includes('medallas')">
         <button mat-raised-button [class.active]="seccionActiva === 'mis-medallas'"
             (click)="cambiarSeccion('mis-medallas')" class="config">
             <mat-icon class="material-symbols-outlined">social_leaderboard</mat-icon>
@@ -68,7 +68,7 @@
         </ng-template>
     </div>
 
-    <div class="prefs" *ngIf="personaje && personaje.rol === 'medallas' && seccionActiva === 'dar-medallas'">
+    <div class="prefs" *ngIf="personaje && personaje.rol.includes('medallas') && seccionActiva === 'dar-medallas'">
         <form (ngSubmit)="asignarMedalla()">
             <h2>Dar medallas</h2>
 

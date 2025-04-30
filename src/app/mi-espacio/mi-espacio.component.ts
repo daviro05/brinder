@@ -164,7 +164,7 @@ export class MiEspacioComponent extends BuzonBaseComponent implements OnInit {
           console.error('Error al editar las preferencias:', error);
           this.openDialog(
             'Error',
-            'Hubo un error al editar las preferencias. Contacta con el Centurión.'
+            'Hubo un error al editar las preferencias. Inténtalo de nuevo o contacta con el Centurión.'
           );
         }
       );
