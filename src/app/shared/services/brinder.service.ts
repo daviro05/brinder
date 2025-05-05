@@ -221,4 +221,8 @@ export class BrinderService {
       `${this.BASE_URL}/killer/objetos/verificar/${personaje_id}`
     );
   }
+
+  getMisObjetos(id_personaje: string) {
+    return this.http.get<any[]>(`${this.BASE_URL}/killer/objetos/${id_personaje}`);
+  }
 }

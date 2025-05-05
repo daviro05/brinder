@@ -33,6 +33,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
   equipoElegido: number = 0;
   escudos: number = 0;
   objetoAsignadoHoy: boolean = false;
+  objetos: any[] = [];
 
   constructor(
     protected override buzonService: BuzonService,
@@ -183,6 +184,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
         .then(() => {
           this.objetoAsignadoHoy = true; // Actualizar el estado
           this.mostrandoCuentaAtras = false; // Ocultar el botón
+          this.misObjetos(); // Actualizar la lista de objetos
         });
     });
   }
@@ -195,6 +197,14 @@ export class MiKillerComponent extends BuzonBaseComponent {
       error: (err) => {
         console.error('Error al verificar objeto asignado:', err);
       },
+    });
+    this.misObjetos();
+  }
+
+  misObjetos() {
+    this.brinderService.getMisObjetos(this.id!).subscribe((data) => {
+      this.objetos = data;
+      console.log('Objetos:', this.objetos);
     });
   }
 }

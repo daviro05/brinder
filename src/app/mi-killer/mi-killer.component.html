@@ -118,6 +118,15 @@
         <div *ngIf="objetoAsignadoHoy">
             <p class="copy">Hoy no hay más objetos disponibles.<br>Vuelve mañana</p>
         </div>
+
+        <div class="mis-objetos">
+            <div class="grid-objetos">
+                <div class="objeto" *ngFor="let objeto of objetos">
+                    <img [src]="'assets/objetos/' + objeto.imagen_url" alt="{{objeto.tipo}}" />
+                    <p class="copy">{{objeto.nombre}}</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="button-container-secondary">
