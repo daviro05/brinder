@@ -199,4 +199,26 @@ export class BrinderService {
       `${this.BASE_URL}/killer/${killerId}/equipo/${equipo}`
     );
   }
+
+  tiposObjeto() {
+    return this.http.get<any[]>(`${this.BASE_URL}/killer/objetos/tipos`);
+  }
+
+  asignarObjeto(objeto: {
+    personaje_id: string;
+    objeto_id: string;
+    killer_id: string;
+    equipo: string;
+  }) {
+    return this.http.post<string>(
+      `${this.BASE_URL}/killer/objetos/asignar-objeto`,
+      objeto
+    );
+  }
+
+  verificarObjetoAsignadoHoy(personaje_id: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${this.BASE_URL}/killer/objetos/verificar/${personaje_id}`
+    );
+  }
 }

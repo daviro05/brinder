@@ -29,9 +29,10 @@ export class MiKillerComponent extends BuzonBaseComponent {
   asignado: boolean = false;
   equipo!: EquipoModel;
   mostrandoCuentaAtras: boolean = false;
-  cuentaAtras: number = 5;
+  cuentaAtras: number = 3;
   equipoElegido: number = 0;
   escudos: number = 0;
+  objetoAsignadoHoy: boolean = false;
 
   constructor(
     protected override buzonService: BuzonService,
@@ -85,6 +86,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
       },
     });
 
+    this.verificarAsignacion();
     //console.log('ID del personaje:', this.id);
   }
 
@@ -128,7 +130,76 @@ export class MiKillerComponent extends BuzonBaseComponent {
     });
   }
 
-  /*unirseEquipo() {
+  obtenerObjeto() {
+    this.brinderService.verificarObjetoAsignadoHoy(this.id!).subscribe({
+      next: (asignadoHoy) => {
+        this.objetoAsignadoHoy = asignadoHoy; // Actualizar el estado del botón
+        if (asignadoHoy) {
+          this.openDialog(
+            'Información',
+            'Ya has obtenido un objeto hoy. Vuelve mañana.'
+          );
+        } else {
+          this.mostrandoCuentaAtras = true;
+          this.cuentaAtras = 3;
+
+          const intervalo = setInterval(() => {
+            this.cuentaAtras--;
+            if (this.cuentaAtras === 0) {
+              clearInterval(intervalo);
+              this.asignarObjeto();
+              this.mostrandoCuentaAtras = false;
+            }
+          }, 1000);
+        }
+      },
+      error: (err) => {
+        console.error('Error al verificar objeto asignado:', err);
+      },
+    });
+  }
+
+  asignarObjeto() {
+    let objetoId = '';
+    let tipos = [];
+
+    this.brinderService.tiposObjeto().subscribe((data) => {
+      tipos = data.map((tipo) => tipo.id);
+      // Seleccionar un objeto aleatorio con las mismas probabilidades
+      const indiceAleatorio = Math.floor(Math.random() * tipos.length);
+      objetoId = tipos[indiceAleatorio];
+
+      const objeto = {
+        personaje_id: this.id!,
+        objeto_id: objetoId,
+        killer_id: '1',
+        equipo: this.equipo.equipo,
+      };
+      console.log('Objeto:', objeto);
+
+      this.brinderService
+        .asignarObjeto(objeto)
+        .toPromise()
+        .then(() => {
+          this.objetoAsignadoHoy = true; // Actualizar el estado
+          this.mostrandoCuentaAtras = false; // Ocultar el botón
+        });
+    });
+  }
+
+  verificarAsignacion() {
+    this.brinderService.verificarObjetoAsignadoHoy(this.id!).subscribe({
+      next: (asignadoHoy) => {
+        this.objetoAsignadoHoy = asignadoHoy;
+      },
+      error: (err) => {
+        console.error('Error al verificar objeto asignado:', err);
+      },
+    });
+  }
+}
+
+/*unirseEquipo() {
     this.mostrandoCuentaAtras = true;
     this.cuentaAtras = 5;
 
@@ -233,4 +304,3 @@ export class MiKillerComponent extends BuzonBaseComponent {
     });
   }
   */
-}

@@ -51,18 +51,19 @@
         </button>
     </div>
 
-    <div class="stats" *ngIf="personaje && seccionActiva === 'estado'">
+    <div class="stats estado" *ngIf="personaje && seccionActiva === 'estado'">
         <h2>Estado</h2>
 
         <div class="estado" *ngIf="equipo">
             <p class="equipo">Estado: {{(equipo.activo ? 'vivo🌚' : 'crucificado☠️') | uppercase}}</p>
             <p class="equipo">Escudos: {{equipo.escudo}}🛡️</p>
             <p class="equipo">Objetivo: No visible*🗡️</p>
-            <p class="copy">*Tu killer aparecerá cuándo tu objetivo no tenga escudos y estemos en la 'Fase de Killer'</p>
+            <p class="copy">*Tu killer aparecerá cuándo tu objetivo no tenga escudos y estemos en la 'Fase de Killer'
+            </p>
         </div>
     </div>
 
-    <div class="stats" *ngIf="personaje && seccionActiva === 'mi-equipo'">
+    <div class="stats mi-equipo" *ngIf="personaje && seccionActiva === 'mi-equipo'">
         <h2>Mi equipo</h2>
 
         <!--<div *ngIf="!asignado && !personaje.rol.includes('inactivo')">
@@ -98,12 +99,24 @@
 
     </div>
 
-    <div class="inventario" *ngIf="personaje && seccionActiva === 'inventario'">
+    <div class="stats inventario" *ngIf="personaje && seccionActiva === 'inventario'">
         <h2>Inventario</h2>
 
-        <div class="estado">
-            <p>El juego aún no ha comenzado</p>
-            <p class="copy">Únete a un equipo en la pestaña de 'Mi equipo'</p>
+        <div class="estado" *ngIf="equipo && !objetoAsignadoHoy">
+            <p class="copy">Obtén objetos para atacar y defenderte. De momento sólo se puede obtener 1 por día.</p>
+            <button mat-raised-button class="obtener-objeto" (click)="obtenerObjeto()"
+                [disabled]="objetoAsignadoHoy || mostrandoCuentaAtras">
+                Obtener objeto
+            </button>
+
+            <div *ngIf="mostrandoCuentaAtras" class="spinner-container">
+                <mat-spinner diameter="50"></mat-spinner>
+                <p>Objeto en {{ cuentaAtras }}</p>
+            </div>
+
+        </div>
+        <div *ngIf="objetoAsignadoHoy">
+            <p class="copy">Hoy no hay más objetos disponibles.<br>Vuelve mañana</p>
         </div>
     </div>
 
