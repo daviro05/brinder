@@ -18,11 +18,21 @@
       </ng-container>
       <ng-template #textContent>
         <p>{{ data.message }}</p>
+        <div *ngIf="personajes.length > 0">
+          <mat-form-field appearance="fill">
+            <mat-label>Selecciona un personaje</mat-label>
+            <mat-select [(value)]="personajeSeleccionado">
+              <mat-option *ngFor="let personaje of personajes" [value]="personaje">
+                {{ personaje.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </ng-template>
     </ng-template>
   </div>
   <div mat-dialog-actions>
     <button mat-button mat-dialog-close="false" *ngIf="data.showCancel">Cancelar</button>
-    <button mat-button mat-dialog-close="true">Aceptar</button>
+    <button mat-button [mat-dialog-close]="personajeSeleccionado || true">Aceptar</button>
   </div>
 </div>

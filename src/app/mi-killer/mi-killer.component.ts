@@ -221,7 +221,8 @@ export class MiKillerComponent extends BuzonBaseComponent {
     });
 
     dialogRef.afterClosed().subscribe((confirmado) => {
-      if (confirmado === 'true') {
+      console.log('Diálogo cerrado:', confirmado);
+      if (confirmado) {
         if (objeto.tipo === 'escudo') {
           if (this.equipo.escudo < 3) {
             // Validación para máximo 3 escudos
@@ -270,28 +271,70 @@ export class MiKillerComponent extends BuzonBaseComponent {
   }
 
   seleccionarObjetivo(objeto: any) {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Seleccionar Objetivo',
-        message: 'Selecciona un personaje para usar la bomba.',
-        showCancel: true,
-      },
-    });
+    const equipoContrario = this.equipo.equipo === 'rojo' ? 'azul' : 'rojo';
 
-    dialogRef.afterClosed().subscribe((personajeSeleccionado) => {
-      if (personajeSeleccionado) {
-        this.brinderService.quitarEscudo(personajeSeleccionado.id).subscribe({
-          next: () => {
-            this.openDialog(
-              'Éxito',
-              `Has usado la bomba contra ${personajeSeleccionado.nick}.`
-            );
-          },
-          error: (err) => {
-            console.error('Error al usar la bomba:', err);
+    this.brinderService
+      .getPersonajesEquipo('1', equipoContrario)
+      .subscribe((data) => {
+        const personajesContrarios = data.personajes.sort((a: any, b: any) => {
+          const nombreA =
+            a.name
+              ?.toLowerCase()
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '') || '';
+          const nombreB =
+            b.name
+              ?.toLowerCase()
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '') || '';
+          return nombreA > nombreB ? 1 : nombreA < nombreB ? -1 : 0;
+        });
+
+        const dialogRef = this.dialog.open(DialogComponent, {
+          data: {
+            title: 'Seleccionar Objetivo',
+            message: 'Selecciona un personaje para usar la bomba.',
+            showCancel: true,
+            personajes: personajesContrarios,
           },
         });
-      }
-    });
+
+        dialogRef.afterClosed().subscribe((personajeSeleccionado) => {
+          console.log('Diálogo cerrado:', personajeSeleccionado);
+          if (personajeSeleccionado) {
+            this.brinderService
+              .getEquipoAsignado('1', personajeSeleccionado.id)
+              .subscribe({
+                next: (res) => {
+                  let equipoPersonajeSel = res;
+                  equipoPersonajeSel.escudo--;
+                  console.log('Equipo del personaje seleccionado:', equipoPersonajeSel);
+                  this.brinderService
+                    .actualizarPersonajeKiller(
+                      '1',
+                      personajeSeleccionado.id,
+                      equipoPersonajeSel
+                    )
+                    .subscribe({
+                      next: () => {
+                        this.openDialog(
+                          'Éxito',
+                          `Has usado la bomba contra ${personajeSeleccionado.name}`
+                        );
+                        //this.eliminarObjeto(objeto.id); // Eliminar el objeto después de usarlo
+                        this.obtenerDatosEquipo(); // Actualizar el equipo
+                      },
+                      error: (err) => {
+                        console.error('Error al usar la bomba:', err);
+                      },
+                    });
+                },
+                error: (err) => {
+                  console.error('Error al comprobar equipo:', err);
+                },
+              });
+          }
+        });
+      });
   }
 }

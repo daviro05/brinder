@@ -228,12 +228,6 @@ export class BrinderService {
     );
   }
 
-  quitarEscudo(personajeId: string) {
-    return this.http.post(`${this.BASE_URL}/killer/objetos/quitar-escudo`, {
-      personajeId,
-    });
-  }
-
   actualizarPersonajeKiller(
     killer_id: string,
     personaje_id: string,

@@ -63,7 +63,7 @@ export class KillerComponent {
         return nombreA > nombreB ? 1 : nombreA < nombreB ? -1 : 0;
       });
       //console.log('Equipo Rojo:', this.equipoRojo);
-      this.obtenerPersonajesFaltantes();
+      //this.obtenerPersonajesFaltantes();
     });
 
     this.brinderService.getPersonajesEquipo('1', 'azul').subscribe((data) => {
@@ -81,7 +81,7 @@ export class KillerComponent {
         return nombreA > nombreB ? 1 : nombreA < nombreB ? -1 : 0;
       });
       //console.log('Equipo Azul:', this.equipoAzul);
-      this.obtenerPersonajesFaltantes();
+      //this.obtenerPersonajesFaltantes();
     });
   }
 
