@@ -204,7 +204,6 @@ export class MiKillerComponent extends BuzonBaseComponent {
   misObjetos() {
     this.brinderService.getMisObjetos(this.id!).subscribe((data) => {
       this.objetos = data;
-      console.log('Objetos:', this.objetos);
     });
   }
 }
