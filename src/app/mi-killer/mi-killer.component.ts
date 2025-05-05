@@ -76,16 +76,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
       this.personajes = data;
     });
 
-    this.brinderService.getEquipoAsignado('1', this.id!).subscribe({
-      next: (res) => {
-        this.equipo = res;
-        console.log('Equipo:', this.equipo);
-        this.getPersonajesEquipo(this.equipo.equipo);
-      },
-      error: (err) => {
-        console.error('Error al comprobar equipo:', err);
-      },
-    });
+    this.obtenerDatosEquipo();
 
     this.verificarAsignacion();
     //console.log('ID del personaje:', this.id);
@@ -123,6 +114,19 @@ export class MiKillerComponent extends BuzonBaseComponent {
   toggleActivo(event: MatCheckboxChange): void {
     const checked = event.checked;
     this.personaje.activo = checked ? 'activo' : 'inactivo';
+  }
+
+  private obtenerDatosEquipo() {
+    this.brinderService.getEquipoAsignado('1', this.id!).subscribe({
+      next: (res) => {
+        this.equipo = res;
+        console.log('Equipo:', this.equipo);
+        this.getPersonajesEquipo(this.equipo.equipo);
+      },
+      error: (err) => {
+        console.error('Error al comprobar equipo:', err);
+      },
+    });
   }
 
   getPersonajesEquipo(equipo: string) {
@@ -206,110 +210,88 @@ export class MiKillerComponent extends BuzonBaseComponent {
       this.objetos = data;
     });
   }
-}
 
-/*unirseEquipo() {
-    this.mostrandoCuentaAtras = true;
-    this.cuentaAtras = 5;
-
-    const intervalo = setInterval(() => {
-      this.cuentaAtras--;
-      if (this.cuentaAtras === 0) {
-        clearInterval(intervalo);
-        this.brinderService.asignarEquipo(this.personaje.id, '1').subscribe({
-          next: (res) => {
-            this.asignado = true;
-            this.equipo = res.equipo || '';
-            this.mostrandoCuentaAtras = false;
-          },
-          error: (err) => {
-            console.error('Error al asignar equipo:', err);
-            this.mostrandoCuentaAtras = false;
-          },
-        });
-      }
-    }, 1000);
-  }
-
-  unirPersonajesMasivamente(): void {
-    const ids = [
-      '14',
-      '15',
-      '16',
-      '17',
-      '18',
-      '19',
-      '20',
-      '21',
-      '22',
-      '23',
-      '24',
-      '25',
-      '26',
-      '28',
-      '29',
-      '30',
-      '31',
-      '33',
-      '41',
-      '44',
-      '45',
-      '46',
-      '47',
-      '48',
-      '49',
-      '50',
-      '51',
-      '52',
-      '53',
-      '54',
-      '55',
-      '56',
-      '57',
-      '58',
-      '59',
-      '60',
-      '62',
-      '65',
-      '66',
-      '94',
-      '102',
-      '103',
-      '104',
-      '105',
-    ];
-    const equipoId = '1'; // ID del killer
-
-    ids.forEach((id) => {
-      this.brinderService.asignarEquipo(id, equipoId).subscribe({
-        next: (res) => {
-          const total = ids.length;
-          const index = ids.indexOf(id) + 1;
-          console.log(
-            `Asignando personaje ${index}/${total}: ID ${id} al equipo ${equipoId}`
-          );
-        },
-        error: (err) => {
-          console.error(`Error al asignar personaje con ID ${id}:`, err);
-        },
-      });
-    });
-  }
-
-    confirmarUnirse() {
+  usarObjeto(objeto: any) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
-        title: 'Confirmar',
-        message: '¿Estás seguro de que deseas unirte a un equipo?',
+        title: 'Usar Objeto',
+        message: `¿Deseas usar el objeto "${objeto.nombre}"?`,
         showCancel: true,
       },
     });
 
     dialogRef.afterClosed().subscribe((confirmado) => {
       if (confirmado === 'true') {
-        this.unirseEquipo();
-        //this.unirPersonajesMasivamente();
+        if (objeto.tipo === 'escudo') {
+          if (this.equipo.escudo < 3) {
+            // Validación para máximo 3 escudos
+            const personaje_killer = {
+              equipo: this.equipo.equipo,
+              personaje_id: this.id!,
+              activo: this.equipo.activo,
+              killer_id: '1',
+              mision_individual: this.equipo.mision,
+              escudo: this.equipo.escudo + 1,
+              vida: this.equipo.vida,
+            };
+            this.brinderService
+              .actualizarPersonajeKiller(
+                personaje_killer.killer_id,
+                personaje_killer.personaje_id,
+                personaje_killer
+              )
+              .subscribe((res) => {
+                console.log('Escudo actualizado:', res);
+                this.eliminarObjeto(objeto.id); // Eliminar el objeto después de usarlo
+                this.obtenerDatosEquipo(); // Actualizar el equipo
+              });
+            this.openDialog('Éxito', 'Has aumentado tu escudo.');
+          } else {
+            this.openDialog('Advertencia', 'No puedes tener más de 3 escudos.');
+          }
+        } else if (objeto.tipo === 'bomba') {
+          this.seleccionarObjetivo(objeto);
+        }
       }
     });
   }
-  */
+
+  eliminarObjeto(objetoId: string) {
+    this.brinderService.eliminarObjeto(objetoId).subscribe({
+      next: () => {
+        this.objetos = this.objetos.filter((obj) => obj.id !== objetoId); // Actualizar la lista local de objetos
+        console.log('Objeto eliminado:', objetoId);
+        this.misObjetos();
+      },
+      error: (err) => {
+        console.error('Error al eliminar el objeto:', err);
+      },
+    });
+  }
+
+  seleccionarObjetivo(objeto: any) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Seleccionar Objetivo',
+        message: 'Selecciona un personaje para usar la bomba.',
+        showCancel: true,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((personajeSeleccionado) => {
+      if (personajeSeleccionado) {
+        this.brinderService.quitarEscudo(personajeSeleccionado.id).subscribe({
+          next: () => {
+            this.openDialog(
+              'Éxito',
+              `Has usado la bomba contra ${personajeSeleccionado.nick}.`
+            );
+          },
+          error: (err) => {
+            console.error('Error al usar la bomba:', err);
+          },
+        });
+      }
+    });
+  }
+}

@@ -104,8 +104,8 @@
 
         <div class="estado" *ngIf="equipo && !objetoAsignadoHoy">
             <p class="copy">Obtén objetos para atacar y defenderte. De momento sólo se puede obtener 1 por día.</p>
-            <button mat-raised-button class="obtener-objeto" (click)="obtenerObjeto()"
-                [disabled]="objetoAsignadoHoy || mostrandoCuentaAtras">
+            <button mat-raised-button class="obtener-objeto" (click)="obtenerObjeto()" [disabled]="objetoAsignadoHoy"
+                *ngIf="!objetoAsignadoHoy && !mostrandoCuentaAtras">
                 Obtener objeto
             </button>
 
@@ -123,7 +123,7 @@
 
         <div class="mis-objetos">
             <div class="grid-objetos">
-                <div class="objeto" *ngFor="let objeto of objetos">
+                <div class="objeto" *ngFor="let objeto of objetos" (click)="usarObjeto(objeto)">
                     <img [src]="'assets/objetos/' + objeto.imagen_url" alt="{{objeto.tipo}}" />
                     <p class="copy">{{objeto.nombre}}</p>
                 </div>

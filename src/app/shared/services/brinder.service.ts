@@ -223,6 +223,31 @@ export class BrinderService {
   }
 
   getMisObjetos(id_personaje: string) {
-    return this.http.get<any[]>(`${this.BASE_URL}/killer/objetos/${id_personaje}`);
+    return this.http.get<any[]>(
+      `${this.BASE_URL}/killer/objetos/${id_personaje}`
+    );
+  }
+
+  quitarEscudo(personajeId: string) {
+    return this.http.post(`${this.BASE_URL}/killer/objetos/quitar-escudo`, {
+      personajeId,
+    });
+  }
+
+  actualizarPersonajeKiller(
+    killer_id: string,
+    personaje_id: string,
+    personaje_killer: any
+  ) {
+    return this.http.put(
+      `${this.BASE_URL}/killer/${killer_id}/${personaje_id}`,
+      personaje_killer
+    );
+  }
+
+  eliminarObjeto(objetoId: string) {
+    return this.http.delete(
+      `${this.BASE_URL}/killer/objetos/eliminar/${objetoId}`
+    );
   }
 }
