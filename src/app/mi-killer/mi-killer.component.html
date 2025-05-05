@@ -54,13 +54,15 @@
     <div class="stats" *ngIf="personaje && seccionActiva === 'estado'">
         <h2>Estado</h2>
 
-        <div class="estado">
-            <p>El juego aún no ha comenzado</p>
-            <p class="copy">Únete a un equipo en la pestaña de 'Mi equipo'</p>
+        <div class="estado" *ngIf="equipo">
+            <p class="equipo">Estado: {{(equipo.activo ? 'vivo🌚' : 'crucificado☠️') | uppercase}}</p>
+            <p class="equipo">Escudos: {{equipo.escudo}}🛡️</p>
+            <p class="equipo">Objetivo: No visible*🗡️</p>
+            <p class="copy">*Tu killer aparecerá cuándo tu objetivo no tenga escudos y estemos en la 'Fase de Killer'</p>
         </div>
     </div>
 
-    <div class="prefs" *ngIf="personaje && seccionActiva === 'mi-equipo'">
+    <div class="stats" *ngIf="personaje && seccionActiva === 'mi-equipo'">
         <h2>Mi equipo</h2>
 
         <!--<div *ngIf="!asignado && !personaje.rol.includes('inactivo')">
@@ -76,16 +78,17 @@
             <p class="copy">Te unirás a un equipo aleatoriamente</p>
         </div>-->
 
-        <div *ngIf="asignado">
-            <p class="equipo">
-                Tu equipo es el
-                <span [ngStyle]="{'color': equipo === 'rojo' ? 'red' : equipo === 'azul' ? 'blue' : 'black'}">
-                    {{equipo | uppercase}}
-                </span>
-            </p>
-            <div>
-            <p>Vivos: {{equipoElegido}} de 19</p>
-            <p>Muertos: {{19 - equipoElegido}} de 19</p>
+        <div *ngIf="equipo?.asignado">
+            <div class="estado">
+                <p class="equipo">
+                    Tu equipo es el
+                    <span
+                        [ngStyle]="{'color': equipo.equipo === 'rojo' ? 'red' : equipo.equipo === 'azul' ? 'blue' : 'black'}">
+                        {{equipo.equipo | uppercase}}
+                    </span>
+                </p>
+                <p class="equipo">Vivos: {{equipoElegido}} de 19</p>
+                <p class="equipo">Muertos: {{19 - equipoElegido}} de 19</p>
             </div>
         </div>
 

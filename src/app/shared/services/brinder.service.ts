@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
 import { environment } from 'src/environments/environment';
+import { EquipoModel } from '../equipo.model';
 
 @Injectable({
   providedIn: 'root',
@@ -188,7 +189,7 @@ export class BrinderService {
   }
 
   getEquipoAsignado(killerId: string, personaje_id?: string) {
-    return this.http.get<{ asignado: boolean; equipo?: string }>(
+    return this.http.get<EquipoModel>(
       `${this.BASE_URL}/killer/${killerId}/${personaje_id}`
     );
   }

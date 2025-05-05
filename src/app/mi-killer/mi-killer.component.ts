@@ -11,6 +11,7 @@ import { BrinderService } from '../shared/services/brinder.service';
 import { BuzonService } from '../shared/services/buzon.service';
 import { Utils } from '../shared/utils';
 import { BuzonBaseComponent } from '../buzon-personal/buzon-base/buzon-base.component';
+import { EquipoModel } from '../shared/equipo.model';
 
 @Component({
   selector: 'app-mi-killer',
@@ -26,10 +27,11 @@ export class MiKillerComponent extends BuzonBaseComponent {
   tipoConexion: string = 'romantico'; // Valor inicial
   personajes: any[] = [];
   asignado: boolean = false;
-  equipo: string = '';
+  equipo!: EquipoModel;
   mostrandoCuentaAtras: boolean = false;
   cuentaAtras: number = 5;
   equipoElegido: number = 0;
+  escudos: number = 0;
 
   constructor(
     protected override buzonService: BuzonService,
@@ -74,9 +76,9 @@ export class MiKillerComponent extends BuzonBaseComponent {
 
     this.brinderService.getEquipoAsignado('1', this.id!).subscribe({
       next: (res) => {
-        this.asignado = res.asignado;
-        this.equipo = res.equipo || '';
-        this.getPersonajesEquipo(this.equipo);
+        this.equipo = res;
+        console.log('Equipo:', this.equipo);
+        this.getPersonajesEquipo(this.equipo.equipo);
       },
       error: (err) => {
         console.error('Error al comprobar equipo:', err);
@@ -93,15 +95,6 @@ export class MiKillerComponent extends BuzonBaseComponent {
         message: message,
       },
     });
-  }
-
-  abrirDialogoMedalla(medalla: any): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      title: 'Información de la medalla',
-      medalla: medalla,
-    };
-    this.dialog.open(DialogComponent, dialogConfig);
   }
 
   cambiarSeccion(seccion: string) {
@@ -129,24 +122,13 @@ export class MiKillerComponent extends BuzonBaseComponent {
     this.personaje.activo = checked ? 'activo' : 'inactivo';
   }
 
-  confirmarUnirse() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Confirmar',
-        message: '¿Estás seguro de que deseas unirte a un equipo?',
-        showCancel: true,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((confirmado) => {
-      if (confirmado === 'true') {
-        this.unirseEquipo();
-        //this.unirPersonajesMasivamente();
-      }
+  getPersonajesEquipo(equipo: string) {
+    this.brinderService.getPersonajesEquipo('1', equipo).subscribe((data) => {
+      this.equipoElegido = data.personajes.length;
     });
   }
 
-  unirseEquipo() {
+  /*unirseEquipo() {
     this.mostrandoCuentaAtras = true;
     this.cuentaAtras = 5;
 
@@ -234,10 +216,21 @@ export class MiKillerComponent extends BuzonBaseComponent {
     });
   }
 
-  getPersonajesEquipo(equipo: string) {
-    console.log('Equipo:', equipo);
-    this.brinderService.getPersonajesEquipo('1', equipo).subscribe((data) => {
-      this.equipoElegido = data.personajes.length;
+    confirmarUnirse() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Confirmar',
+        message: '¿Estás seguro de que deseas unirte a un equipo?',
+        showCancel: true,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmado) => {
+      if (confirmado === 'true') {
+        this.unirseEquipo();
+        //this.unirPersonajesMasivamente();
+      }
     });
   }
+  */
 }
