@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from '../shared/utils';
 import { BrinderService } from '../shared/services/brinder.service';
 
@@ -21,9 +21,24 @@ export class KillerComponent {
   equipoAzul: any[] = [];
   personajesPendientes: any[] = []; // Arreglo para personajes pendientes
   personajesPendientesName: string = '';
+  seccionActiva: string = 'estado';
 
-  constructor(private brinderService: BrinderService, private router: Router) {
+  constructor(
+    private brinderService: BrinderService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.utils = new Utils(this.router);
+
+    this.route.queryParams.subscribe((params) => {
+      const seccion = params['seccion'];
+      if (
+        seccion === 'estado' ||
+        seccion === 'log-batalla'
+      ) {
+        this.seccionActiva = seccion;
+      }
+    });
   }
 
   // Este método se ejecuta cuando el componente se inicializa
@@ -129,12 +144,19 @@ export class KillerComponent {
     this.filtrarPersonajes();
   }
 
-
   getCapitan(equipo: any[]): any {
     return equipo.find((c) => c.rol?.includes('capitan'));
   }
 
   getMiembrosSinCapitan(equipo: any[]): any[] {
     return equipo.filter((c) => !c.rol?.includes('capitan'));
+  }
+
+  cambiarSeccion(seccion: string) {
+    this.seccionActiva = seccion;
+    this.router.navigate([], {
+      queryParams: { seccion },
+      queryParamsHandling: 'merge',
+    });
   }
 }

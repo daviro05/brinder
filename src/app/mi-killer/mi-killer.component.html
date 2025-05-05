@@ -63,7 +63,7 @@
     <div class="prefs" *ngIf="personaje && seccionActiva === 'mi-equipo'">
         <h2>Mi equipo</h2>
 
-        <div *ngIf="!asignado && !personaje.rol.includes('inactivo')">
+        <!--<div *ngIf="!asignado && !personaje.rol.includes('inactivo')">
             <button mat-raised-button class="unirse" (click)="confirmarUnirse()" *ngIf="!mostrandoCuentaAtras">
                 UNIRSE
             </button>
@@ -74,7 +74,7 @@
             </div>
 
             <p class="copy">Te unirás a un equipo aleatoriamente</p>
-        </div>
+        </div>-->
 
         <div *ngIf="asignado">
             <p class="equipo">
@@ -83,6 +83,10 @@
                     {{equipo | uppercase}}
                 </span>
             </p>
+            <div>
+            <p>Vivos: {{equipoElegido}} de 19</p>
+            <p>Muertos: {{19 - equipoElegido}} de 19</p>
+            </div>
         </div>
 
         <div *ngIf="personaje.rol.includes('inactivo')">

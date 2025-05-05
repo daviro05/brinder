@@ -29,6 +29,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
   equipo: string = '';
   mostrandoCuentaAtras: boolean = false;
   cuentaAtras: number = 5;
+  equipoElegido: number = 0;
 
   constructor(
     protected override buzonService: BuzonService,
@@ -75,13 +76,14 @@ export class MiKillerComponent extends BuzonBaseComponent {
       next: (res) => {
         this.asignado = res.asignado;
         this.equipo = res.equipo || '';
+        this.getPersonajesEquipo(this.equipo);
       },
       error: (err) => {
         console.error('Error al comprobar equipo:', err);
       },
     });
 
-    console.log('ID del personaje:', this.id);
+    //console.log('ID del personaje:', this.id);
   }
 
   openDialog(title: string, message: string): void {
@@ -169,24 +171,73 @@ export class MiKillerComponent extends BuzonBaseComponent {
 
   unirPersonajesMasivamente(): void {
     const ids = [
-          '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', 
-          '26', '28', '29', '30', '31', '33', '41', '44', '45', '46', '47', '48', 
-          '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', 
-          '62', '65', '66', '94', '102', '103', '104', '105'
-        ];
+      '14',
+      '15',
+      '16',
+      '17',
+      '18',
+      '19',
+      '20',
+      '21',
+      '22',
+      '23',
+      '24',
+      '25',
+      '26',
+      '28',
+      '29',
+      '30',
+      '31',
+      '33',
+      '41',
+      '44',
+      '45',
+      '46',
+      '47',
+      '48',
+      '49',
+      '50',
+      '51',
+      '52',
+      '53',
+      '54',
+      '55',
+      '56',
+      '57',
+      '58',
+      '59',
+      '60',
+      '62',
+      '65',
+      '66',
+      '94',
+      '102',
+      '103',
+      '104',
+      '105',
+    ];
     const equipoId = '1'; // ID del killer
-    
+
     ids.forEach((id) => {
       this.brinderService.asignarEquipo(id, equipoId).subscribe({
         next: (res) => {
-            const total = ids.length;
-            const index = ids.indexOf(id) + 1;
-            console.log(`Asignando personaje ${index}/${total}: ID ${id} al equipo ${equipoId}`);
+          const total = ids.length;
+          const index = ids.indexOf(id) + 1;
+          console.log(
+            `Asignando personaje ${index}/${total}: ID ${id} al equipo ${equipoId}`
+          );
         },
         error: (err) => {
           console.error(`Error al asignar personaje con ID ${id}:`, err);
         },
       });
+    });
+  }
+
+  getPersonajesEquipo(equipo: string) {
+    console.log('Equipo:', equipo);
+    this.brinderService.getPersonajesEquipo('1', equipo).subscribe((data) => {
+      this.equipoElegido = data.personajes.length;
     });
   }
 }

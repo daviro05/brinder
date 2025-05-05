@@ -2,11 +2,10 @@
     <div class="title-container">
         <h2><span>KILLER X EQUIP</span><mat-icon class="icon material-symbols-outlined">skull</mat-icon><span>S</span>
         </h2>
-        <p></p>
-        <div class="button-container" *ngIf="filteredCharacters.length > 0">
-            <!--<button mat-button (click)="seleccionarEstado('todos')" [class.seleccionado]="estadoSeleccionado === 'todos'">
+        <!--<div class="button-container" *ngIf="filteredCharacters.length > 0">
+            <button mat-button (click)="seleccionarEstado('todos')" [class.seleccionado]="estadoSeleccionado === 'todos'">
                 Todos
-            </button>-->
+            </button>
             <button mat-button (click)="seleccionarEstado('vivo')" [class.seleccionado]="estadoSeleccionado === 'vivo'">
                 Vivos: {{ vivos }}
             </button>
@@ -14,37 +13,36 @@
                 [class.seleccionado]="estadoSeleccionado === 'muerto'">
                 Muertos: {{ muertos }}
             </button>
-        </div>
+        </div>-->
     </div>
 
-    <div class="characters-table" *ngIf="filteredCharacters.length > 0">
-        <div class="character-row" *ngFor="let row of filteredCharacters">
-            <div class="character-card" [class.muerto]="row.estado === 'muerto'">
-                <div class="red-cross"></div>
-                <img [src]="row.image_url" class="character-image">
-                <p>{{ row.name }}</p>
-                <span *ngIf="row.estado === 'vivo'">VIVO</span>
-                <span *ngIf="row.estado === 'muerto'">MUERTO</span>
-            </div>
-        </div>
+    <div class="button-container">
+        <button mat-raised-button [class.active]="seccionActiva === 'estado'" (click)="cambiarSeccion('estado')"
+            class="config">
+            Estado
+        </button>
+        <button mat-raised-button [class.active]="seccionActiva === 'log-batalla'"
+            (click)="cambiarSeccion('log-batalla')" class="config">
+            Log Batalla
+        </button>
     </div>
 
-    <div class="proximamente">
-        <img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">
-        <p><b>FASE DE EQUIPOS</b></p>
-        <div *ngIf="personajesPendientes.length > 0">
+    <div class="killer-estado" *ngIf="seccionActiva === 'estado'">
+        <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->
+        <p class="titulo"><b>FASE DE TANTEO</b></p>
+        <div class="mensaje-fase">
+            <span class="copy">Aprovisiónate, estudia tu estrategia, juega en equipo. La batalla está a punto de empezar...</span>
+        </div>
+        <!--<div *ngIf="personajesPendientes.length > 0">
             <span>Los equipos se están conformando.</span>
             <p>Personajes pendientes (<b>{{personajesPendientes.length}}</b>)<br>
                 <span class="copy">{{personajesPendientesName}}</span>
             </p>
-        </div>
-        <div *ngIf="personajesPendientes.length === 0">
-            <p>Elección de capitán o capitana</p>
-        </div>
+        </div>-->
 
         <div class="team-slider">
             <div class="team-container team-rojo">
-                <h3>Equipo Rojo ({{equipoRojo.length}})</h3>
+                <h3>Los Pandas Rojos ({{equipoRojo.length}})</h3>
                 <div class="team-grid">
                     <!-- Capitán del equipo rojo -->
                     <div class="character-card captain" *ngIf="getCapitan(equipoRojo) as capitanRojo">
@@ -60,7 +58,7 @@
             </div>
 
             <div class="team-container team-azul">
-                <h3>Equipo Azul ({{equipoAzul.length}})</h3>
+                <h3>Frente Popular de Judea ({{equipoAzul.length}})</h3>
                 <div class="team-grid">
                     <!-- Capitán del equipo azul -->
                     <div class="character-card captain" *ngIf="getCapitan(equipoAzul) as capitanAzul">
@@ -77,8 +75,21 @@
         </div>
 
         <button mat-raised-button class="unirte" type="button" (click)="utils.navegar('mi-killer')">
-            Unirte a un equipo
+            Ir a Mi Equipo
         </button>
+    </div>
+
+    <div class="killer-estado" *ngIf="seccionActiva === 'log-batalla'">
+        <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->
+        <p class="titulo"><b>LOG DE BATALLA</b></p>
+        <div class="mensaje-fase">
+            <span class="copy">Aquí podrás ver el estado de la batalla</span>
+        </div>
+
+        <div class="log">
+
+        </div>
+
     </div>
 
     <div>
