@@ -252,4 +252,22 @@ export class BrinderService {
       null
     );
   }
+
+  registrarLogKiller(data: {
+    killer_id: string;
+    personaje_id: string;
+    personaje_name: string;
+    accion: string;
+    objeto_id: string;
+    personaje_objetivo_id?: string | null;
+    personaje_objetivo_name?: string | null;
+    resultado: string;
+    equipo: string;
+  }) {
+    return this.http.post(`${this.BASE_URL}/killer/log`, data);
+  }
+
+  obtenerLogKiller() {
+    return this.http.get<any[]>(`${this.BASE_URL}/killer/log`);
+  }
 }

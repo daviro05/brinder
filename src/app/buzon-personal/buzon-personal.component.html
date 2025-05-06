@@ -1,6 +1,6 @@
 <div class="container">
   <div class="title-container">
-    <h2>BUZÓN DE {{nombrePersonaje}}</h2>
+    <h2>BUZÓN DE {{nombrePersonaje | uppercase}}</h2>
   </div>
   <div *ngIf="activo === 'activo'">
     <mat-expansion-panel [expanded]="false" [hideToggle]="true" class="info-panel">

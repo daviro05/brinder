@@ -31,7 +31,8 @@
         <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->
         <p class="titulo"><b>FASE DE TANTEO</b></p>
         <div class="mensaje-fase">
-            <span class="copy">Aprovisiónate, estudia tu estrategia, juega en equipo. La batalla está a punto de empezar...</span>
+            <span class="copy">Aprovisiónate, estudia tu estrategia, juega en equipo. La batalla está a punto de
+                empezar...</span>
         </div>
         <!--<div *ngIf="personajesPendientes.length > 0">
             <span>Los equipos se están conformando.</span>
@@ -83,7 +84,11 @@
         <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->
         <p class="titulo"><b>LOG DE BATALLA</b></p>
         <div class="mensaje-fase">
-            <span class="copy">Aquí podrás ver el estado de la batalla</span>
+            <button mat-raised-button (click)="obtenerKillerLog()">
+                <mat-icon>refresh</mat-icon>
+                Actualizar
+            </button>
+            <p class="copy">Aquí podrás ver el estado de la batalla</p>
         </div>
 
         <div class="log">

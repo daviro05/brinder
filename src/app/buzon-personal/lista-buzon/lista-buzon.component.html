@@ -1,6 +1,6 @@
 <div class="chat-container">
     <div class="title-container">
-        <h2>BUZÓN DE {{nombrePersonaje}}</h2>
+        <h2>BUZÓN DE {{nombrePersonaje | uppercase}}</h2>
     </div>
 
     <div class="image-container">
@@ -78,7 +78,8 @@
 
     <div *ngIf="bandejaSeleccionada != 'killer'">
         <div class="button-container">
-            <button mat-raised-button type="button" class="enviar" (click)="utils.navegar('buzon/inicio')" [disabled]="activo !== 'activo'">
+            <button mat-raised-button type="button" class="enviar" (click)="utils.navegar('buzon/inicio')"
+                [disabled]="activo !== 'activo'">
                 Escribir mensaje
             </button>
             <button class="modificar" mat-raised-button (click)="abrirDialogoAlias()">

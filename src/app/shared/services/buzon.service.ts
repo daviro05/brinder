@@ -67,7 +67,7 @@ export class BuzonService {
           if (personajeEncontrado) {
             this.id = personajeEncontrado.id;
             this.codigo = personajeEncontrado.codigo;
-            this.nombrePersonaje = personajeEncontrado.name.toUpperCase();
+            this.nombrePersonaje = personajeEncontrado.name;
             this.aliasPersonaje = personajeEncontrado.alias;
             this.imagenPersonaje = personajeEncontrado.image_url;
             this.rolPersonaje = personajeEncontrado.rol;

@@ -207,7 +207,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
   misObjetos() {
     this.brinderService.getMisObjetos(this.id!).subscribe((data) => {
       this.objetos = data;
-      console.log('Objetos:', this.objetos);
+      //console.log('Objetos:', this.objetos);
     });
   }
 
@@ -246,13 +246,26 @@ export class MiKillerComponent extends BuzonBaseComponent {
                     personaje_killer
                   )
                   .subscribe((res) => {
-                    console.log('Escudo actualizado:', res);
                     this.obtenerDatosEquipo();
+                    this.brinderService
+                      .registrarLogKiller({
+                        killer_id: '1',
+                        personaje_id: this.id!,
+                        personaje_name: this.nombrePersonaje,
+                        accion: 'usa objeto ' + objeto.nombre,
+                        objeto_id: objeto.objeto_id,
+                        personaje_objetivo_id: null,
+                        personaje_objetivo_name: null,
+                        resultado: 'Escudo aumentado en + ' + objeto.valor,
+                        equipo: this.equipo.equipo,
+                      })
+                      .subscribe();
                   });
                 this.openDialog(
                   'Éxito',
                   'Has aumentado + ' + objeto.valor + ' tu escudo.'
                 );
+                this.misObjetos();
               } else {
                 this.openDialog(
                   'Advertencia',
@@ -336,6 +349,21 @@ export class MiKillerComponent extends BuzonBaseComponent {
                           `Has usado una bomba contra ${personajeSeleccionado.name} quitándole ${objeto.valor} escudo(s).`
                         );
                         this.obtenerDatosEquipo();
+                        this.brinderService
+                          .registrarLogKiller({
+                            killer_id: '1',
+                            personaje_id: this.id!,
+                            personaje_name: this.nombrePersonaje,
+                            accion: 'usa objeto ' + objeto.nombre,
+                            objeto_id: objeto.objeto_id,
+                            personaje_objetivo_id:
+                              personajeSeleccionado?.id ?? null,
+                            personaje_objetivo_name:
+                              personajeSeleccionado?.name ?? null,
+                            resultado: 'Quita ' + objeto.valor + ' escudo(s) a ' +personajeSeleccionado?.name,
+                            equipo: this.equipo.equipo,
+                          })
+                          .subscribe();
                       },
                       error: (err) => {
                         console.error('Error al usar la bomba:', err);
@@ -351,6 +379,45 @@ export class MiKillerComponent extends BuzonBaseComponent {
       });
     this.misObjetos();
   }
+
+  abrirInfoInventario(): void {
+    this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Información del Inventario',
+        message: `
+  <div style="text-align: left; font-family: Arial, sans-serif;">
+    <p><b>Los objetos que pueden tocarte son los siguientes:</b></p>
+    <p><b>🛡️ Escudos (aumentan)</b></p>
+
+    <div style="margin-bottom: 16px;">
+      <img src="assets/objetos/escudo.png" width="40%" />
+      <div>Plumas de Ganso: +1</div>
+    </div>
+        <br>
+    <div style="margin-bottom: 16px;">
+      <img src="assets/objetos/centurion.png"  width="40%" />
+      <div>Casco del Centurión: +2</div>
+    </div>
+    <br>
+    <p><b>💣 Bombas (quitan escudo a un enemigo)</b></p>
+    <div style="margin-bottom: 16px;">
+      <img src="assets/objetos/bomba.png" alt="Calabaza explosiva" width="40%" />
+      <div>Calabaza explosiva: -1 enemigo</div>
+    </div>
+        <br>
+    <div style="margin-bottom: 16px;">
+      <img src="assets/objetos/sandalias.png" alt="Sandalias explosivas" width="40%" />
+      <div>Sandalias explosivas: -2 enemigo</div>
+    </div>
+    <br>
+    <p><b>✨ Especiales (Muy pronto)</b></p>
+  </div>
+`,
+      },
+    });
+  }
+
+  // Unirse a un equipo
 
   unirseEquipo() {
     this.mostrandoCuentaAtras = true;
@@ -459,41 +526,4 @@ export class MiKillerComponent extends BuzonBaseComponent {
       });
     });
   }*/
-
-  abrirInfoInventario(): void {
-    this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Información del Inventario',
-        message: `
-  <div style="text-align: left; font-family: Arial, sans-serif;">
-    <p><b>Los objetos que pueden tocarte son los siguientes:</b></p>
-    <p><b>🛡️ Escudos (aumentan)</b></p>
-
-    <div style="margin-bottom: 16px;">
-      <img src="assets/objetos/escudo.png" width="40%" />
-      <div>Plumas de Ganso: +1</div>
-    </div>
-        <br>
-    <div style="margin-bottom: 16px;">
-      <img src="assets/objetos/centurion.png"  width="40%" />
-      <div>Casco del Centurión: +2</div>
-    </div>
-    <br>
-    <p><b>💣 Bombas (quitan escudo a un enemigo)</b></p>
-    <div style="margin-bottom: 16px;">
-      <img src="assets/objetos/bomba.png" alt="Calabaza explosiva" width="40%" />
-      <div>Calabaza explosiva: -1 enemigo</div>
-    </div>
-        <br>
-    <div style="margin-bottom: 16px;">
-      <img src="assets/objetos/sandalias.png" alt="Sandalias explosivas" width="40%" />
-      <div>Sandalias explosivas: -2 enemigo</div>
-    </div>
-    <br>
-    <p><b>✨ Especiales (Muy pronto)</b></p>
-  </div>
-`,
-      },
-    });
-  }
 }

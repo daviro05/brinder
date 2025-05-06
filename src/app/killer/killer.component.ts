@@ -13,6 +13,7 @@ export class KillerComponent {
   filteredCharacters: any[] = [];
   utils: Utils;
   killer: any[] = [];
+  killerLog: any[] = [];
   tipo: string = 'brinder';
   vivos: string = '';
   muertos: string = '';
@@ -32,10 +33,7 @@ export class KillerComponent {
 
     this.route.queryParams.subscribe((params) => {
       const seccion = params['seccion'];
-      if (
-        seccion === 'estado' ||
-        seccion === 'log-batalla'
-      ) {
+      if (seccion === 'estado' || seccion === 'log-batalla') {
         this.seccionActiva = seccion;
       }
     });
@@ -45,6 +43,7 @@ export class KillerComponent {
   ngOnInit() {
     this.loadCharacters();
     this.getPersonajesEquipo(); // Llamar al método para obtener personajes del equipo
+    this.obtenerKillerLog();
   }
 
   getPersonajesEquipo() {
@@ -157,6 +156,13 @@ export class KillerComponent {
     this.router.navigate([], {
       queryParams: { seccion },
       queryParamsHandling: 'merge',
+    });
+  }
+
+  obtenerKillerLog() {
+    this.brinderService.obtenerLogKiller().subscribe((log) => {
+      this.killerLog = log;
+      console.log('Log de acciones:', this.killerLog);
     });
   }
 }
