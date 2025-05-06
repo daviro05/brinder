@@ -120,7 +120,6 @@ export class MiKillerComponent extends BuzonBaseComponent {
     this.brinderService.getEquipoAsignado('1', this.id!).subscribe({
       next: (res) => {
         this.equipo = res;
-        console.log('Equipo:', this.equipo);
         this.getPersonajesEquipo(this.equipo.equipo);
       },
       error: (err) => {
@@ -180,7 +179,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
         killer_id: '1',
         equipo: this.equipo.equipo,
       };
-      console.log('Objeto:', objeto);
+      //console.log('Objeto:', objeto);
 
       this.brinderService
         .asignarObjeto(objeto)
@@ -208,6 +207,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
   misObjetos() {
     this.brinderService.getMisObjetos(this.id!).subscribe((data) => {
       this.objetos = data;
+      console.log('Objetos:', this.objetos);
     });
   }
 
@@ -221,53 +221,58 @@ export class MiKillerComponent extends BuzonBaseComponent {
     });
 
     dialogRef.afterClosed().subscribe((confirmado) => {
-      console.log('Diálogo cerrado:', confirmado);
-      if (confirmado) {
-        if (objeto.tipo === 'escudo') {
-          if (this.equipo.escudo < 3) {
-            // Validación para máximo 3 escudos
-            const personaje_killer = {
-              equipo: this.equipo.equipo,
-              personaje_id: this.id!,
-              activo: this.equipo.activo,
-              killer_id: '1',
-              mision_individual: this.equipo.mision,
-              escudo: this.equipo.escudo + 1,
-              vida: this.equipo.vida,
-            };
-            this.brinderService
-              .actualizarPersonajeKiller(
-                personaje_killer.killer_id,
-                personaje_killer.personaje_id,
-                personaje_killer
-              )
-              .subscribe((res) => {
-                console.log('Escudo actualizado:', res);
-                this.eliminarObjeto(objeto.id); // Eliminar el objeto después de usarlo
-                this.obtenerDatosEquipo(); // Actualizar el equipo
-              });
-            this.openDialog('Éxito', 'Has aumentado tu escudo.');
-          } else {
-            this.openDialog('Advertencia', 'No puedes tener más de 3 escudos.');
-          }
-        } else if (objeto.tipo === 'bomba') {
-          this.seleccionarObjetivo(objeto);
-        }
+      if (confirmado === true) {
+        this.brinderService.usarObjeto(objeto.id).subscribe({
+          next: () => {
+            if (objeto.tipo === 'escudo') {
+              if (this.equipo.escudo < 3) {
+                const nuevoEscudo = Math.min(this.equipo.escudo + objeto.valor, 3);
+                const personaje_killer = {
+                  equipo: this.equipo.equipo,
+                  personaje_id: this.id!,
+                  activo: this.equipo.activo,
+                  killer_id: '1',
+                  mision_individual: this.equipo.mision,
+                  escudo: nuevoEscudo,
+                  vida: this.equipo.vida,
+                };
+                this.brinderService
+                  .actualizarPersonajeKiller(
+                    personaje_killer.killer_id,
+                    personaje_killer.personaje_id,
+                    personaje_killer
+                  )
+                  .subscribe((res) => {
+                    console.log('Escudo actualizado:', res);
+                    this.obtenerDatosEquipo();
+                  });
+                this.openDialog('Éxito', 'Has aumentado + ' + objeto.valor + ' tu escudo.');
+              } else {
+                this.openDialog(
+                  'Advertencia',
+                  'No puedes tener más de 3 escudos. El objeto no se ha usado'
+                );
+              }
+            } else if (objeto.tipo === 'bomba') {
+              this.seleccionarObjetivo(objeto);
+            }
+          },
+          error: (err: { status: number }) => {
+            if (err.status === 409) {
+              this.openDialog(
+                'Advertencia',
+                'Este objeto ya ha sido usado...<br>' +
+                  this.nombrePersonaje +
+                  ' has penalizado a tu equipo. Las trampas no le gustan al Centurión.'
+              );
+            } else {
+              console.error('Error al usar el objeto:', err);
+            }
+          },
+        });
       }
     });
-  }
-
-  eliminarObjeto(objetoId: string) {
-    this.brinderService.eliminarObjeto(objetoId).subscribe({
-      next: () => {
-        this.objetos = this.objetos.filter((obj) => obj.id !== objetoId); // Actualizar la lista local de objetos
-        console.log('Objeto eliminado:', objetoId);
-        this.misObjetos();
-      },
-      error: (err) => {
-        console.error('Error al eliminar el objeto:', err);
-      },
-    });
+    this.misObjetos();
   }
 
   seleccionarObjetivo(objeto: any) {
@@ -294,21 +299,21 @@ export class MiKillerComponent extends BuzonBaseComponent {
           data: {
             title: 'Seleccionar Objetivo',
             message: 'Selecciona un personaje para usar la bomba.',
-            showCancel: true,
             personajes: personajesContrarios,
           },
+          disableClose: true,
         });
 
         dialogRef.afterClosed().subscribe((personajeSeleccionado) => {
-          console.log('Diálogo cerrado:', personajeSeleccionado);
+          //console.log('Diálogo cerrado:', personajeSeleccionado);
           if (personajeSeleccionado) {
             this.brinderService
               .getEquipoAsignado('1', personajeSeleccionado.id)
               .subscribe({
                 next: (res) => {
                   let equipoPersonajeSel = res;
-                  equipoPersonajeSel.escudo--;
-                  console.log('Equipo del personaje seleccionado:', equipoPersonajeSel);
+                  equipoPersonajeSel.escudo = Math.max(0, equipoPersonajeSel.escudo - objeto.valor);
+
                   this.brinderService
                     .actualizarPersonajeKiller(
                       '1',
@@ -319,10 +324,9 @@ export class MiKillerComponent extends BuzonBaseComponent {
                       next: () => {
                         this.openDialog(
                           'Éxito',
-                          `Has usado la bomba contra ${personajeSeleccionado.name}`
+                          `Has usado una bomba contra ${personajeSeleccionado.name} quitándole ${objeto.valor} escudo(s).`
                         );
-                        //this.eliminarObjeto(objeto.id); // Eliminar el objeto después de usarlo
-                        this.obtenerDatosEquipo(); // Actualizar el equipo
+                        this.obtenerDatosEquipo();
                       },
                       error: (err) => {
                         console.error('Error al usar la bomba:', err);
@@ -336,5 +340,114 @@ export class MiKillerComponent extends BuzonBaseComponent {
           }
         });
       });
+    this.misObjetos();
   }
+
+  unirseEquipo() {
+    this.mostrandoCuentaAtras = true;
+    this.cuentaAtras = 5;
+
+    const intervalo = setInterval(() => {
+      this.cuentaAtras--;
+      if (this.cuentaAtras === 0) {
+        clearInterval(intervalo);
+        this.brinderService.asignarEquipo(this.personaje.id, '1').subscribe({
+          next: (res) => {
+            this.equipo.asignado = true;
+            this.equipo.equipo = res.equipo || '';
+            this.mostrandoCuentaAtras = false;
+            this.getPersonajesEquipo(this.equipo.equipo);
+            this.obtenerDatosEquipo();
+          },
+          error: (err) => {
+            console.error('Error al asignar equipo:', err);
+            this.mostrandoCuentaAtras = false;
+          },
+        });
+      }
+    }, 1000);
+  }
+
+  confirmarUnirse() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Confirmar',
+        message: '¿Estás seguro de que deseas unirte a un equipo?',
+        showCancel: true,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmado) => {
+      console.log('Diálogo cerrado:', confirmado);
+      if (confirmado === true) {
+        this.unirseEquipo();
+        //this.unirPersonajesMasivamente();
+      }
+    });
+  }
+
+  /*unirPersonajesMasivamente(): void {
+    const ids = [
+      '14',
+      '15',
+      '16',
+      '17',
+      '18',
+      '19',
+      '20',
+      '21',
+      '22',
+      '23',
+      '24',
+      '25',
+      '26',
+      '28',
+      '29',
+      '30',
+      '31',
+      '33',
+      '41',
+      '44',
+      '45',
+      '46',
+      '47',
+      '48',
+      '49',
+      '50',
+      '51',
+      '52',
+      '53',
+      '54',
+      '55',
+      '56',
+      '57',
+      '58',
+      '59',
+      '60',
+      '62',
+      '65',
+      '66',
+      '94',
+      '102',
+      '103',
+      '104',
+      '105',
+    ];
+    const equipoId = '1'; // ID del killer
+
+    ids.forEach((id) => {
+      this.brinderService.asignarEquipo(id, equipoId).subscribe({
+        next: (res) => {
+          const total = ids.length;
+          const index = ids.indexOf(id) + 1;
+          console.log(
+            `Asignando personaje ${index}/${total}: ID ${id} al equipo ${equipoId}`
+          );
+        },
+        error: (err) => {
+          console.error(`Error al asignar personaje con ID ${id}:`, err);
+        },
+      });
+    });
+  }*/
 }

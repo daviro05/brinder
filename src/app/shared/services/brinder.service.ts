@@ -240,8 +240,16 @@ export class BrinderService {
   }
 
   eliminarObjeto(objetoId: string) {
-    return this.http.delete(
-      `${this.BASE_URL}/killer/objetos/eliminar/${objetoId}`
+    return this.http.put(
+      `${this.BASE_URL}/killer/objetos/eliminar/${objetoId}`,
+      null
+    );
+  }
+
+  usarObjeto(objetoId: string) {
+    return this.http.put(
+      `${this.BASE_URL}/killer/objetos/usar/${objetoId}`,
+      null
     );
   }
 }

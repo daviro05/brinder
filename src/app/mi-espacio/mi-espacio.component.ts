@@ -59,7 +59,7 @@ export class MiEspacioComponent extends BuzonBaseComponent implements OnInit {
           }))
           .filter((item) => item.mensaje !== '');
 
-        console.log(this.mensajesMatches);
+        //console.log(this.mensajesMatches);
 
         // Contar las veces que se realiza cada match
         const matchCounts = matches.reduce((acc, match) => {

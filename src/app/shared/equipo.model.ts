@@ -7,6 +7,7 @@ export class EquipoModel {
     public equipo: string,
     public mision: string,
     public escudo: number,
+    public valor: number,
     public vida: number,
   ) { }
 

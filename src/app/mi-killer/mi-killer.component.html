@@ -54,7 +54,7 @@
     <div class="stats estado" *ngIf="personaje && seccionActiva === 'estado'">
         <h2>Estado</h2>
 
-        <div class="estado" *ngIf="equipo">
+        <div class="estado" *ngIf="equipo && equipo.asignado">
             <p class="equipo">Estado: {{(equipo.activo ? 'vivo🌚' : 'crucificado☠️') | uppercase}}</p>
             <p class="equipo">Escudos: {{equipo.escudo}}🛡️</p>
             <p class="equipo">Objetivo: No visible*🗡️</p>
@@ -66,7 +66,7 @@
     <div class="stats mi-equipo" *ngIf="personaje && seccionActiva === 'mi-equipo'">
         <h2>Mi equipo</h2>
 
-        <!--<div *ngIf="!asignado && !personaje.rol.includes('inactivo')">
+        <div *ngIf="!equipo?.asignado && !personaje.rol.includes('inactivo')">
             <button mat-raised-button class="unirse" (click)="confirmarUnirse()" *ngIf="!mostrandoCuentaAtras">
                 UNIRSE
             </button>
@@ -77,7 +77,7 @@
             </div>
 
             <p class="copy">Te unirás a un equipo aleatoriamente</p>
-        </div>-->
+        </div>
 
         <div *ngIf="equipo?.asignado">
             <div class="estado">
@@ -102,7 +102,7 @@
     <div class="stats inventario" *ngIf="personaje && seccionActiva === 'inventario'">
         <h2>Inventario</h2>
 
-        <div class="estado" *ngIf="equipo && !objetoAsignadoHoy">
+        <div class="estado" *ngIf="equipo && equipo.asignado && !objetoAsignadoHoy">
             <p class="copy">Obtén objetos para atacar y defenderte. De momento sólo se puede obtener 1 por día.</p>
             <button mat-raised-button class="obtener-objeto" (click)="obtenerObjeto()" [disabled]="objetoAsignadoHoy"
                 *ngIf="!objetoAsignadoHoy && !mostrandoCuentaAtras">
@@ -115,18 +115,18 @@
             </div>
 
         </div>
-        <div *ngIf="objetoAsignadoHoy">
+        <div *ngIf="equipo && equipo.asignado && objetoAsignadoHoy">
             <p class="copy">Hoy no hay más objetos disponibles.<br>Vuelve mañana</p>
         </div>
 
         <hr class="separator" />
 
-        <div class="mis-objetos">
+        <div class="mis-objetos" *ngIf="equipo && equipo.asignado">
             <div class="grid-objetos">
-                <div class="objeto" *ngFor="let objeto of objetos" (click)="usarObjeto(objeto)">
+                <button class="objeto" *ngFor="let objeto of objetos" (click)="usarObjeto(objeto)" [disabled]="objeto.usado">
                     <img [src]="'assets/objetos/' + objeto.imagen_url" alt="{{objeto.tipo}}" />
                     <p class="copy">{{objeto.nombre}}</p>
-                </div>
+                </button>
             </div>
         </div>
     </div>
