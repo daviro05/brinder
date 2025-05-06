@@ -14,6 +14,14 @@ export class KillerComponent {
   utils: Utils;
   killer: any[] = [];
   killerLog: any[] = [];
+  displayedColumns: string[] = [
+    'fecha',
+    'accion',
+    'personaje_name',
+    'personaje_objetivo_name',
+    'resultado',
+  ];
+
   tipo: string = 'brinder';
   vivos: string = '';
   muertos: string = '';

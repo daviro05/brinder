@@ -188,6 +188,19 @@ export class MiKillerComponent extends BuzonBaseComponent {
           this.objetoAsignadoHoy = true; // Actualizar el estado
           this.mostrandoCuentaAtras = false; // Ocultar el botón
           this.misObjetos(); // Actualizar la lista de objetos
+          this.brinderService
+            .registrarLogKiller({
+              killer_id: '1',
+              personaje_id: this.id!,
+              personaje_name: this.nombrePersonaje,
+              accion: 'Inventario',
+              objeto_id: objeto.objeto_id,
+              personaje_objetivo_id: null,
+              personaje_objetivo_name: null,
+              resultado: 'Obtiene 1 objeto',
+              equipo: this.equipo.equipo,
+            })
+            .subscribe();
         });
     });
   }
@@ -252,7 +265,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
                         killer_id: '1',
                         personaje_id: this.id!,
                         personaje_name: this.nombrePersonaje,
-                        accion: 'usa objeto ' + objeto.nombre,
+                        accion: 'Usa ' + objeto.nombre,
                         objeto_id: objeto.objeto_id,
                         personaje_objetivo_id: null,
                         personaje_objetivo_name: null,
@@ -284,6 +297,19 @@ export class MiKillerComponent extends BuzonBaseComponent {
                   this.nombrePersonaje +
                   ' has penalizado a tu equipo. Las trampas no le gustan al Centurión.'
               );
+              this.brinderService
+                .registrarLogKiller({
+                  killer_id: '1',
+                  personaje_id: this.id!,
+                  personaje_name: this.nombrePersonaje,
+                  accion: 'Trampas',
+                  objeto_id: objeto.objeto_id,
+                  personaje_objetivo_id: null,
+                  personaje_objetivo_name: null,
+                  resultado: 'Penalización por trampas',
+                  equipo: this.equipo.equipo,
+                })
+                .subscribe();
             } else {
               console.error('Error al usar el objeto:', err);
             }
@@ -354,13 +380,17 @@ export class MiKillerComponent extends BuzonBaseComponent {
                             killer_id: '1',
                             personaje_id: this.id!,
                             personaje_name: this.nombrePersonaje,
-                            accion: 'usa objeto ' + objeto.nombre,
+                            accion: 'Usa ' + objeto.nombre,
                             objeto_id: objeto.objeto_id,
                             personaje_objetivo_id:
                               personajeSeleccionado?.id ?? null,
                             personaje_objetivo_name:
                               personajeSeleccionado?.name ?? null,
-                            resultado: 'Quita ' + objeto.valor + ' escudo(s) a ' +personajeSeleccionado?.name,
+                            resultado:
+                              'Quita ' +
+                              objeto.valor +
+                              ' escudo(s) a ' +
+                              personajeSeleccionado?.name,
                             equipo: this.equipo.equipo,
                           })
                           .subscribe();

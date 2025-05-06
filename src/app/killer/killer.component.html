@@ -92,7 +92,13 @@
         </div>
 
         <div class="log">
-
+            <div *ngFor="let log of killerLog" class="log-entry" [ngClass]="{'log-rojo': log.equipo === 'rojo', 'log-azul': log.equipo === 'azul'}">
+                <p class="log-item"><strong>Fecha:</strong><small> {{ log.fecha | date:'dd/MM/yyyy HH:mm' }}</small></p>
+                <p class="log-item"><strong>Personaje:</strong> {{ log.personaje_name }}</p>
+                <p class="log-item"><strong>Acción:</strong> {{ log.accion }}</p>
+                <p class="log-item" *ngIf="log.personaje_objetivo_name"><strong>Objetivo:</strong> {{ log.personaje_objetivo_name }}</p>
+                <p class="log-item"><strong>Resultado:</strong> {{ log.resultado }}</p>
+            </div>
         </div>
 
     </div>

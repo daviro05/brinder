@@ -116,7 +116,7 @@
   button {
     cursor: pointer;
     border-radius: 5px;
-    border: 0.5px solid grey;;
+    border: 0.5px solid grey;
   }
 }
 
@@ -155,11 +155,11 @@
     }
   }
 
-  .log{
+  .log {
     gap: 5px;
     justify-items: center;
-    min-height: 500px;
-    max-height: 550px;
+    min-height: 400px;
+    max-height: 460px;
     overflow-y: auto;
   }
 }
@@ -190,7 +190,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
     justify-items: center;
-    max-height: 380px;
+    max-height: 370px;
     overflow-y: auto;
   }
 
@@ -229,13 +229,51 @@
 .mensaje-fase {
   width: 80%;
   display: inline-block;
-  button{
+  button {
     margin-bottom: 10px;
   }
 }
 
-.titulo{
+.titulo {
   font-size: 20px;
   color: #000;
   margin-bottom: 10px;
+}
+
+// KILLER LOG
+
+.log {
+  margin-top: 16px;
+  max-height: 400px; /* Puedes ajustar este valor según tu diseño */
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.log-entry {
+  margin-bottom: 16px;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 80%;
+}
+
+.log-item {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+hr {
+  margin: 8px 0;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
+
+.log-rojo {
+  border: 1px solid red;
+}
+
+.log-azul {
+  border: 1px solid blue;
 }
