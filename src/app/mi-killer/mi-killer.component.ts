@@ -269,14 +269,14 @@ export class MiKillerComponent extends BuzonBaseComponent {
                         objeto_id: objeto.objeto_id,
                         personaje_objetivo_id: null,
                         personaje_objetivo_name: null,
-                        resultado: 'Escudo aumentado en + ' + objeto.valor,
+                        resultado: 'Defensa aumentada en + ' + objeto.valor,
                         equipo: this.equipo.equipo,
                       })
                       .subscribe();
                   });
                 this.openDialog(
                   'Éxito',
-                  'Has aumentado + ' + objeto.valor + ' tu escudo.'
+                  'Has aumentado + ' + objeto.valor + ' tu defensa.'
                 );
                 this.misObjetos();
               } else {
@@ -372,7 +372,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
                       next: () => {
                         this.openDialog(
                           'Éxito',
-                          `Has usado una bomba contra ${personajeSeleccionado.name} quitándole ${objeto.valor} escudo(s).`
+                          `Has usado una bomba contra ${personajeSeleccionado.name} quitándole ${objeto.valor} de defensa.`
                         );
                         this.obtenerDatosEquipo();
                         this.brinderService
@@ -389,7 +389,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
                             resultado:
                               'Quita ' +
                               objeto.valor +
-                              ' escudo(s) a ' +
+                              ' de defensa a ' +
                               personajeSeleccionado?.name,
                             equipo: this.equipo.equipo,
                           })
@@ -417,7 +417,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
         message: `
   <div style="text-align: left; font-family: Arial, sans-serif;">
     <p><b>Los objetos que pueden tocarte son los siguientes:</b></p>
-    <p><b>🛡️ Escudos (aumentan)</b></p>
+    <p><b>🛡️ Escudos (aumentan defensa)</b></p>
 
     <div style="margin-bottom: 16px;">
       <img src="assets/objetos/escudo.png" width="40%" />
