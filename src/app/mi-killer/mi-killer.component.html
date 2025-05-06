@@ -100,7 +100,12 @@
     </div>
 
     <div class="stats inventario" *ngIf="personaje && seccionActiva === 'inventario'">
-        <h2>Inventario</h2>
+        <div class="header-container">
+            <h2>Inventario</h2>
+            <button class="info-icon" mat-icon-button (click)="abrirInfoInventario()">
+                <mat-icon>info</mat-icon>
+            </button>
+        </div>
 
         <div class="estado" *ngIf="equipo && equipo.asignado && !objetoAsignadoHoy">
             <p class="copy">Obtén objetos para atacar y defenderte. De momento sólo se puede obtener 1 por día.</p>
@@ -123,7 +128,8 @@
 
         <div class="mis-objetos" *ngIf="equipo && equipo.asignado">
             <div class="grid-objetos">
-                <button class="objeto" *ngFor="let objeto of objetos" (click)="usarObjeto(objeto)" [disabled]="objeto.usado">
+                <button class="objeto" *ngFor="let objeto of objetos" (click)="usarObjeto(objeto)"
+                    [disabled]="objeto.usado">
                     <img [src]="'assets/objetos/' + objeto.imagen_url" alt="{{objeto.tipo}}" />
                     <p class="copy">{{objeto.nombre}}</p>
                 </button>

@@ -226,7 +226,10 @@ export class MiKillerComponent extends BuzonBaseComponent {
           next: () => {
             if (objeto.tipo === 'escudo') {
               if (this.equipo.escudo < 3) {
-                const nuevoEscudo = Math.min(this.equipo.escudo + objeto.valor, 3);
+                const nuevoEscudo = Math.min(
+                  this.equipo.escudo + objeto.valor,
+                  3
+                );
                 const personaje_killer = {
                   equipo: this.equipo.equipo,
                   personaje_id: this.id!,
@@ -246,7 +249,10 @@ export class MiKillerComponent extends BuzonBaseComponent {
                     console.log('Escudo actualizado:', res);
                     this.obtenerDatosEquipo();
                   });
-                this.openDialog('Éxito', 'Has aumentado + ' + objeto.valor + ' tu escudo.');
+                this.openDialog(
+                  'Éxito',
+                  'Has aumentado + ' + objeto.valor + ' tu escudo.'
+                );
               } else {
                 this.openDialog(
                   'Advertencia',
@@ -312,7 +318,10 @@ export class MiKillerComponent extends BuzonBaseComponent {
               .subscribe({
                 next: (res) => {
                   let equipoPersonajeSel = res;
-                  equipoPersonajeSel.escudo = Math.max(0, equipoPersonajeSel.escudo - objeto.valor);
+                  equipoPersonajeSel.escudo = Math.max(
+                    0,
+                    equipoPersonajeSel.escudo - objeto.valor
+                  );
 
                   this.brinderService
                     .actualizarPersonajeKiller(
@@ -450,4 +459,41 @@ export class MiKillerComponent extends BuzonBaseComponent {
       });
     });
   }*/
+
+  abrirInfoInventario(): void {
+    this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Información del Inventario',
+        message: `
+  <div style="text-align: left; font-family: Arial, sans-serif;">
+    <p><b>Los objetos que pueden tocarte son los siguientes:</b></p>
+    <p><b>🛡️ Escudos (aumentan)</b></p>
+
+    <div style="margin-bottom: 16px;">
+      <img src="assets/objetos/escudo.png" width="40%" />
+      <div>Plumas de Ganso: +1</div>
+    </div>
+        <br>
+    <div style="margin-bottom: 16px;">
+      <img src="assets/objetos/centurion.png"  width="40%" />
+      <div>Casco del Centurión: +2</div>
+    </div>
+    <br>
+    <p><b>💣 Bombas (quitan escudo a un enemigo)</b></p>
+    <div style="margin-bottom: 16px;">
+      <img src="assets/objetos/bomba.png" alt="Calabaza explosiva" width="40%" />
+      <div>Calabaza explosiva: -1 enemigo</div>
+    </div>
+        <br>
+    <div style="margin-bottom: 16px;">
+      <img src="assets/objetos/sandalias.png" alt="Sandalias explosivas" width="40%" />
+      <div>Sandalias explosivas: -2 enemigo</div>
+    </div>
+    <br>
+    <p><b>✨ Especiales (Muy pronto)</b></p>
+  </div>
+`,
+      },
+    });
+  }
 }
