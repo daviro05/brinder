@@ -120,6 +120,19 @@
   }
 }
 
+.button-container-secondary {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+
+  button {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+}
+
 .config {
   width: 120px !important;
   font-size: 10px;
@@ -276,4 +289,17 @@ hr {
 
 .log-azul {
   border: 1px solid blue;
+}
+
+.acciones{
+  display:flex;
+  justify-content: space-between;
+}
+
+.actualizar-log{
+  background-color: #f8e091 !important;
+  border: 1px solid #f7d461;
+  color: black !important;
+  font-size: 12px;
+  padding: 5px 10px;
 }

@@ -49,11 +49,13 @@
                     <div class="character-card captain" *ngIf="getCapitan(equipoRojo) as capitanRojo">
                         <img [src]="capitanRojo.image_url" alt="{{ capitanRojo.name }}" class="character-image">
                         <span class="label-name">{{ capitanRojo.name }}<br>(Capi)</span>
+                        <span>{{ '🛡️'.repeat(capitanRojo.escudo) }}</span>
                     </div>
                     <!-- Resto del equipo rojo -->
                     <div class="character-card" *ngFor="let character of getMiembrosSinCapitan(equipoRojo)">
                         <img [src]="character.image_url" alt="{{ character.name }}" class="character-image">
                         <span class="label-name">{{ character.name }}</span>
+                        <span>{{ '🛡️'.repeat(character.escudo) }}</span>
                     </div>
                 </div>
             </div>
@@ -65,11 +67,13 @@
                     <div class="character-card captain" *ngIf="getCapitan(equipoAzul) as capitanAzul">
                         <img [src]="capitanAzul.image_url" alt="{{ capitanAzul.name }}" class="character-image">
                         <span class="label-name">{{ capitanAzul.name }}<br>(Capi)</span>
+                        <span>{{ '🛡️'.repeat(capitanAzul.escudo) }}</span>
                     </div>
                     <!-- Resto del equipo azul -->
                     <div class="character-card" *ngFor="let character of getMiembrosSinCapitan(equipoAzul)">
                         <img [src]="character.image_url" alt="{{ character.name }}" class="character-image">
                         <span class="label-name">{{ character.name }}</span>
+                        <span>{{ '🛡️'.repeat(character.escudo) }}</span>
                     </div>
                 </div>
             </div>
@@ -83,27 +87,33 @@
     <div class="killer-estado" *ngIf="seccionActiva === 'log-batalla'">
         <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->
         <p class="titulo"><b>LOG DE BATALLA</b></p>
+        <p class="copy">Aquí podrás ver el estado de la batalla</p>
         <div class="mensaje-fase">
-            <button mat-raised-button (click)="obtenerKillerLog()">
-                <mat-icon>refresh</mat-icon>
-                Actualizar
-            </button>
-            <p class="copy">Aquí podrás ver el estado de la batalla</p>
+            <div class="acciones">
+                <span>🔴 {{killerLogRojo.length}} acc...</span>
+                <span>🔵 {{killerLogAzul.length}} acc...</span>
+            </div>
         </div>
 
         <div class="log">
-            <div *ngFor="let log of killerLog" class="log-entry" [ngClass]="{'log-rojo': log.equipo === 'rojo', 'log-azul': log.equipo === 'azul'}">
+            <div *ngFor="let log of killerLog" class="log-entry"
+                [ngClass]="{'log-rojo': log.equipo === 'rojo', 'log-azul': log.equipo === 'azul'}">
                 <p class="log-item"><strong>Fecha:</strong><small> {{ log.fecha | date:'dd/MM/yyyy HH:mm' }}</small></p>
                 <p class="log-item"><strong>Personaje:</strong> {{ log.personaje_name }}</p>
                 <p class="log-item"><strong>Acción:</strong> {{ log.accion }}</p>
-                <p class="log-item" *ngIf="log.personaje_objetivo_name"><strong>Objetivo:</strong> {{ log.personaje_objetivo_name }}</p>
+                <p class="log-item" *ngIf="log.personaje_objetivo_name"><strong>Objetivo:</strong> {{
+                    log.personaje_objetivo_name }}</p>
                 <p class="log-item"><strong>Resultado:</strong> {{ log.resultado }}</p>
             </div>
         </div>
 
     </div>
 
-    <div>
+    <div class="button-container-secondary">
+        <button class="actualizar-log" mat-raised-button (click)="obtenerKillerLog()" *ngIf="seccionActiva === 'log-batalla'">
+            <mat-icon>refresh</mat-icon>
+            Actualizar
+        </button>
         <button mat-raised-button class="volver" type="button" (click)="utils.navegar('inicio')">
             Volver
         </button>

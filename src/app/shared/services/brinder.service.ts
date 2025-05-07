@@ -258,7 +258,7 @@ export class BrinderService {
     personaje_id: string;
     personaje_name: string;
     accion: string;
-    objeto_id: string;
+    objeto_id?: string | null;
     personaje_objetivo_id?: string | null;
     personaje_objetivo_name?: string | null;
     resultado: string;

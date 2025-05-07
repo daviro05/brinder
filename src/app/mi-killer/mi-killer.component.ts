@@ -194,7 +194,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
               personaje_id: this.id!,
               personaje_name: this.nombrePersonaje,
               accion: 'Inventario',
-              objeto_id: objeto.objeto_id,
+              objeto_id: null,
               personaje_objetivo_id: null,
               personaje_objetivo_name: null,
               resultado: 'Obtiene 1 objeto',

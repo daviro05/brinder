@@ -28,6 +28,8 @@ export class KillerComponent {
   estadoSeleccionado: string = 'vivo'; // Nuevo estado seleccionado
   equipoRojo: any[] = [];
   equipoAzul: any[] = [];
+  killerLogRojo: any[] = []; // Log de acciones del equipo rojo
+  killerLogAzul: any[] = []; // Log de acciones del equipo azul
   personajesPendientes: any[] = []; // Arreglo para personajes pendientes
   personajesPendientesName: string = '';
   seccionActiva: string = 'estado';
@@ -170,7 +172,13 @@ export class KillerComponent {
   obtenerKillerLog() {
     this.brinderService.obtenerLogKiller().subscribe((log) => {
       this.killerLog = log;
-      console.log('Log de acciones:', this.killerLog);
+      //console.log('Log de acciones:', this.killerLog);
+      this.killerLogRojo = this.killerLog.filter(
+        (log) => log.equipo === 'rojo'  
+      );
+      this.killerLogAzul = this.killerLog.filter(
+        (log) => log.equipo === 'azul'  
+      );
     });
   }
 }
