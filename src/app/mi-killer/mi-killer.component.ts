@@ -350,8 +350,6 @@ export class MiKillerComponent extends BuzonBaseComponent {
           disableClose: true,
         });
 
-        console.log('Personajes:', personajesContrarios);
-
         dialogRef.afterClosed().subscribe((personajeSeleccionado) => {
           //console.log('Diálogo cerrado:', personajeSeleccionado);
           if (personajeSeleccionado) {

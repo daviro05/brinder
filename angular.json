@@ -63,6 +63,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "serviceWorker": true,
               "outputHashing": "all"
             },
             "development": {
