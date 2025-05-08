@@ -33,6 +33,9 @@
   </div>
   <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="false" *ngIf="data.showCancel">Cancelar</button>
-    <button mat-button [mat-dialog-close]="personajeSeleccionado || true" cdkFocusInitial>Aceptar</button>
+    <button mat-button [mat-dialog-close]="personajeSeleccionado || true" cdkFocusInitial
+      [disabled]="personajes.length > 0 && !personajeSeleccionado">
+      Aceptar
+    </button>
   </div>
 </div>

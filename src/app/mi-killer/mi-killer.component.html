@@ -88,8 +88,8 @@
                         {{equipo.equipo | uppercase}}
                     </span>
                 </p>
+                <p class="equipo">Puntos: {{puntosEquipoElegido}}</p>
                 <p class="equipo">Vivos: {{equipoElegido}} de 19</p>
-                <p class="equipo">Muertos: {{19 - equipoElegido}} de 19</p>
             </div>
         </div>
 
@@ -108,7 +108,7 @@
         </div>
 
         <div class="estado" *ngIf="equipo && equipo.asignado && !objetoAsignadoHoy">
-            <p class="copy">Obtén objetos para atacar y defenderte. De momento sólo se puede obtener 1 por día.</p>
+            <p class="copy">Obtén objetos de ataque, defensa o especiales. Sólo se puede obtener 1 por día.</p>
             <button mat-raised-button class="obtener-objeto" (click)="obtenerObjeto()" [disabled]="objetoAsignadoHoy"
                 *ngIf="!objetoAsignadoHoy && !mostrandoCuentaAtras">
                 Obtener objeto

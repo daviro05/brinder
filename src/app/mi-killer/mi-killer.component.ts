@@ -31,6 +31,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
   mostrandoCuentaAtras: boolean = false;
   cuentaAtras: number = 3;
   equipoElegido: number = 0;
+  puntosEquipoElegido: number = 0;
   escudos: number = 0;
   objetoAsignadoHoy: boolean = false;
   objetos: any[] = [];
@@ -269,20 +270,20 @@ export class MiKillerComponent extends BuzonBaseComponent {
                         objeto_id: objeto.objeto_id,
                         personaje_objetivo_id: null,
                         personaje_objetivo_name: null,
-                        resultado: 'Defensa aumentada en + ' + objeto.valor,
+                        resultado: 'Defensa aumentada en +' + objeto.valor,
                         equipo: this.equipo.equipo,
                       })
                       .subscribe();
                   });
                 this.openDialog(
                   'Éxito',
-                  'Has aumentado + ' + objeto.valor + ' tu defensa.'
+                  'Has aumentado +' + objeto.valor + ' tu defensa.'
                 );
                 this.misObjetos();
               } else {
                 this.openDialog(
                   'Advertencia',
-                  'No puedes tener más de 3 escudos. El objeto no se ha usado'
+                  'No puedes tener más de 3 escudos. El objeto no se ha usado.'
                 );
               }
             } else if (objeto.tipo === 'bomba') {
@@ -349,11 +350,13 @@ export class MiKillerComponent extends BuzonBaseComponent {
           disableClose: true,
         });
 
+        console.log('Personajes:', personajesContrarios);
+
         dialogRef.afterClosed().subscribe((personajeSeleccionado) => {
           //console.log('Diálogo cerrado:', personajeSeleccionado);
           if (personajeSeleccionado) {
             this.brinderService
-              .getEquipoAsignado('1', personajeSeleccionado.id)
+              .getEquipoAsignado('1', personajeSeleccionado.personaje_id)
               .subscribe({
                 next: (res) => {
                   let equipoPersonajeSel = res;
@@ -365,14 +368,14 @@ export class MiKillerComponent extends BuzonBaseComponent {
                   this.brinderService
                     .actualizarPersonajeKiller(
                       '1',
-                      personajeSeleccionado.id,
+                      personajeSeleccionado.personaje_id,
                       equipoPersonajeSel
                     )
                     .subscribe({
                       next: () => {
                         this.openDialog(
                           'Éxito',
-                          `Has usado una bomba contra ${personajeSeleccionado.name} quitándole ${objeto.valor} de defensa.`
+                          `Has usado ${objeto.nombre} contra ${personajeSeleccionado.name} quitándole ${objeto.valor} de defensa.`
                         );
                         this.obtenerDatosEquipo();
                         this.brinderService
@@ -383,7 +386,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
                             accion: 'Usa ' + objeto.nombre,
                             objeto_id: objeto.objeto_id,
                             personaje_objetivo_id:
-                              personajeSeleccionado?.id ?? null,
+                              personajeSeleccionado?.personaje_id ?? null,
                             personaje_objetivo_name:
                               personajeSeleccionado?.name ?? null,
                             resultado:
@@ -484,7 +487,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
     });
 
     dialogRef.afterClosed().subscribe((confirmado) => {
-      console.log('Diálogo cerrado:', confirmado);
+      //console.log('Diálogo cerrado:', confirmado);
       if (confirmado === true) {
         this.unirseEquipo();
         //this.unirPersonajesMasivamente();

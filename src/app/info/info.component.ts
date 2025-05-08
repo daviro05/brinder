@@ -26,7 +26,7 @@ export class InfoComponent implements OnInit {
     this.brinderService.listarAvisos('brinder').subscribe(
       (avisos) => {
         this.avisos = avisos;
-        console.log('Avisos cargados:', this.avisos);
+        //console.log('Avisos cargados:', this.avisos);
       },
       (error) => {
         console.error('Error al cargar avisos:', error);
