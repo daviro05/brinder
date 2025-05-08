@@ -96,21 +96,39 @@
         </div>
 
         <div class="log">
-            <div *ngFor="let log of killerLog" class="log-entry"
-                [ngClass]="{'log-rojo': log.equipo === 'rojo', 'log-azul': log.equipo === 'azul'}">
-                <p class="log-item"><strong>Fecha:</strong><small> {{ log.fecha | date:'dd/MM/yyyy HH:mm' }}</small></p>
-                <p class="log-item"><strong>Personaje:</strong> {{ log.personaje_name }}</p>
-                <p class="log-item"><strong>Acción:</strong> {{ log.accion }}</p>
-                <p class="log-item" *ngIf="log.personaje_objetivo_name"><strong>Objetivo:</strong> {{
-                    log.personaje_objetivo_name }}</p>
-                <p class="log-item"><strong>Resultado:</strong> {{ log.resultado }}</p>
-            </div>
+            <ng-container *ngFor="let log of killerLog; let i = index">
+
+                <!-- Mostrar encabezado de fecha solo si cambia el día -->
+                <div *ngIf="i === 0 || (log.fecha | date:'dd/MM/yyyy') !== (killerLog[i - 1].fecha | date:'dd/MM/yyyy')"
+                    class="log-dia">
+                    {{ log.fecha | date:'dd/MM/yyyy' }}
+                </div>
+
+                <div class="log-entry"
+                    [ngClass]="{'log-rojo': log.equipo === 'rojo', 'log-azul': log.equipo === 'azul'}">
+
+                    <div class="log-hora">{{ log.fecha | date:'HH:mm' }}</div>
+
+                    <div class="log-linea">
+                        <strong>{{ log.personaje_name }}</strong> usa<br>
+                        <strong>{{ log.accion }}</strong><br>
+                        <ng-container *ngIf="log.personaje_objetivo_name">
+                            contra <strong>{{ log.personaje_objetivo_name }}</strong>
+                        </ng-container>
+                    </div>
+
+                    <div class="log-resultado">{{ log.resultado }}</div>
+                </div>
+            </ng-container>
         </div>
+
+
 
     </div>
 
     <div class="button-container-secondary">
-        <button class="actualizar-log" mat-raised-button (click)="obtenerKillerLog()" *ngIf="seccionActiva === 'log-batalla'">
+        <button class="actualizar-log" mat-raised-button (click)="obtenerKillerLog()"
+            *ngIf="seccionActiva === 'log-batalla'">
             <mat-icon>refresh</mat-icon>
             Actualizar
         </button>

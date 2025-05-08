@@ -198,7 +198,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
               objeto_id: null,
               personaje_objetivo_id: null,
               personaje_objetivo_name: null,
-              resultado: 'Obtiene 1 objeto',
+              resultado: '+1 objeto',
               equipo: this.equipo.equipo,
             })
             .subscribe();
@@ -266,11 +266,11 @@ export class MiKillerComponent extends BuzonBaseComponent {
                         killer_id: '1',
                         personaje_id: this.id!,
                         personaje_name: this.nombrePersonaje,
-                        accion: 'Usa ' + objeto.nombre,
+                        accion: objeto.nombre,
                         objeto_id: objeto.objeto_id,
                         personaje_objetivo_id: null,
                         personaje_objetivo_name: null,
-                        resultado: 'Defensa aumentada en +' + objeto.valor,
+                        resultado: '+' + objeto.valor +' en defensa (' + nuevoEscudo + '/3)🛡️',
                         equipo: this.equipo.equipo,
                       })
                       .subscribe();
@@ -381,17 +381,23 @@ export class MiKillerComponent extends BuzonBaseComponent {
                             killer_id: '1',
                             personaje_id: this.id!,
                             personaje_name: this.nombrePersonaje,
-                            accion: 'Usa ' + objeto.nombre,
+                            accion: objeto.nombre,
                             objeto_id: objeto.objeto_id,
                             personaje_objetivo_id:
                               personajeSeleccionado?.personaje_id ?? null,
                             personaje_objetivo_name:
                               personajeSeleccionado?.name ?? null,
                             resultado:
-                              'Quita ' +
+                              '-' +
                               objeto.valor +
                               ' de defensa a ' +
-                              personajeSeleccionado?.name,
+                              personajeSeleccionado?.name +
+                              ' (' +
+                              Math.max(
+                                0,
+                                personajeSeleccionado?.escudo - objeto.valor
+                              ) +
+                              '/3)🛡️',
                             equipo: this.equipo.equipo,
                           })
                           .subscribe();

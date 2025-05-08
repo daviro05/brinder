@@ -253,44 +253,6 @@
   margin-bottom: 10px;
 }
 
-// KILLER LOG
-
-.log {
-  margin-top: 16px;
-  max-height: 400px; /* Puedes ajustar este valor según tu diseño */
-  overflow-y: auto;
-  margin-bottom: 20px;
-}
-
-.log-entry {
-  margin-bottom: 16px;
-  padding: 10px;
-  background-color: #f1f1f1;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  width: 80%;
-}
-
-.log-item {
-  margin: 4px 0;
-  font-size: 14px;
-  color: #333;
-}
-
-hr {
-  margin: 8px 0;
-  border: 0;
-  border-top: 1px solid #ccc;
-}
-
-.log-rojo {
-  border: 1px solid red;
-}
-
-.log-azul {
-  border: 1px solid blue;
-}
-
 .acciones{
   display:flex;
   justify-content: space-between;
@@ -302,4 +264,75 @@ hr {
   color: black !important;
   font-size: 12px;
   padding: 5px 10px;
+}
+
+// KILLER LOG
+
+.log {
+  margin-top: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.log-entry {
+  position: relative;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  width: 80%;
+}
+
+.log-dia {
+  background-color: #f8e091;
+  font-weight: bold;
+  padding: 6px 10px;
+  margin: 10px;
+  border-radius: 20px;
+  color: #333;
+}
+
+.log-hora {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+}
+
+.log-linea {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.log-fecha {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+}
+
+.log-linea {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.log-resultado {
+  font-size: 13px;
+  color: #555;
+}
+
+.log-rojo {
+  border: 1px solid red;
+}
+
+.log-azul {
+  border: 1px solid blue;
 }
