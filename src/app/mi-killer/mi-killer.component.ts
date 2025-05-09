@@ -430,7 +430,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
         message: `
   <div style="text-align: left; font-family: Arial, sans-serif;">
     <p><b>Los objetos que pueden tocarte son los siguientes:</b></p>
-    <p><b>🛡️ Escudos (aumentan defensa)</b></p>
+    <p><b>🛡️ Escudos (+ defensa)</b></p>
 
     <div style="margin-bottom: 16px;">
       <img src="assets/objetos/escudo.png" width="40%" />
@@ -442,15 +442,25 @@ export class MiKillerComponent extends BuzonBaseComponent {
       <div>Casco del Centurión: +2</div>
     </div>
     <br>
-    <p><b>💣 Bombas (quitan escudo a un enemigo)</b></p>
+        <div style="margin-bottom: 16px;">
+      <img src="assets/objetos/salchichas.jpg"  width="40%" />
+      <div>Salchichas de cerdo: +3</div>
+    </div>
+    <br>
+    <p><b>💣 Bombas (- defensa a enemigo)</b></p>
     <div style="margin-bottom: 16px;">
-      <img src="assets/objetos/bomba.png" alt="Calabaza explosiva" width="40%" />
-      <div>Calabaza explosiva: -1 enemigo</div>
+      <img src="assets/objetos/bomba.png" width="40%" />
+      <div>Calabaza explosiva: -1</div>
     </div>
         <br>
     <div style="margin-bottom: 16px;">
-      <img src="assets/objetos/sandalias.png" alt="Sandalias explosivas" width="40%" />
-      <div>Sandalias explosivas: -2 enemigo</div>
+      <img src="assets/objetos/sandalias.png" width="40%" />
+      <div>Sandalias explosivas: -2</div>
+    </div>
+    <br>
+    <div style="margin-bottom: 16px;">
+      <img src="assets/objetos/cuchillos.jpg" width="40%" />
+      <div>Cuchillos suicidas: -3</div>
     </div>
     <br>
     <p><b>✨ Especiales (Muy pronto)</b></p>
