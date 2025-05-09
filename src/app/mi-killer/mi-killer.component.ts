@@ -220,7 +220,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
 
   misObjetos() {
     this.brinderService.getMisObjetos(this.id!).subscribe((data) => {
-      this.objetos = data;
+      this.objetos = data.filter((objeto: any) => objeto.usado === 0);
       //console.log('Objetos:', this.objetos);
     });
   }
@@ -236,56 +236,62 @@ export class MiKillerComponent extends BuzonBaseComponent {
 
     dialogRef.afterClosed().subscribe((confirmado) => {
       if (confirmado === true) {
+        if (objeto.tipo === 'escudo' && this.equipo.escudo >= 3) {
+          this.openDialog(
+            'Advertencia',
+            'No puedes tener más de 3 escudos. El objeto no se ha usado.'
+          );
+          return; // Salir sin llamar a usarObjeto
+        }
+
         this.brinderService.usarObjeto(objeto.id).subscribe({
           next: () => {
             if (objeto.tipo === 'escudo') {
-              if (this.equipo.escudo < 3) {
-                const nuevoEscudo = Math.min(
-                  this.equipo.escudo + objeto.valor,
-                  3
-                );
-                const personaje_killer = {
-                  equipo: this.equipo.equipo,
-                  personaje_id: this.id!,
-                  activo: this.equipo.activo,
-                  killer_id: '1',
-                  mision_individual: this.equipo.mision,
-                  escudo: nuevoEscudo,
-                  vida: this.equipo.vida,
-                };
-                this.brinderService
-                  .actualizarPersonajeKiller(
-                    personaje_killer.killer_id,
-                    personaje_killer.personaje_id,
-                    personaje_killer
-                  )
-                  .subscribe((res) => {
-                    this.obtenerDatosEquipo();
-                    this.brinderService
-                      .registrarLogKiller({
-                        killer_id: '1',
-                        personaje_id: this.id!,
-                        personaje_name: this.nombrePersonaje,
-                        accion: objeto.nombre,
-                        objeto_id: objeto.objeto_id,
-                        personaje_objetivo_id: null,
-                        personaje_objetivo_name: null,
-                        resultado: '+' + objeto.valor +' en defensa (' + nuevoEscudo + '/3)🛡️',
-                        equipo: this.equipo.equipo,
-                      })
-                      .subscribe();
-                  });
-                this.openDialog(
-                  'Éxito',
-                  'Has aumentado +' + objeto.valor + ' tu defensa.'
-                );
-                this.misObjetos();
-              } else {
-                this.openDialog(
-                  'Advertencia',
-                  'No puedes tener más de 3 escudos. El objeto no se ha usado.'
-                );
-              }
+              const nuevoEscudo = Math.min(
+                this.equipo.escudo + objeto.valor,
+                3
+              );
+              const personaje_killer = {
+                equipo: this.equipo.equipo,
+                personaje_id: this.id!,
+                activo: this.equipo.activo,
+                killer_id: '1',
+                mision_individual: this.equipo.mision,
+                escudo: nuevoEscudo,
+                vida: this.equipo.vida,
+              };
+              this.brinderService
+                .actualizarPersonajeKiller(
+                  personaje_killer.killer_id,
+                  personaje_killer.personaje_id,
+                  personaje_killer
+                )
+                .subscribe((res) => {
+                  this.obtenerDatosEquipo();
+                  this.brinderService
+                    .registrarLogKiller({
+                      killer_id: '1',
+                      personaje_id: this.id!,
+                      personaje_name: this.nombrePersonaje,
+                      accion: objeto.nombre,
+                      objeto_id: objeto.objeto_id,
+                      personaje_objetivo_id: null,
+                      personaje_objetivo_name: null,
+                      resultado:
+                        '+' +
+                        objeto.valor +
+                        ' en defensa (' +
+                        nuevoEscudo +
+                        '/3)🛡️',
+                      equipo: this.equipo.equipo,
+                    })
+                    .subscribe();
+                });
+              this.openDialog(
+                'Éxito',
+                'Has aumentado +' + objeto.valor + ' tu defensa.'
+              );
+              this.misObjetos();
             } else if (objeto.tipo === 'bomba') {
               this.seleccionarObjetivo(objeto);
             }
