@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Utils } from '../shared/utils';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BrinderService } from '../shared/services/brinder.service';
 
 @Component({
@@ -13,9 +13,30 @@ export class InfoComponent implements OnInit {
   isVisible: boolean = false;
   avisos: any[] = [];
   currentAvisoIndex: number = 0;
+  seccionActiva: string = 'disidente';
 
-  constructor(private router: Router, private brinderService: BrinderService) {
+    audios = [
+  { nombre: 'Disidente FM 1', url: 'assets/audios/disidente/Disidente FM 1.mp3' },
+  { nombre: 'Disidente FM 2', url: 'assets/audios/disidente/Disidente FM 2.mp3' },
+  { nombre: 'Disidente FM 3', url: 'assets/audios/disidente/Disidente FM 3.mp3' },
+  { nombre: 'Disidente FM 4', url: 'assets/audios/disidente/Disidente FM 4.mp3' },
+  { nombre: 'Disidente FM 5', url: 'assets/audios/disidente/Disidente FM 5.mp3' },
+];
+
+audioActual: { nombre: string; url: string } | null = null;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private brinderService: BrinderService
+  ) {
     this.utils = new Utils(this.router);
+    this.route.queryParams.subscribe((params) => {
+      const seccion = params['seccion'];
+      if (seccion === 'disidente' || seccion === 'noticias') {
+        this.seccionActiva = seccion;
+      }
+    });
   }
 
   ngOnInit() {
@@ -37,6 +58,23 @@ export class InfoComponent implements OnInit {
   toggleVisibility() {
     this.isVisible = !this.isVisible;
   }
+
+  cambiarSeccion(seccion: string) {
+    this.seccionActiva = seccion;
+    this.router.navigate([], {
+      queryParams: { seccion },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+reproducirAudio(index: number) {
+  this.audioActual = this.audios[index];
+  const player = document.querySelector('audio');
+  if (player) {
+    player.load(); // Recarga la nueva fuente
+    player.play();
+  }
+}
 
   descargarPDF() {
     const url = '../assets/presentacion.pdf';

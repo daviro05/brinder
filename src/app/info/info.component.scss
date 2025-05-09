@@ -42,8 +42,29 @@ h1 {
 }
 
 .button-container {
-  margin-top: 20px;
-  display: grid;
+  text-align: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  padding: 15px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+
+  button {
+    cursor: pointer;
+    border-radius: 5px;
+    border: 0.5px solid grey;
+  }
+}
+
+.config {
+  width: 120px !important;
+  font-size: 10px;
+  &.active {
+    background-color: #f8e091 !important;
+    border: 1px solid #f7d461;
+  }
 }
 
 .descargar {
@@ -109,6 +130,44 @@ h1 {
   align-items: center;
   text-align: center;
   justify-content: center;
+}
+
+// Audios
+
+.audio-player {
+  padding: 1rem;
+  font-family: sans-serif;
+}
+
+.audio-list {
+  display: flex;
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  align-items: center;
+  margin: 16px;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.audio-button {
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.audio-button:hover {
+  color: #007acc;
+}
+
+.audio-element {
+  width: 100%;
 }
 
 // Adaptación a mobile

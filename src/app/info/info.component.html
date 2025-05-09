@@ -1,10 +1,20 @@
 <div class="info-container">
-  <h1>BRINDER</h1>
-  <span>Uniendo personas...y personajes</span>
   <div class="title">
-    <h2>Últimas noticias</h2>
+    <h1>Novedades</h1>
   </div>
-  <div class="avisos-section">
+
+  <div class="button-container">
+    <button mat-raised-button [class.active]="seccionActiva === 'disidente'" (click)="cambiarSeccion('disidente')"
+      class="config">
+      Disidente FM
+    </button>
+    <button mat-raised-button [class.active]="seccionActiva === 'noticias'" (click)="cambiarSeccion('noticias')"
+      class="config">
+      Noticias
+    </button>
+  </div>
+
+  <div class="avisos-section" *ngIf="seccionActiva === 'noticias'">
     <div *ngIf="avisos[currentAvisoIndex]" class="aviso-card"
       [ngClass]="'prioridad-' + avisos[currentAvisoIndex]!.prioridad" style="max-height: 50vh; overflow-y: auto;">
       <div class="aviso-content">
@@ -19,9 +29,31 @@
         (click)="nextAviso()">Siguiente</button>
     </div>
   </div>
-  <!-- Botón de enviar más grande -->
-  <div class="button-container">
-    <!--<button mat-raised-button type="button" class="descargar" (click)="descargarPDF()">Presentación Brinder</button>-->
-    <button mat-raised-button type="button" (click)="utils.navegar('inicio')">Volver</button>
+
+  <div class="avisos-section disidente" *ngIf="seccionActiva === 'disidente'">
+
+    <div class="avisos-section disidente" *ngIf="seccionActiva === 'disidente'">
+
+      <div class="audio-player">
+        <audio #audioPlayer controls class="audio-element">
+          <source [src]="audioActual?.url" type="audio/mpeg" />
+          Tu navegador no soporta la reproducción de audio.
+        </audio>
+      </div>
+
+      <div class="audio-list">
+        <span *ngFor="let audio of audios; let i = index">
+          <button class="audio-button" (click)="reproducirAudio(i)">
+            {{ audio.nombre }}
+          </button>
+        </span>
+      </div>
+
+    </div>
+
+
+    <div class="button-container-secondary">
+      <!--<button mat-raised-button type="button" class="descargar" (click)="descargarPDF()">Presentación Brinder</button>-->
+      <button mat-raised-button type="button" (click)="utils.navegar('inicio')">Volver</button>
+    </div>
   </div>
-</div>
