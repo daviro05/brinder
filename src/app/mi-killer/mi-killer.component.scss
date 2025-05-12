@@ -181,15 +181,21 @@
 }
 
 .equipo {
-  margin: 1rem;
+  margin: 0.9rem;
   font-size: 20px;
   background-color: #fcf2d2;
-  padding: 1rem;
-  border-radius: 20px;
+  padding: 0.5rem;
+  border-radius: 10px;
 }
 
 .estado {
-  font-size: 20px;
+  p{
+    font-size: 16px;
+  }
+}
+
+.info{
+  margin-top:10px;
 }
 
 .spinner-container {
@@ -311,5 +317,21 @@
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+.buttons-killer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+
+  .atacar {
+    background-color: #fad3d3 !important;
+  }
+
+  .muerto:not(:disabled) {
+    background-color: #000000 !important;
+        color: white !important;
   }
 }

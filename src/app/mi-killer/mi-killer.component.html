@@ -51,15 +51,34 @@
         </button>
     </div>
 
-    <div class="stats estado" *ngIf="personaje && seccionActiva === 'estado'">
+    <div class="stats" *ngIf="personaje && seccionActiva === 'estado'">
         <h2>Estado</h2>
 
         <div class="estado" *ngIf="equipo && equipo.asignado">
-            <p class="equipo">Estado: {{(equipo.activo ? 'vivo🌚' : 'crucificado☠️') | uppercase}}</p>
+            <p class="equipo">Estado: {{(equipo.vida ? 'vivo🌚' : 'crucificado☠️') | uppercase}}</p>
             <p class="equipo">Defensa: {{equipo.escudo}}🛡️</p>
-            <p class="equipo">Objetivo: No visible*🗡️</p>
-            <p class="copy">*Tu killer aparecerá cuándo tu objetivo no tenga escudos y estemos en la 'Fase de Killer'
+            <div *ngIf="equipo.escudo_objetivo === 0">
+                <p class="equipo">Objetivo: {{equipo.escudo_objetivo === 0 ? equipo.objetivo : 'No visible*🔪'}}</p>
+                <p class="equipo">Misión: {{equipo.escudo_objetivo === 0 ? equipo.mision : 'No visible*🔪'}}</p>
+            </div>
+            <div class="buttons-killer">
+                <button mat-raised-button class="atacar" (click)="realizarAtaque()"
+                    *ngIf="equipo?.escudo_objetivo === 0" [disabled]="ataqueDeshabilitado">
+                    🔪 Voy a atacar
+                </button>
+                <button mat-raised-button class="muerto" *ngIf="equipo?.escudo === 0">
+                    ☠️ He muerto
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="!equipo?.objetivo">
+            <p class="copy info">Tu objetivo aparecerá cuándo no tenga defensa.<br>Sólo podrás matarle en ese estado.
             </p>
+        </div>
+
+        <div *ngIf="ataqueDeshabilitado && equipo?.escudo_objetivo === 0">
+        <p class="copy info">Tienes un killer en proceso.<br>Inténtalo más tarde.</p>
         </div>
     </div>
 
@@ -88,8 +107,8 @@
                         {{equipo.equipo | uppercase}}
                     </span>
                 </p>
+                <p class="equipo">Vivos: {{equipoElegidoVivos}} de {{equipoElegido}}</p>
                 <p class="equipo">Puntos: {{puntosEquipoElegido}}</p>
-                <p class="equipo">Vivos: {{equipoElegido}} de 19</p>
             </div>
         </div>
 
@@ -136,6 +155,8 @@
             </div>
         </div>
     </div>
+
+    <hr class="separator" />
 
     <div class="button-container-secondary">
 

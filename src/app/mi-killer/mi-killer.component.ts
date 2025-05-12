@@ -31,10 +31,12 @@ export class MiKillerComponent extends BuzonBaseComponent {
   mostrandoCuentaAtras: boolean = false;
   cuentaAtras: number = 3;
   equipoElegido: number = 0;
+  equipoElegidoVivos: number = 0;
   puntosEquipoElegido: number = 0;
   escudos: number = 0;
   objetoAsignadoHoy: boolean = false;
   objetos: any[] = [];
+  ataqueDeshabilitado: boolean = false; // Nueva variable para controlar el estado del botón
 
   constructor(
     protected override buzonService: BuzonService,
@@ -45,6 +47,18 @@ export class MiKillerComponent extends BuzonBaseComponent {
   ) {
     super(buzonService, router, dialog);
     this.utils = new Utils(this.router);
+
+    // Restaurar el estado del botón desde localStorage
+    const deshabilitadoHasta = localStorage.getItem('ataqueDeshabilitadoHasta');
+    if (deshabilitadoHasta && new Date(deshabilitadoHasta) > new Date()) {
+      this.ataqueDeshabilitado = true;
+      const tiempoRestante =
+        new Date(deshabilitadoHasta).getTime() - new Date().getTime();
+      setTimeout(() => {
+        this.ataqueDeshabilitado = false;
+        localStorage.removeItem('ataqueDeshabilitadoHasta');
+      }, tiempoRestante);
+    }
 
     // Leer parámetros de la URL y establecer la sección activa
     this.route.queryParams.subscribe((params) => {
@@ -117,10 +131,11 @@ export class MiKillerComponent extends BuzonBaseComponent {
     this.personaje.activo = checked ? 'activo' : 'inactivo';
   }
 
-  private obtenerDatosEquipo() {
+  obtenerDatosEquipo() {
     this.brinderService.getEquipoAsignado('1', this.id!).subscribe({
       next: (res) => {
         this.equipo = res;
+        console.log('Equipo:', this.equipo);
         this.getPersonajesEquipo(this.equipo.equipo);
       },
       error: (err) => {
@@ -132,8 +147,13 @@ export class MiKillerComponent extends BuzonBaseComponent {
   getPersonajesEquipo(equipo: string) {
     this.brinderService.getPersonajesEquipo('1', equipo).subscribe((data) => {
       this.equipoElegido = data.personajes.length;
+      this.equipoElegidoVivos = data.personajes.filter(
+        (personaje: any) => personaje.vida === 1
+      ).length;
     });
   }
+
+  //Objetos
 
   obtenerObjeto() {
     this.brinderService.verificarObjetoAsignadoHoy(this.id!).subscribe({
@@ -515,6 +535,58 @@ export class MiKillerComponent extends BuzonBaseComponent {
     });
   }
 
+  //Killer
+
+  realizarAtaque() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Realizar ataque Killer',
+        message: `Vas a realizar un ataque killer. Tendrás 10 minutos para realizarlo. ¿Deseas continuar?`,
+        showCancel: true,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmado) => {
+      if (confirmado === true) {
+        this.ataqueDeshabilitado = true; // Deshabilitar el botón
+
+        // Guardar el tiempo de deshabilitación en localStorage
+        const deshabilitadoHasta = new Date(
+          new Date().getTime() + 10 * 60 * 1000
+        );
+        localStorage.setItem(
+          'ataqueDeshabilitadoHasta',
+          deshabilitadoHasta.toISOString()
+        );
+
+        setTimeout(() => {
+          this.ataqueDeshabilitado = false; // Habilitar el botón después de 5 minutos
+          localStorage.removeItem('ataqueDeshabilitadoHasta');
+        }, 10 * 60 * 1000);
+
+        this.obtenerDatosEquipo();
+
+        this.brinderService
+          .registrarLogKiller({
+            killer_id: '1',
+            personaje_id: this.id!,
+            personaje_name: this.nombrePersonaje,
+            accion: 'Killer',
+            objeto_id: null,
+            personaje_objetivo_id: null,
+            personaje_objetivo_name: null,
+            resultado: 'Se dispone a atacar',
+            equipo: this.equipo.equipo,
+          })
+          .subscribe();
+
+        this.openDialog(
+          'Ataque Killer',
+          'Tienes 10 minutos para atacar a tu enemigo.'
+        );
+      }
+    });
+  }
   /*unirPersonajesMasivamente(): void {
     const ids = [
       '14',
