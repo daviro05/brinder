@@ -110,7 +110,7 @@
                     <div class="log-hora">{{ log.fecha | date:'HH:mm' }}</div>
 
                     <div class="log-linea">
-                        <strong>{{ log.personaje_name }}</strong> usa<br>
+                        <strong>{{ log.personaje_name }}</strong> {{log.accion === 'Crucifixión' ? 'sufre la' : 'usa'}}<br>
                         <strong>{{ log.accion }}</strong><br>
                         <ng-container *ngIf="log.personaje_objetivo_name">
                             contra <strong>{{ log.personaje_objetivo_name }}</strong>

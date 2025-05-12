@@ -255,7 +255,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
     });
 
     dialogRef.afterClosed().subscribe((confirmado) => {
-      if (confirmado === true) {
+      if (confirmado === true && this.equipo.vida === 1) {
         if (objeto.tipo === 'escudo' && this.equipo.escudo >= 3) {
           this.openDialog(
             'Advertencia',
@@ -587,6 +587,59 @@ export class MiKillerComponent extends BuzonBaseComponent {
       }
     });
   }
+
+  heMuerto() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: '¿Te han matado?',
+        message: `Si tu killer te ha matado, pulsa en aceptar. ¿Deseas continuar?`,
+        showCancel: true,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmado) => {
+      if (confirmado === true) {
+        const personaje_killer = {
+          equipo: this.equipo.equipo,
+          personaje_id: this.id!,
+          activo: this.equipo.activo,
+          killer_id: '1',
+          mision_individual: this.equipo.mision,
+          escudo: this.equipo.escudo,
+          vida: 0,
+        };
+        console.log('Personaje killer:', personaje_killer);
+
+        this.brinderService.actualizarPersonajeKiller(
+          personaje_killer.killer_id,
+          personaje_killer.personaje_id,
+          personaje_killer
+        ).subscribe((res) => {
+          this.obtenerDatosEquipo();
+        });
+
+        this.openDialog(
+          'Has muerto',
+          'Has sufrido la crucifixión. Tu personaje ha muerto.'
+        );
+
+        this.brinderService
+          .registrarLogKiller({
+            killer_id: '1',
+            personaje_id: this.id!,
+            personaje_name: this.nombrePersonaje,
+            accion: 'Crucifixión',
+            objeto_id: null,
+            personaje_objetivo_id: null,
+            personaje_objetivo_name: null,
+            resultado: this.nombrePersonaje + ' ha muerto',
+            equipo: this.equipo.equipo,
+          })
+          .subscribe();
+      }
+    });
+  }
+
   /*unirPersonajesMasivamente(): void {
     const ids = [
       '14',

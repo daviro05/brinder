@@ -54,19 +54,19 @@
     <div class="stats" *ngIf="personaje && seccionActiva === 'estado'">
         <h2>Estado</h2>
 
-        <div class="estado" *ngIf="equipo && equipo.asignado">
-            <p class="equipo">Estado: {{(equipo.vida ? 'vivo🌚' : 'crucificado☠️') | uppercase}}</p>
+        <div class="estado" [ngClass]="{'crucificado': equipo.vida === 0}" *ngIf="equipo && equipo.asignado">
+            <p class="equipo">Estado: {{(equipo.vida ? 'vivo🌚' : '✟ crucifixión ✟') | uppercase}}</p>
             <p class="equipo">Defensa: {{equipo.escudo}}🛡️</p>
-            <div *ngIf="equipo.escudo_objetivo === 0">
+            <div *ngIf="equipo.escudo_objetivo === 0 && equipo.vida === 1">
                 <p class="equipo">Objetivo: {{equipo.escudo_objetivo === 0 ? equipo.objetivo : 'No visible*🔪'}}</p>
                 <p class="equipo">Misión: {{equipo.escudo_objetivo === 0 ? equipo.mision : 'No visible*🔪'}}</p>
             </div>
-            <div class="buttons-killer">
+            <div class="buttons-killer" *ngIf="equipo.vida === 1">
                 <button mat-raised-button class="atacar" (click)="realizarAtaque()"
                     *ngIf="equipo?.escudo_objetivo === 0" [disabled]="ataqueDeshabilitado">
                     🔪 Voy a atacar
                 </button>
-                <button mat-raised-button class="muerto" *ngIf="equipo?.escudo === 0">
+                <button mat-raised-button class="muerto" (click)="heMuerto()" *ngIf="equipo?.escudo === 0">
                     ☠️ He muerto
                 </button>
             </div>
@@ -77,18 +77,16 @@
             </p>
         </div>
 
-        <div *ngIf="ataqueDeshabilitado && equipo?.escudo_objetivo === 0">
-        <p class="copy info">Tienes un killer en proceso.<br>Inténtalo más tarde.</p>
-        </div>
+        <div *ngIf="ataqueDeshabilitado && equipo?.escudo_objetivo === 0 && equipo.vida === 1">
+            <p class="copy info">Tienes un killer en proceso.</p>
+        </div> 
     </div>
 
     <div class="stats mi-equipo" *ngIf="personaje && seccionActiva === 'mi-equipo'">
         <h2>Mi equipo</h2>
 
-        <div *ngIf="!equipo?.asignado && !personaje.rol.includes('inactivo')">
-            <button mat-raised-button class="unirse" (click)="confirmarUnirse()" *ngIf="!mostrandoCuentaAtras">
-                UNIRSE
-            </button>
+        <!--<div *ngIf="!equipo?.asignado && !personaje.rol.includes('inactivo')">
+            <button mat-raised-button class="unirse" (click)="confirmarUnirse()" *ngIf="!mostrandoCuentaAtras">UNIRSE</button>
 
             <div *ngIf="mostrandoCuentaAtras" class="spinner-container">
                 <mat-spinner diameter="50"></mat-spinner>
@@ -96,7 +94,7 @@
             </div>
 
             <p class="copy">Te unirás a un equipo aleatoriamente</p>
-        </div>
+        </div>-->
 
         <div *ngIf="equipo?.asignado">
             <div class="estado">
@@ -126,7 +124,7 @@
             </button>
         </div>
 
-        <div class="estado" *ngIf="equipo && equipo.asignado && !objetoAsignadoHoy">
+        <div class="estado" *ngIf="equipo && equipo.asignado && !objetoAsignadoHoy && equipo.vida === 1">
             <p class="copy">Obtén objetos de ataque, defensa o especiales. Sólo se puede obtener 1 por día.</p>
             <button mat-raised-button class="obtener-objeto" (click)="obtenerObjeto()" [disabled]="objetoAsignadoHoy"
                 *ngIf="!objetoAsignadoHoy && !mostrandoCuentaAtras">
@@ -139,8 +137,11 @@
             </div>
 
         </div>
-        <div *ngIf="equipo && equipo.asignado && objetoAsignadoHoy">
+        <div *ngIf="equipo && equipo.asignado && objetoAsignadoHoy && equipo.vida === 1">
             <p class="copy">Hoy no hay más objetos disponibles.<br>Vuelve mañana</p>
+        </div>
+        <div *ngIf="equipo && equipo.asignado && equipo.vida === 0">
+            <p class="copy">No puedes obtener objetos, estás muerto.</p>
         </div>
 
         <hr class="separator" />
