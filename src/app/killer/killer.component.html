@@ -29,10 +29,13 @@
 
     <div class="killer-estado" *ngIf="seccionActiva === 'estado'">
         <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->
-        <p class="titulo"><b>FASE DE TANTEO</b></p>
+        <p class="titulo"><b>FASE DE KILLER</b></p>
         <div class="mensaje-fase">
-            <span class="copy">Aprovisiónate, estudia tu estrategia, juega en equipo. La batalla está a punto de
-                empezar...</span>
+            <span class="copy">La batalla ha comenzado. Que gane el mejor...</span>
+            <div class="acciones">
+                <span>🔴 {{killerLogRojo.length}} pts</span>
+                <span>🔵 {{killerLogAzul.length}} pts</span>
+            </div>
         </div>
         <!--<div *ngIf="personajesPendientes.length > 0">
             <span>Los equipos se están conformando.</span>

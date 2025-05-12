@@ -190,9 +190,27 @@ export class MiKillerComponent extends BuzonBaseComponent {
 
     this.brinderService.tiposObjeto().subscribe((data) => {
       tipos = data.map((tipo) => tipo.id);
+      tipos.sort((a, b) => a - b);
       // Seleccionar un objeto aleatorio con las mismas probabilidades
-      const indiceAleatorio = Math.floor(Math.random() * tipos.length);
+      const probabilidades = [
+        0.15, 0.15, 0.15, 0.15, 0.1, 0.1, 0.1, 0.05, 0.05,
+      ];
+      const sumaProbabilidades = probabilidades.reduce((a, b) => a + b, 0);
+      const random = Math.random() * sumaProbabilidades;
+      let acumulado = 0;
+      let indiceAleatorio = 0;
+
+      for (let i = 0; i < probabilidades.length; i++) {
+        acumulado += probabilidades[i];
+        if (random <= acumulado) {
+          indiceAleatorio = i;
+          break;
+        }
+      }
       objetoId = tipos[indiceAleatorio];
+
+      console.log('Índice elegido:', indiceAleatorio);
+      console.log('ID del objeto elegido:', objetoId);
 
       const objeto = {
         personaje_id: this.id!,
@@ -610,13 +628,15 @@ export class MiKillerComponent extends BuzonBaseComponent {
         };
         console.log('Personaje killer:', personaje_killer);
 
-        this.brinderService.actualizarPersonajeKiller(
-          personaje_killer.killer_id,
-          personaje_killer.personaje_id,
-          personaje_killer
-        ).subscribe((res) => {
-          this.obtenerDatosEquipo();
-        });
+        this.brinderService
+          .actualizarPersonajeKiller(
+            personaje_killer.killer_id,
+            personaje_killer.personaje_id,
+            personaje_killer
+          )
+          .subscribe((res) => {
+            this.obtenerDatosEquipo();
+          });
 
         this.openDialog(
           'Has muerto',

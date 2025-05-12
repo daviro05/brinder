@@ -146,7 +146,7 @@
 
         <hr class="separator" />
 
-        <div class="mis-objetos" *ngIf="equipo && equipo.asignado">
+        <div class="mis-objetos" *ngIf="equipo && equipo.asignado && equipo.vida === 1">
             <div class="grid-objetos">
                 <button class="objeto" *ngFor="let objeto of objetos" (click)="usarObjeto(objeto)"
                     [disabled]="objeto.usado">
