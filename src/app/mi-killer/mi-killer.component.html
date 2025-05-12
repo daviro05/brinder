@@ -57,13 +57,17 @@
         <div class="estado" [ngClass]="{'crucificado': equipo.vida === 0}" *ngIf="equipo && equipo.asignado">
             <p class="equipo">Estado: {{(equipo.vida ? 'vivo🌚' : '✟ crucifixión ✟') | uppercase}}</p>
             <p class="equipo">Defensa: {{equipo.escudo}}🛡️</p>
-            <div *ngIf="equipo.escudo_objetivo === 0 && equipo.vida === 1">
+            <div *ngIf="equipo.escudo_objetivo === 0 && equipo.vida === 1 && equipo?.vida_objetivo === 1">
                 <p class="equipo">Objetivo: {{equipo.escudo_objetivo === 0 ? equipo.objetivo : 'No visible*🔪'}}</p>
                 <p class="equipo">Misión: {{equipo.escudo_objetivo === 0 ? equipo.mision : 'No visible*🔪'}}</p>
             </div>
+            <div *ngIf=" equipo?.vida === 1 && (equipo?.vida_objetivo === 0 || equipo?.vida_objetivo === null)">
+                <p class="copy info">Ya has matado a tu objetivo.<br>Espera una reasignación.</p>
+            </div>
             <div class="buttons-killer" *ngIf="equipo.vida === 1">
                 <button mat-raised-button class="atacar" (click)="realizarAtaque()"
-                    *ngIf="equipo?.escudo_objetivo === 0" [disabled]="ataqueDeshabilitado">
+                    *ngIf="equipo?.escudo_objetivo === 0 && equipo?.vida_objetivo === 1"
+                    [disabled]="ataqueDeshabilitado">
                     🔪 Voy a atacar
                 </button>
                 <button mat-raised-button class="muerto" (click)="heMuerto()" *ngIf="equipo?.escudo === 0">
@@ -72,14 +76,15 @@
             </div>
         </div>
 
-        <div *ngIf="!equipo?.objetivo">
+        <div *ngIf="!equipo?.objetivo && equipo?.vida === 1 && (equipo?.vida_objetivo !== 0 && equipo?.vida_objetivo !== null)">
             <p class="copy info">Tu objetivo aparecerá cuándo no tenga defensa.<br>Sólo podrás matarle en ese estado.
             </p>
         </div>
 
-        <div *ngIf="ataqueDeshabilitado && equipo?.escudo_objetivo === 0 && equipo.vida === 1">
+        <div
+            *ngIf="ataqueDeshabilitado && equipo?.escudo_objetivo === 0 && equipo?.vida === 1 && equipo?.vida_objetivo === 1">
             <p class="copy info">Tienes un killer en proceso.</p>
-        </div> 
+        </div>
     </div>
 
     <div class="stats mi-equipo" *ngIf="personaje && seccionActiva === 'mi-equipo'">

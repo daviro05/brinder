@@ -9,6 +9,7 @@ export class EquipoModel {
     public escudo: number,
     public valor: number,
     public vida: number,
+    public vida_objetivo: number,
     public objetivo: string,
     public personaje_kill: string,
     public escudo_objetivo: number,

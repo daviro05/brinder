@@ -510,7 +510,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
 
   // Unirse a un equipo
 
-  unirseEquipo() {
+  /*unirseEquipo() {
     this.mostrandoCuentaAtras = true;
     this.cuentaAtras = 5;
 
@@ -551,7 +551,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
         //this.unirPersonajesMasivamente();
       }
     });
-  }
+  }*/
 
   //Killer
 
