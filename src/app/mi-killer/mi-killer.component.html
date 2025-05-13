@@ -81,8 +81,7 @@
             </p>
         </div>
 
-        <div
-            *ngIf="ataqueDeshabilitado && equipo?.escudo_objetivo === 0 && equipo?.vida === 1 && equipo?.vida_objetivo === 1">
+        <div *ngIf="ataqueDeshabilitado && equipo?.escudo_objetivo === 0 && equipo?.vida === 1 && equipo?.vida_objetivo === 1">
             <p class="copy info">Tienes un killer en proceso.</p>
         </div>
     </div>
@@ -90,23 +89,11 @@
     <div class="stats mi-equipo" *ngIf="personaje && seccionActiva === 'mi-equipo'">
         <h2>Mi equipo</h2>
 
-        <!--<div *ngIf="!equipo?.asignado && !personaje.rol.includes('inactivo')">
-            <button mat-raised-button class="unirse" (click)="confirmarUnirse()" *ngIf="!mostrandoCuentaAtras">UNIRSE</button>
-
-            <div *ngIf="mostrandoCuentaAtras" class="spinner-container">
-                <mat-spinner diameter="50"></mat-spinner>
-                <p>Uniéndose en {{ cuentaAtras }}</p>
-            </div>
-
-            <p class="copy">Te unirás a un equipo aleatoriamente</p>
-        </div>-->
-
         <div *ngIf="equipo?.asignado">
             <div class="estado">
                 <p class="equipo">
                     Tu equipo es el
-                    <span
-                        [ngStyle]="{'color': equipo.equipo === 'rojo' ? 'red' : equipo.equipo === 'azul' ? 'blue' : 'black'}">
+                    <span [ngStyle]="{'color': equipo.equipo === 'rojo' ? 'red' : equipo.equipo === 'azul' ? 'blue' : 'black'}">
                         {{equipo.equipo | uppercase}}
                     </span>
                 </p>
@@ -114,11 +101,9 @@
                 <p class="equipo">Puntos: {{puntosEquipoElegido}}</p>
             </div>
         </div>
-
         <div *ngIf="personaje.rol.includes('inactivo')">
             <p class="copy">No participas en el Killer por equipos</p>
         </div>
-
     </div>
 
     <div class="stats inventario" *ngIf="personaje && seccionActiva === 'inventario'">

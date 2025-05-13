@@ -21,6 +21,24 @@ export class BrinderService {
     return this.http.get<string>(this.BASE_URL + '/ping');
   }
 
+  /* MATCHES */
+  
+  obtenerMatches(tipo: string) {
+    return this.http.get<any[]>(`${this.BASE_URL}/matches/todos/${tipo}`);
+  }
+
+  obtenerMatchesPersonaje(tipo: string, personaje_id: string) {
+    return this.http.get<any[]>(
+      `${this.BASE_URL}/matches/personajes/${tipo}/${personaje_id}`
+    );
+  }
+
+  sendMatch(matchData: MatchModel) {
+    return this.http.post(`${this.BASE_URL}/matches`, matchData);
+  }
+
+  /* PERSONAJES */
+
   obtenerPersonajes(tipo: string): Observable<BrinderModel[]> {
     return this.http
       .get<BrinderModel[]>(`${this.BASE_URL}/personajes/${tipo}`)
@@ -47,20 +65,6 @@ export class BrinderService {
     );
   }
 
-  obtenerMatches(tipo: string) {
-    return this.http.get<any[]>(`${this.BASE_URL}/matches/todos/${tipo}`);
-  }
-
-  obtenerMatchesPersonaje(tipo: string, personaje_id: string) {
-    return this.http.get<any[]>(
-      `${this.BASE_URL}/matches/personajes/${tipo}/${personaje_id}`
-    );
-  }
-
-  sendMatch(matchData: MatchModel) {
-    return this.http.post(`${this.BASE_URL}/matches`, matchData);
-  }
-
   agregarPersonaje(personaje: FormData) {
     return this.http.post<string>(
       `${this.BASE_URL}/personajes/agregar`,
@@ -76,6 +80,8 @@ export class BrinderService {
     return this.http.delete<string>(`${this.BASE_URL}/personajes/borrar/${id}`);
   }
 
+  /* CONTACTO */
+
   enviarContacto(contacto: { nombre: string; mensaje: string; tipo: string }) {
     return this.http.post<string>(`${this.BASE_URL}/contacto`, contacto);
   }
@@ -84,14 +90,7 @@ export class BrinderService {
     return this.http.get<any[]>(`${this.BASE_URL}/contacto/${tipo}`);
   }
 
-  enviarMensaje(buzon: {
-    codigo_origen: string;
-    codigo_destino: string;
-    mensaje: string;
-    tipo: string;
-  }) {
-    return this.http.post<string>(`${this.BASE_URL}/buzon/enviar`, buzon);
-  }
+  /* AVISOS */
 
   enviarAviso(aviso: { prioridad: string; mensaje: string; tipo: string }) {
     return this.http.post<string>(`${this.BASE_URL}/avisos`, aviso);
@@ -99,6 +98,17 @@ export class BrinderService {
 
   listarAvisos(tipo: string) {
     return this.http.get<any[]>(`${this.BASE_URL}/avisos/${tipo}`);
+  }
+
+  /* BUZÓN */
+
+  enviarMensaje(buzon: {
+    codigo_origen: string;
+    codigo_destino: string;
+    mensaje: string;
+    tipo: string;
+  }) {
+    return this.http.post<string>(`${this.BASE_URL}/buzon/enviar`, buzon);
   }
 
   listarMensajesBuzon(tipo: string) {
@@ -133,6 +143,8 @@ export class BrinderService {
       alias,
     });
   }
+
+  /* MEDALLAS */
 
   obtenerMedallas(id: string) {
     return this.http.get<any[]>(`${this.BASE_URL}/medallas/${id}`);
@@ -228,17 +240,6 @@ export class BrinderService {
     );
   }
 
-  actualizarPersonajeKiller(
-    killer_id: string,
-    personaje_id: string,
-    personaje_killer: any
-  ) {
-    return this.http.put(
-      `${this.BASE_URL}/killer/${killer_id}/${personaje_id}`,
-      personaje_killer
-    );
-  }
-
   eliminarObjeto(objetoId: string) {
     return this.http.put(
       `${this.BASE_URL}/killer/objetos/eliminar/${objetoId}`,
@@ -252,6 +253,21 @@ export class BrinderService {
       null
     );
   }
+
+  /* ACTUALIZAR PERSONAJE_KILLER */
+
+  actualizarPersonajeKiller(
+    killer_id: string,
+    personaje_id: string,
+    personaje_killer: any
+  ) {
+    return this.http.put(
+      `${this.BASE_URL}/killer/${killer_id}/${personaje_id}`,
+      personaje_killer
+    );
+  }
+
+  /* LOG KILLER */
 
   registrarLogKiller(data: {
     killer_id: string;
