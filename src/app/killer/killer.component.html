@@ -136,9 +136,6 @@
                 </div>
             </ng-container>
         </div>
-
-
-
     </div>
 
     <div class="button-container-secondary">
@@ -146,7 +143,8 @@
         <button mat-raised-button class="unirte" type="button" (click)="utils.navegar('mi-killer')">
             Mi Equipo
         </button>
-        <button class="actualizar-log" mat-raised-button (click)="obtenerKillerLog()" *ngIf="seccionActiva === 'log-batalla'">
+        <button class="actualizar-log" mat-raised-button
+            (click)="seccionActiva === 'log-batalla' ? obtenerKillerLog() : obtenerKillerConfig()">
             <mat-icon>refresh</mat-icon>
             Actualizar
         </button>
