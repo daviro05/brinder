@@ -299,4 +299,19 @@ export class BrinderService {
   obtenerLogKiller() {
     return this.http.get<any[]>(`${this.BASE_URL}/killer/log`);
   }
+
+  /* KILLER LOG */
+
+  obtenerKillerConfig() {
+    return this.http.get<any[]>(`${this.BASE_URL}/killer/config`);
+  }
+
+  registrarKillerConfig(data: {
+    puntosR: number;
+    puntosA: number;
+  }) {
+
+    console.log(data)
+    return this.http.post(`${this.BASE_URL}/killer/config`, data);
+  }
 }

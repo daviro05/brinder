@@ -124,12 +124,13 @@
   display: flex;
   justify-content: center;
   gap: 15px;
+  margin-top: 20px;
 
   button {
-    padding: 10px;
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    font-size: 12px;
   }
 }
 
@@ -178,7 +179,6 @@
 }
 
 .unirte {
-  margin: 1rem;
   background: linear-gradient(90deg, rgb(255, 87, 87), rgb(144, 144, 255));
   color: white !important;
 }

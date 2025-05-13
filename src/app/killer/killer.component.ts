@@ -26,10 +26,16 @@ export class KillerComponent {
   vivos: string = '';
   muertos: string = '';
   estadoSeleccionado: string = 'vivo'; // Nuevo estado seleccionado
+  
   equipoRojo: any[] = [];
   equipoAzul: any[] = [];
+  configKiller: any = {};
+
+  faseKiller: string = 'KILLER';
   killerLogRojo: any[] = []; // Log de acciones del equipo rojo
   killerLogAzul: any[] = []; // Log de acciones del equipo azul
+  puntosRojo: number = 0;
+  puntosAzul: number = 0;
   personajesPendientes: any[] = []; // Arreglo para personajes pendientes
   personajesPendientesName: string = '';
   seccionActiva: string = 'estado';
@@ -58,6 +64,7 @@ export class KillerComponent {
     this.loadCharacters();
     this.getPersonajesEquipo(); // Llamar al método para obtener personajes del equipo
     this.obtenerKillerLog();
+    this.obtenerKillerConfig();
   }
 
   getPersonajesEquipo() {
@@ -201,5 +208,14 @@ export class KillerComponent {
 
   toggleFiltro(): void {
     this.mostrarFiltro = !this.mostrarFiltro;
+  }
+
+  obtenerKillerConfig(){
+      this.brinderService.obtenerKillerConfig().subscribe((config) => {
+      this.configKiller = config;
+      this.faseKiller = this.configKiller.fase_killer;
+      this.puntosRojo = this.configKiller.puntos_rojo;
+      this.puntosAzul = this.configKiller.puntos_azul;
+    });
   }
 }

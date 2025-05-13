@@ -275,8 +275,8 @@ export class MiKillerComponent extends BuzonBaseComponent {
     const objetoEncontrado = this.objetos.find((o) => o.id === objeto.id);
     if (!objetoEncontrado || objeto.usado === 1) {
       this.openDialog(
-      'Error',
-      'El objeto no está disponible en tu inventario o ya ha sido usado.'
+        'Error',
+        'El objeto no está disponible en tu inventario o ya ha sido usado.'
       );
       return;
     }
@@ -715,6 +715,29 @@ export class MiKillerComponent extends BuzonBaseComponent {
   }
 
   //Killer
+
+  incrementarPuntos(equipo: string, puntos: number) {
+    let puntosTotales =
+      equipo === 'rojo'
+        ? { puntosR: puntos, puntosA: 0 }
+        : { puntosR: 0, puntosA: puntos };
+    this.brinderService.registrarKillerConfig(puntosTotales).subscribe();
+
+    this.brinderService
+      .registrarLogKiller({
+        killer_id: '1',
+        personaje_id: this.id!,
+        personaje_name: this.nombrePersonaje,
+        accion: 'puntos',
+        objeto_id: null,
+        personaje_objetivo_id: null,
+        personaje_objetivo_name: null,
+        resultado:
+          'Equipo ' + equipo + ' +'+ puntos + 'puntos',
+        equipo: this.equipo.equipo,
+      })
+      .subscribe();
+  }
 
   async realizarAtaque() {
     try {

@@ -2,18 +2,6 @@
     <div class="title-container">
         <h2><span>KILLER X EQUIP</span><mat-icon class="icon material-symbols-outlined">skull</mat-icon><span>S</span>
         </h2>
-        <!--<div class="button-container" *ngIf="filteredCharacters.length > 0">
-            <button mat-button (click)="seleccionarEstado('todos')" [class.seleccionado]="estadoSeleccionado === 'todos'">
-                Todos
-            </button>
-            <button mat-button (click)="seleccionarEstado('vivo')" [class.seleccionado]="estadoSeleccionado === 'vivo'">
-                Vivos: {{ vivos }}
-            </button>
-            <button mat-button (click)="seleccionarEstado('muerto')"
-                [class.seleccionado]="estadoSeleccionado === 'muerto'">
-                Muertos: {{ muertos }}
-            </button>
-        </div>-->
     </div>
 
     <div class="button-container">
@@ -29,13 +17,13 @@
 
     <div class="killer-estado" *ngIf="seccionActiva === 'estado'">
         <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->
-        <p class="titulo"><b>FASE 1 DE KILLER</b></p>
+        <p class="titulo"><b>{{faseKiller | uppercase }}</b></p>
         <div class="mensaje-fase">
-            <span class="copy">La batalla ha comenzado. Que gane el mejor equipo...</span>
+            <span class="copy">La batalla ha comenzado. Mucha suerte, y que gane el mejor...</span>
             <div class="acciones">
-                <span>🔴 {{killerLogRojo.length}} pts</span>
+                <span>🔴 {{puntosRojo}} pts</span>
                 <span>VS</span>
-                <span>🔵 {{killerLogAzul.length}} pts</span>
+                <span>🔵 {{puntosAzul}} pts</span>
             </div>
         </div>
         <!--<div *ngIf="personajesPendientes.length > 0">
@@ -90,10 +78,6 @@
                 </div>
             </div>
         </div>
-
-        <button mat-raised-button class="unirte" type="button" (click)="utils.navegar('mi-killer')">
-            Ir a Mi Equipo
-        </button>
     </div>
 
     <div class="killer-estado" *ngIf="seccionActiva === 'log-batalla'">
@@ -103,9 +87,10 @@
 
         <div class="mensaje-fase">
             <div class="acciones">
-                <span>🔴 {{killerLogRojo.length}} acc...</span>
-                <mat-icon class="material-symbols-outlined"  (click)="toggleFiltro()">{{ mostrarFiltro ? 'filter_alt_off' : 'filter_alt' }}</mat-icon>
-                <span>🔵 {{killerLogAzul.length}} acc...</span>
+                <span>🔴 {{killerLogRojo.length}} acc</span>
+                <mat-icon class="material-symbols-outlined" (click)="toggleFiltro()">{{ mostrarFiltro ? 'filter_alt_off'
+                    : 'filter_alt' }}</mat-icon>
+                <span>🔵 {{killerLogAzul.length}} acc</span>
             </div>
         </div>
 
@@ -142,7 +127,8 @@
                         'usa'}}<br>
                         <strong>{{ log.accion }}</strong><br>
                         <ng-container *ngIf="log.personaje_objetivo_name">
-                            {{log.accion === 'Cambio de Alpargatas' ? 'con' : 'contra'}} <strong>{{ log.personaje_objetivo_name }}</strong>
+                            {{log.accion === 'Cambio de Alpargatas' ? 'con' : 'contra'}} <strong>{{
+                                log.personaje_objetivo_name }}</strong>
                         </ng-container>
                     </div>
 
@@ -156,8 +142,11 @@
     </div>
 
     <div class="button-container-secondary">
-        <button class="actualizar-log" mat-raised-button (click)="obtenerKillerLog()"
-            *ngIf="seccionActiva === 'log-batalla'">
+
+        <button mat-raised-button class="unirte" type="button" (click)="utils.navegar('mi-killer')">
+            Mi Equipo
+        </button>
+        <button class="actualizar-log" mat-raised-button (click)="obtenerKillerLog()" *ngIf="seccionActiva === 'log-batalla'">
             <mat-icon>refresh</mat-icon>
             Actualizar
         </button>
