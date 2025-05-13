@@ -22,7 +22,7 @@ export class BrinderService {
   }
 
   /* MATCHES */
-  
+
   obtenerMatches(tipo: string) {
     return this.http.get<any[]>(`${this.BASE_URL}/matches/todos/${tipo}`);
   }
@@ -206,10 +206,16 @@ export class BrinderService {
     );
   }
 
-  getPersonajesEquipo(killerId: string, equipo: string) {
-    return this.http.get<any>(
-      `${this.BASE_URL}/killer/${killerId}/equipo/${equipo}`
-    );
+  getPersonajesEquipo(killerId: string, equipo?: string) {
+    if (equipo) {
+      return this.http.get<any>(
+        `${this.BASE_URL}/killer/${killerId}/equipo/${equipo}`
+      );
+    } else {
+      return this.http.get<any>(
+        `${this.BASE_URL}/killer/${killerId}/equipo/todos`
+      );
+    }
   }
 
   tiposObjeto() {
@@ -250,6 +256,13 @@ export class BrinderService {
   usarObjeto(objetoId: string) {
     return this.http.put(
       `${this.BASE_URL}/killer/objetos/usar/${objetoId}`,
+      null
+    );
+  }
+
+  intercambiarInventario(idA: string, idB: string) {
+    return this.http.put(
+      `${this.BASE_URL}/killer/objetos/intercambiar/${idA}/${idB}`,
       null
     );
   }

@@ -252,19 +252,35 @@ export class MiKillerComponent extends BuzonBaseComponent {
     this.misObjetos();
   }
 
-  misObjetos() {
-    this.brinderService.getMisObjetos(this.id!).subscribe((data) => {
-      this.objetos = data.filter((objeto: any) => objeto.usado === 0);
-      //console.log('Objetos:', this.objetos);
+  misObjetos(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.brinderService.getMisObjetos(this.id!).subscribe({
+        next: (data) => {
+          this.objetos = data.filter((objeto: any) => objeto.usado === 0);
+          resolve();
+        },
+        error: (err) => {
+          console.error('Error al obtener objetos:', err);
+          reject(err);
+        },
+      });
     });
   }
 
-  usarObjeto(objeto: any) {
-    this.misObjetos();
-    this.obtenerDatosEquipo();
-    if (objeto.usado === 1) {
+  async usarObjeto(objeto: any) {
+    await this.misObjetos();
+    await this.obtenerDatosEquipo();
+
+    // Comprobar que el objeto está en this.objetos
+    const objetoEncontrado = this.objetos.find((o) => o.id === objeto.id);
+    if (!objetoEncontrado || objeto.usado === 1) {
+      this.openDialog(
+      'Error',
+      'El objeto no está disponible en tu inventario o ya ha sido usado.'
+      );
       return;
     }
+
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         title: 'Usar Objeto',
@@ -340,6 +356,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
             ) {
               this.seleccionarObjetivo(objeto);
             } else if (objeto.tipo === 'cambio') {
+              this.intercambiarInventario(objeto);
             }
           },
           error: (err: { status: number }) => {
@@ -627,6 +644,74 @@ export class MiKillerComponent extends BuzonBaseComponent {
 `,
       },
     });
+  }
+
+  intercambiarInventario(objeto: any) {
+    this.brinderService.getPersonajesEquipo('1').subscribe((data) => {
+      const personajes = data.personajes.sort((a: any, b: any) => {
+        const nombreA =
+          a.name
+            ?.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '') || '';
+        const nombreB =
+          b.name
+            ?.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '') || '';
+        return nombreA > nombreB ? 1 : nombreA < nombreB ? -1 : 0;
+      });
+
+      const dialogRef = this.dialog.open(DialogComponent, {
+        data: {
+          title: 'Seleccionar Personaje',
+          message: 'Selecciona un personaje para usar ' + objeto.nombre,
+          personajes: personajes,
+        },
+        disableClose: true,
+      });
+
+      dialogRef.afterClosed().subscribe((personajeSeleccionado) => {
+        //console.log('Diálogo cerrado:', personajeSeleccionado);
+        if (personajeSeleccionado) {
+          this.brinderService
+            .intercambiarInventario(
+              personajeSeleccionado.personaje_id,
+              this.id!
+            )
+            .subscribe({
+              next: (res) => {
+                this.openDialog(
+                  'Éxito',
+                  `Has intercambiado tu Inventario con ${personajeSeleccionado.name}.`
+                );
+                this.obtenerDatosEquipo();
+                this.misObjetos();
+                this.brinderService
+                  .registrarLogKiller({
+                    killer_id: '1',
+                    personaje_id: this.id!,
+                    personaje_name: this.nombrePersonaje,
+                    accion: objeto.nombre,
+                    objeto_id: objeto.objeto_id,
+                    personaje_objetivo_id:
+                      personajeSeleccionado?.personaje_id ?? null,
+                    personaje_objetivo_name:
+                      personajeSeleccionado?.name ?? null,
+                    resultado: 'Intercambian su Inventario',
+                    equipo: this.equipo.equipo,
+                  })
+                  .subscribe();
+                return;
+              },
+              error: (err) => {
+                console.error('Error al comprobar equipo:', err);
+              },
+            });
+        }
+      });
+    });
+    this.misObjetos();
   }
 
   //Killer

@@ -142,7 +142,7 @@
                         'usa'}}<br>
                         <strong>{{ log.accion }}</strong><br>
                         <ng-container *ngIf="log.personaje_objetivo_name">
-                            contra <strong>{{ log.personaje_objetivo_name }}</strong>
+                            {{log.accion === 'Cambio de Alpargatas' ? 'con' : 'contra'}} <strong>{{ log.personaje_objetivo_name }}</strong>
                         </ng-container>
                     </div>
 
