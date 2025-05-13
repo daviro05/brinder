@@ -443,7 +443,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
                               personaje_objetivo_name:
                                 personajeSeleccionado?.name ?? null,
                               resultado:
-                                'Sin éxito, ' +
+                                'Sin éxito. ' +
                                 personajeSeleccionado?.name +
                                 ' no tiene objetos',
                               equipo: this.equipo.equipo,

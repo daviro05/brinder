@@ -33,6 +33,10 @@ export class KillerComponent {
   personajesPendientes: any[] = []; // Arreglo para personajes pendientes
   personajesPendientesName: string = '';
   seccionActiva: string = 'estado';
+  personajes: any[] = []; // Lista de personajes para el filtro
+  personajeSeleccionado: string | null = null; // Personaje seleccionado en el filtro
+  killerLogFiltrado: any[] = []; // Log filtrado
+  mostrarFiltro: boolean = false; // Controla la visibilidad del filtro
 
   constructor(
     private brinderService: BrinderService,
@@ -170,15 +174,32 @@ export class KillerComponent {
   }
 
   obtenerKillerLog() {
+    this.personajeSeleccionado = null;
     this.brinderService.obtenerLogKiller().subscribe((log) => {
       this.killerLog = log;
-      //console.log('Log de acciones:', this.killerLog);
+      this.killerLogFiltrado = log; // Inicialmente, mostrar todo el log
       this.killerLogRojo = this.killerLog.filter(
-        (log) => log.equipo === 'rojo'  
+        (log) => log.equipo === 'rojo'
       );
       this.killerLogAzul = this.killerLog.filter(
-        (log) => log.equipo === 'azul'  
+        (log) => log.equipo === 'azul'
       );
     });
+  }
+
+  filtrarLog() {
+    if (this.personajeSeleccionado) {
+      this.killerLogFiltrado = this.killerLog.filter(
+        (log) =>
+          log.personaje_name === this.personajeSeleccionado ||
+          log.personaje_objetivo_name === this.personajeSeleccionado
+      );
+    } else {
+      this.killerLogFiltrado = this.killerLog; // Mostrar todo si no hay filtro
+    }
+  }
+
+  toggleFiltro(): void {
+    this.mostrarFiltro = !this.mostrarFiltro;
   }
 }

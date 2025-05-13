@@ -340,3 +340,21 @@
 .log-azul {
   border: 1px solid blue;
 }
+
+.log-img{
+  img{
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    object-fit: cover;
+    border-radius: 30px;
+  }
+}
+
+// Filter
+
+.filter-container{
+  margin-top: 20px;
+}

@@ -50,14 +50,18 @@
                 <h3>Guerreros de Jehová ({{equipoRojo.length}})</h3>
                 <div class="team-grid">
                     <!-- Capitán del equipo rojo -->
-                    <div class="character-card captain" *ngIf="getCapitan(equipoRojo) as capitanRojo" [ngClass]="{'crucificado': capitanRojo.vida === 0}">
-                        <img [src]="capitanRojo.vida === 1 ? capitanRojo.image_url : 'assets/crucifixion.png'" alt="{{ capitanRojo.name }}" class="character-image">
+                    <div class="character-card captain" *ngIf="getCapitan(equipoRojo) as capitanRojo"
+                        [ngClass]="{'crucificado': capitanRojo.vida === 0}">
+                        <img [src]="capitanRojo.vida === 1 ? capitanRojo.image_url : 'assets/crucifixion.png'"
+                            alt="{{ capitanRojo.name }}" class="character-image">
                         <span class="label-name">{{ capitanRojo.name }}<br>(Capi)</span>
                         <span>{{ '🛡️'.repeat(capitanRojo.escudo) }}</span>
                     </div>
                     <!-- Resto del equipo rojo -->
-                    <div class="character-card" *ngFor="let character of getMiembrosSinCapitan(equipoRojo)" [ngClass]="{'crucificado': character.vida === 0}">
-                        <img [src]="character.vida === 1 ? character.image_url : 'assets/crucifixion.png'" alt="{{ character.name }}" class="character-image">
+                    <div class="character-card" *ngFor="let character of getMiembrosSinCapitan(equipoRojo)"
+                        [ngClass]="{'crucificado': character.vida === 0}">
+                        <img [src]="character.vida === 1 ? character.image_url : 'assets/crucifixion.png'"
+                            alt="{{ character.name }}" class="character-image">
                         <span class="label-name">{{ character.name }}</span>
                         <span>{{ '🛡️'.repeat(character.escudo) }}</span>
                     </div>
@@ -68,14 +72,18 @@
                 <h3>Frente Popular de Judea ({{equipoAzul.length}})</h3>
                 <div class="team-grid">
                     <!-- Capitán del equipo azul -->
-                    <div class="character-card captain" *ngIf="getCapitan(equipoAzul) as capitanAzul" [ngClass]="{'crucificado': capitanAzul.vida === 0}">
-                        <img [src]="capitanAzul.vida === 1 ? capitanAzul.image_url : 'assets/crucifixion.png'" alt="{{ capitanAzul.name }}" class="character-image">
+                    <div class="character-card captain" *ngIf="getCapitan(equipoAzul) as capitanAzul"
+                        [ngClass]="{'crucificado': capitanAzul.vida === 0}">
+                        <img [src]="capitanAzul.vida === 1 ? capitanAzul.image_url : 'assets/crucifixion.png'"
+                            alt="{{ capitanAzul.name }}" class="character-image">
                         <span class="label-name">{{ capitanAzul.name }}<br>(Capi)</span>
                         <span>{{ '🛡️'.repeat(capitanAzul.escudo) }}</span>
                     </div>
                     <!-- Resto del equipo azul -->
-                    <div class="character-card" *ngFor="let character of getMiembrosSinCapitan(equipoAzul)" [ngClass]="{'crucificado': character.vida === 0}">
-                        <img [src]="character.vida === 1 ? character.image_url : 'assets/crucifixion.png'" alt="{{ character.name }}" class="character-image">
+                    <div class="character-card" *ngFor="let character of getMiembrosSinCapitan(equipoAzul)"
+                        [ngClass]="{'crucificado': character.vida === 0}">
+                        <img [src]="character.vida === 1 ? character.image_url : 'assets/crucifixion.png'"
+                            alt="{{ character.name }}" class="character-image">
                         <span class="label-name">{{ character.name }}</span>
                         <span>{{ '🛡️'.repeat(character.escudo) }}</span>
                     </div>
@@ -92,18 +100,33 @@
         <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->
         <p class="titulo"><b>LOG DE BATALLA</b></p>
         <p class="copy">Aquí podrás ver el estado de la batalla</p>
+
         <div class="mensaje-fase">
             <div class="acciones">
                 <span>🔴 {{killerLogRojo.length}} acc...</span>
+                <mat-icon class="material-symbols-outlined"  (click)="toggleFiltro()">{{ mostrarFiltro ? 'filter_alt_off' : 'filter_alt' }}</mat-icon>
                 <span>🔵 {{killerLogAzul.length}} acc...</span>
             </div>
         </div>
 
+        <!-- Filtro por personaje -->
+        <div class="filter-container" *ngIf="mostrarFiltro">
+            <mat-form-field appearance="fill">
+                <mat-label>Filtrar personaje</mat-label>
+                <mat-select [(value)]="personajeSeleccionado" (selectionChange)="filtrarLog()">
+                    <mat-option [value]="null">Todos</mat-option>
+                    <mat-option *ngFor="let personaje of characters" [value]="personaje.name">
+                        {{ personaje.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
         <div class="log">
-            <ng-container *ngFor="let log of killerLog; let i = index">
+            <ng-container *ngFor="let log of killerLogFiltrado; let i = index">
 
                 <!-- Mostrar encabezado de fecha solo si cambia el día -->
-                <div *ngIf="i === 0 || (log.fecha | date:'dd/MM/yyyy') !== (killerLog[i - 1].fecha | date:'dd/MM/yyyy')"
+                <div *ngIf="i === 0 || (log.fecha | date:'dd/MM/yyyy') !== (killerLogFiltrado[i - 1].fecha | date:'dd/MM/yyyy')"
                     class="log-dia">
                     {{ log.fecha | date:'dd/MM/yyyy' }}
                 </div>
@@ -111,10 +134,12 @@
                 <div class="log-entry"
                     [ngClass]="{'log-rojo': log.equipo === 'rojo', 'log-azul': log.equipo === 'azul'}">
 
+                    <div class="log-img"><img [src]="log.image_url"></div>
                     <div class="log-hora">{{ log.fecha | date:'HH:mm' }}</div>
 
                     <div class="log-linea">
-                        <strong>{{ log.personaje_name }}</strong> {{log.accion === 'Crucifixión' ? 'sufre la' : 'usa'}}<br>
+                        <strong>{{ log.personaje_name }}</strong> {{log.accion === 'Crucifixión' ? 'sufre la' :
+                        'usa'}}<br>
                         <strong>{{ log.accion }}</strong><br>
                         <ng-container *ngIf="log.personaje_objetivo_name">
                             contra <strong>{{ log.personaje_objetivo_name }}</strong>
