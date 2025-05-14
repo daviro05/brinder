@@ -19,7 +19,7 @@
         <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->
         <p class="titulo"><b>{{faseKiller | uppercase }}</b></p>
         <div class="mensaje-fase">
-            <span class="copy">La batalla ha comenzado. Mucha suerte, y que gane el mejor...</span>
+            <span class="copy">La batalla ha comenzado. Que gane el mejor...</span>
             <div class="acciones">
                 <span>🔴 {{puntosRojo}} pts</span>
                 <span>VS</span>
@@ -95,17 +95,20 @@
         </div>
 
         <!-- Filtro por personaje -->
-        <div class="filter-container" *ngIf="mostrarFiltro">
-            <mat-form-field appearance="fill">
-                <mat-label>Filtrar personaje</mat-label>
-                <mat-select [(value)]="personajeSeleccionado" (selectionChange)="filtrarLog()">
-                    <mat-option [value]="null">Todos</mat-option>
-                    <mat-option *ngFor="let personaje of characters" [value]="personaje.name">
-                        {{ personaje.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+        <div class="filter-wrapper">
+            <div class="filter-container" [class.visible]="mostrarFiltro">
+                <mat-form-field appearance="fill">
+                    <mat-label>Filtrar personaje</mat-label>
+                    <mat-select [(value)]="personajeSeleccionado" (selectionChange)="filtrarLog()">
+                        <mat-option [value]="null">Todos</mat-option>
+                        <mat-option *ngFor="let personaje of characters" [value]="personaje.name">
+                            {{ personaje.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
         </div>
+
 
         <div class="log">
             <ng-container *ngFor="let log of killerLogFiltrado; let i = index">
