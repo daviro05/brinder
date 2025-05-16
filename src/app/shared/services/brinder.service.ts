@@ -310,8 +310,6 @@ export class BrinderService {
     puntosR: number;
     puntosA: number;
   }) {
-
-    console.log(data)
     return this.http.post(`${this.BASE_URL}/killer/config`, data);
   }
 }

@@ -342,7 +342,9 @@ export class MiKillerComponent extends BuzonBaseComponent {
                         '/3)🛡️',
                       equipo: this.equipo.equipo,
                     })
-                    .subscribe();
+                    .subscribe(() => {
+                      this.incrementarPuntos(this.equipo.equipo, 5);
+                    });
                 });
               this.openDialog(
                 'Éxito',
@@ -501,7 +503,12 @@ export class MiKillerComponent extends BuzonBaseComponent {
                                     personajeSeleccionado?.name,
                                   equipo: this.equipo.equipo,
                                 })
-                                .subscribe();
+                                .subscribe(() => {
+                                  this.incrementarPuntos(
+                                    this.equipo.equipo,
+                                    15
+                                  );
+                                });
                             });
                         }
 
@@ -533,7 +540,9 @@ export class MiKillerComponent extends BuzonBaseComponent {
                                 personajeSeleccionado?.name,
                               equipo: this.equipo.equipo,
                             })
-                            .subscribe();
+                            .subscribe(() => {
+                              this.incrementarPuntos(this.equipo.equipo, 20);
+                            });
                         }
                       });
                   }
@@ -591,7 +600,9 @@ export class MiKillerComponent extends BuzonBaseComponent {
                 '/3)🛡️',
               equipo: this.equipo.equipo,
             })
-            .subscribe();
+            .subscribe(() => {
+              this.incrementarPuntos(this.equipo.equipo, 10);
+            });
         },
         error: (err) => {
           console.error('Error al usar la bomba:', err);
@@ -603,45 +614,10 @@ export class MiKillerComponent extends BuzonBaseComponent {
     this.dialog.open(DialogComponent, {
       data: {
         title: 'Información del Inventario',
-        message: `
-  <div style="text-align: left; font-family: Arial, sans-serif;">
-    <p><b>Los objetos que pueden tocarte son los siguientes:</b></p>
-    <p><b>🛡️ Escudos (+ defensa)</b></p>
-
-    <div style="margin-bottom: 16px;">
-      <img src="assets/objetos/escudo.png" width="40%" />
-      <div>Plumas de Ganso: +1</div>
-    </div>
+        message: `<img src="assets/objetos1.jpg" width="100%"/>
         <br>
-    <div style="margin-bottom: 16px;">
-      <img src="assets/objetos/centurion.png"  width="40%" />
-      <div>Casco del Centurión: +2</div>
-    </div>
-    <br>
-        <div style="margin-bottom: 16px;">
-      <img src="assets/objetos/salchichas.jpg"  width="40%" />
-      <div>Salchichas de cerdo: +3</div>
-    </div>
-    <br>
-    <p><b>💣 Bombas (- defensa a enemigo)</b></p>
-    <div style="margin-bottom: 16px;">
-      <img src="assets/objetos/bomba.png" width="40%" />
-      <div>Calabaza explosiva: -1</div>
-    </div>
-        <br>
-    <div style="margin-bottom: 16px;">
-      <img src="assets/objetos/sandalias.png" width="40%" />
-      <div>Sandalias explosivas: -2</div>
-    </div>
-    <br>
-    <div style="margin-bottom: 16px;">
-      <img src="assets/objetos/cuchillos.jpg" width="40%" />
-      <div>Cuchillos suicidas: -3</div>
-    </div>
-    <br>
-    <p><b>✨ Especiales (Muy pronto)</b></p>
-  </div>
-`,
+        <hr>
+        <img src="assets/objetos2.jpg" width="100%" />`,
       },
     });
   }
@@ -701,7 +677,9 @@ export class MiKillerComponent extends BuzonBaseComponent {
                     resultado: 'Intercambian su Inventario',
                     equipo: this.equipo.equipo,
                   })
-                  .subscribe();
+                  .subscribe(() => {
+                    this.incrementarPuntos(this.equipo.equipo, 15);
+                  });
                 return;
               },
               error: (err) => {
@@ -715,29 +693,6 @@ export class MiKillerComponent extends BuzonBaseComponent {
   }
 
   //Killer
-
-  incrementarPuntos(equipo: string, puntos: number) {
-    let puntosTotales =
-      equipo === 'rojo'
-        ? { puntosR: puntos, puntosA: 0 }
-        : { puntosR: 0, puntosA: puntos };
-    this.brinderService.registrarKillerConfig(puntosTotales).subscribe();
-
-    this.brinderService
-      .registrarLogKiller({
-        killer_id: '1',
-        personaje_id: this.id!,
-        personaje_name: this.nombrePersonaje,
-        accion: 'puntos',
-        objeto_id: null,
-        personaje_objetivo_id: null,
-        personaje_objetivo_name: null,
-        resultado:
-          'Equipo ' + equipo + ' +'+ puntos + 'puntos',
-        equipo: this.equipo.equipo,
-      })
-      .subscribe();
-  }
 
   async realizarAtaque() {
     try {
@@ -855,8 +810,36 @@ export class MiKillerComponent extends BuzonBaseComponent {
             resultado: this.nombrePersonaje + ' ha muerto',
             equipo: this.equipo.equipo,
           })
-          .subscribe();
+          .subscribe(() => {
+            let equipoContario =
+              this.equipo.equipo === 'rojo' ? 'azul' : 'rojo';
+            this.incrementarPuntos(equipoContario, 50);
+          });
       }
+    });
+  }
+
+  incrementarPuntos(equipo: string, puntos: number) {
+    let puntosTotales =
+      equipo === 'rojo'
+        ? { puntosR: puntos, puntosA: 0 }
+        : { puntosR: 0, puntosA: puntos };
+    this.brinderService.registrarKillerConfig(puntosTotales).subscribe(() => {
+      setTimeout(() => {
+      this.brinderService
+        .registrarLogKiller({
+        killer_id: '1',
+        personaje_id: this.id!,
+        personaje_name: this.nombrePersonaje,
+        accion: 'puntos',
+        objeto_id: null,
+        personaje_objetivo_id: null,
+        personaje_objetivo_name: null,
+        resultado: 'Equipo ' + equipo + ' +' + puntos + ' puntos',
+        equipo: this.equipo.equipo,
+        })
+        .subscribe();
+      }, 2000);
     });
   }
 }

@@ -122,10 +122,10 @@
                 <div class="log-entry"
                     [ngClass]="{'log-rojo': log.equipo === 'rojo', 'log-azul': log.equipo === 'azul'}">
 
-                    <div class="log-img"><img [src]="log.image_url"></div>
+                    <div class="log-img" *ngIf="log.accion !== 'puntos'"><img [src]="log.image_url"></div>
                     <div class="log-hora">{{ log.fecha | date:'HH:mm' }}</div>
 
-                    <div class="log-linea">
+                    <div class="log-linea" *ngIf="log.accion !== 'puntos'">
                         <strong>{{ log.personaje_name }}</strong> {{log.accion === 'Crucifixión' ? 'sufre la' :
                         'usa'}}<br>
                         <strong>{{ log.accion }}</strong><br>
