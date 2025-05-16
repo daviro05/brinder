@@ -359,6 +359,26 @@ export class MiKillerComponent extends BuzonBaseComponent {
               this.seleccionarObjetivo(objeto);
             } else if (objeto.tipo === 'cambio') {
               this.intercambiarInventario(objeto);
+            } else if (objeto.tipo === 'puntos') {
+              this.brinderService
+                .registrarLogKiller({
+                  killer_id: '1',
+                  personaje_id: this.id!,
+                  personaje_name: this.nombrePersonaje,
+                  accion: objeto.nombre,
+                  objeto_id: objeto.objeto_id,
+                  personaje_objetivo_id: null,
+                  personaje_objetivo_name: null,
+                  resultado:
+                    '+' +
+                    objeto.valor +
+                    ' puntos para el equipo ' +
+                    this.equipo.equipo,
+                  equipo: this.equipo.equipo,
+                })
+                .subscribe(() => {
+                  this.incrementarPuntos(this.equipo.equipo, objeto.valor);
+                });
             }
           },
           error: (err: { status: number }) => {
@@ -826,19 +846,19 @@ export class MiKillerComponent extends BuzonBaseComponent {
         : { puntosR: 0, puntosA: puntos };
     this.brinderService.registrarKillerConfig(puntosTotales).subscribe(() => {
       setTimeout(() => {
-      this.brinderService
-        .registrarLogKiller({
-        killer_id: '1',
-        personaje_id: this.id!,
-        personaje_name: this.nombrePersonaje,
-        accion: 'puntos',
-        objeto_id: null,
-        personaje_objetivo_id: null,
-        personaje_objetivo_name: null,
-        resultado: 'Equipo ' + equipo + ' +' + puntos + ' puntos',
-        equipo: this.equipo.equipo,
-        })
-        .subscribe();
+        this.brinderService
+          .registrarLogKiller({
+            killer_id: '1',
+            personaje_id: this.id!,
+            personaje_name: this.nombrePersonaje,
+            accion: 'puntos',
+            objeto_id: null,
+            personaje_objetivo_id: null,
+            personaje_objetivo_name: null,
+            resultado: 'Equipo ' + equipo + ' +' + puntos + ' puntos',
+            equipo: this.equipo.equipo,
+          })
+          .subscribe();
       }, 2000);
     });
   }
