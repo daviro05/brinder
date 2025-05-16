@@ -34,6 +34,10 @@ export class MiKillerComponent extends BuzonBaseComponent {
   objetos: any[] = [];
   ataqueDeshabilitado: boolean = false; // Nueva variable para controlar el estado del botón
 
+  equipoRojo: any[] = [];
+  equipoAzul: any[] = [];
+  configKiller: any = {};
+
   constructor(
     protected override buzonService: BuzonService,
     protected override router: Router,
@@ -88,8 +92,8 @@ export class MiKillerComponent extends BuzonBaseComponent {
     });
 
     this.obtenerDatosEquipo();
-
     this.verificarAsignacion();
+    this.obtenerKillerConfig()
     //console.log('ID del personaje:', this.id);
   }
 
@@ -856,10 +860,17 @@ export class MiKillerComponent extends BuzonBaseComponent {
             personaje_objetivo_id: null,
             personaje_objetivo_name: null,
             resultado: 'Equipo ' + equipo + ' +' + puntos + ' puntos',
-            equipo: this.equipo.equipo,
+            equipo: equipo,
           })
           .subscribe();
       }, 2000);
+    });
+  }
+
+  obtenerKillerConfig() {
+    this.brinderService.obtenerKillerConfig().subscribe((config) => {
+      this.configKiller = config;
+      this.puntosEquipoElegido = this.equipo.equipo === 'rojo' ? this.configKiller.puntos_rojo : this.configKiller.puntos_azul;
     });
   }
 }

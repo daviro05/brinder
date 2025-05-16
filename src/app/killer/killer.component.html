@@ -17,9 +17,9 @@
 
     <div class="killer-estado" *ngIf="seccionActiva === 'estado'">
         <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->
-        <p class="titulo"><b>{{faseKiller | uppercase }}</b></p>
+        <p class="titulo"><b>{{configKiller.fase_killer | uppercase }}</b></p>
         <div class="mensaje-fase">
-            <span class="copy">La batalla ha comenzado. Que gane el mejor...</span>
+            <span class="copy">{{configKiller.subtitulo}}</span>
             <div class="acciones">
                 <span>🔴 {{puntosRojo}} pts</span>
                 <span>VS</span>
@@ -94,17 +94,25 @@
             </div>
         </div>
 
-        <!-- Filtro por personaje -->
+        <!-- Filtro por personaje y fecha -->
         <div class="filter-wrapper">
-            <div class="filter-container" [class.visible]="mostrarFiltro">
+            <div class="filter-container" [class.visible]="mostrarFiltro" style="display: flex; gap: 1rem;">
                 <mat-form-field appearance="fill">
-                    <mat-label>Filtrar personaje</mat-label>
+                    <mat-label>Personaje</mat-label>
                     <mat-select [(value)]="personajeSeleccionado" (selectionChange)="filtrarLog()">
                         <mat-option [value]="null">Todos</mat-option>
                         <mat-option *ngFor="let personaje of characters" [value]="personaje.name">
                             {{ personaje.name }}
                         </mat-option>
                     </mat-select>
+                </mat-form-field>
+                <!-- Nuevo filtro de fecha -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Fecha</mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="fechaSeleccionada" (dateChange)="filtrarLog()"
+                        placeholder="Fecha">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
             </div>
         </div>

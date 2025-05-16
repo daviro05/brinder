@@ -26,12 +26,11 @@ export class KillerComponent {
   vivos: string = '';
   muertos: string = '';
   estadoSeleccionado: string = 'vivo'; // Nuevo estado seleccionado
-  
+
   equipoRojo: any[] = [];
   equipoAzul: any[] = [];
   configKiller: any = {};
 
-  faseKiller: string = 'KILLER';
   killerLogRojo: any[] = []; // Log de acciones del equipo rojo
   killerLogAzul: any[] = []; // Log de acciones del equipo azul
   puntosRojo: number = 0;
@@ -41,6 +40,7 @@ export class KillerComponent {
   seccionActiva: string = 'estado';
   personajes: any[] = []; // Lista de personajes para el filtro
   personajeSeleccionado: string | null = null; // Personaje seleccionado en el filtro
+  fechaSeleccionada: Date | null = null; // Nueva propiedad para la fecha seleccionada
   killerLogFiltrado: any[] = []; // Log filtrado
   mostrarFiltro: boolean = false; // Controla la visibilidad del filtro
 
@@ -195,25 +195,41 @@ export class KillerComponent {
   }
 
   filtrarLog() {
+    let filtrado = this.killerLog;
+
     if (this.personajeSeleccionado) {
-      this.killerLogFiltrado = this.killerLog.filter(
+      filtrado = filtrado.filter(
         (log) =>
           log.personaje_name === this.personajeSeleccionado ||
           log.personaje_objetivo_name === this.personajeSeleccionado
       );
-    } else {
-      this.killerLogFiltrado = this.killerLog; // Mostrar todo si no hay filtro
     }
+
+    if (this.fechaSeleccionada) {
+      const fechaFiltro = new Date(this.fechaSeleccionada);
+      filtrado = filtrado.filter((log) => {
+        const fechaLog = new Date(log.fecha);
+        // Comparar solo año, mes y día
+        return (
+          fechaLog.getFullYear() === fechaFiltro.getFullYear() &&
+          fechaLog.getMonth() === fechaFiltro.getMonth() &&
+          fechaLog.getDate() === fechaFiltro.getDate()
+        );
+      });
+    }
+
+    this.killerLogFiltrado = filtrado;
   }
 
   toggleFiltro(): void {
     this.mostrarFiltro = !this.mostrarFiltro;
+    this.fechaSeleccionada = null;
+    this.obtenerKillerLog();
   }
 
-  obtenerKillerConfig(){
-      this.brinderService.obtenerKillerConfig().subscribe((config) => {
+  obtenerKillerConfig() {
+    this.brinderService.obtenerKillerConfig().subscribe((config) => {
       this.configKiller = config;
-      this.faseKiller = this.configKiller.fase_killer;
       this.puntosRojo = this.configKiller.puntos_rojo;
       this.puntosAzul = this.configKiller.puntos_azul;
     });

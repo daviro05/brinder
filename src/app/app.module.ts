@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -45,6 +45,26 @@ import { MedallasComponent } from './medallas/medallas.component';
 import { MedallasAdminComponent } from './admin/medallas/medallas.component';
 import { MiKillerComponent } from './mi-killer/mi-killer.component';
 import { MensajesDialogComponent } from './dialog/mensajes-dialog/mensajes-dialog.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+
+
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YY',
+  },
+  display: {
+    dateInput: 'dd/MM/yy',
+    monthYearLabel: 'MMM yy',
+    dateA11yLabel: 'dd/MM/yy',
+    monthYearA11yLabel: 'MMMM yy',
+  },
+};
+
+registerLocaleData(localeEs);
+
 
 @NgModule({
   declarations: [
@@ -71,7 +91,7 @@ import { MensajesDialogComponent } from './dialog/mensajes-dialog/mensajes-dialo
     MedallasComponent,
     MedallasAdminComponent,
     MiKillerComponent,
-    MensajesDialogComponent 
+    MensajesDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,12 +114,16 @@ import { MensajesDialogComponent } from './dialog/mensajes-dialog/mensajes-dialo
     MatExpansionModule,
     SharedModule,
     MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production
-    })
+      enabled: environment.production,
+    }),
   ],
   exports: [DialogSimpleComponent],
-  providers: [],
+  providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+  { provide: LOCALE_ID, useValue: 'es-ES' },
+],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
