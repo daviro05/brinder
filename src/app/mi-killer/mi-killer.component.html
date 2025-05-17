@@ -76,12 +76,14 @@
             </div>
         </div>
 
-        <div *ngIf="!equipo?.objetivo && equipo?.vida === 1 && (equipo?.vida_objetivo !== 0 && equipo?.vida_objetivo !== null)">
+        <div
+            *ngIf="!equipo?.objetivo && equipo?.vida === 1 && (equipo?.vida_objetivo !== 0 && equipo?.vida_objetivo !== null)">
             <p class="copy info">Tu objetivo aparecerá cuándo no tenga defensa.<br>Sólo podrás matarle en ese estado.
             </p>
         </div>
 
-        <div *ngIf="ataqueDeshabilitado && equipo?.escudo_objetivo === 0 && equipo?.vida === 1 && equipo?.vida_objetivo === 1">
+        <div
+            *ngIf="ataqueDeshabilitado && equipo?.escudo_objetivo === 0 && equipo?.vida === 1 && equipo?.vida_objetivo === 1">
             <p class="copy info">Tienes un killer en proceso.</p>
         </div>
     </div>
@@ -93,7 +95,8 @@
             <div class="estado">
                 <p class="equipo">
                     Tu equipo es el
-                    <span [ngStyle]="{'color': equipo.equipo === 'rojo' ? 'red' : equipo.equipo === 'azul' ? 'blue' : 'black'}">
+                    <span
+                        [ngStyle]="{'color': equipo.equipo === 'rojo' ? 'red' : equipo.equipo === 'azul' ? 'blue' : 'black'}">
                         {{equipo.equipo | uppercase}}
                     </span>
                 </p>
@@ -111,6 +114,9 @@
             <h2>Inventario</h2>
             <button class="info-icon" mat-icon-button (click)="abrirInfoInventario()">
                 <mat-icon>info</mat-icon>
+            </button>
+            <button class="update-icon" mat-icon-button (click)="misObjetos()">
+                <mat-icon>refresh</mat-icon>
             </button>
         </div>
 
