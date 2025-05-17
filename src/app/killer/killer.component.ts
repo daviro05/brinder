@@ -233,5 +233,6 @@ export class KillerComponent {
       this.puntosRojo = this.configKiller.puntos_rojo;
       this.puntosAzul = this.configKiller.puntos_azul;
     });
+    this.getPersonajesEquipo();
   }
 }

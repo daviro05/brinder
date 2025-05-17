@@ -612,7 +612,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
               accion: objeto.nombre,
               objeto_id: objeto.objeto_id,
               personaje_objetivo_id:
-                personajeSeleccionado?.personaje_id ?? null,
+              personajeSeleccionado?.personaje_id ?? null,
               personaje_objetivo_name: personajeSeleccionado?.name ?? null,
               resultado:
                 '-' +
