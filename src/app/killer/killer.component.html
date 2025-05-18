@@ -35,7 +35,7 @@
 
         <div class="team-slider">
             <div class="team-container team-rojo">
-                <h3>Guerreros de Jehová ({{equipoRojo.length}})</h3>
+                <h3>Guerreros de Jehová ({{vivosRojo}}/{{equipoRojo.length}})</h3>
                 <div class="team-grid">
                     <!-- Capitán del equipo rojo -->
                     <div class="character-card captain" *ngIf="getCapitan(equipoRojo) as capitanRojo"
@@ -57,7 +57,7 @@
             </div>
 
             <div class="team-container team-azul">
-                <h3>Frente Popular de Judea ({{equipoAzul.length}})</h3>
+                <h3>Frente Popular de Judea ({{vivosAzul}}/{{equipoAzul.length}})</h3>
                 <div class="team-grid">
                     <!-- Capitán del equipo azul -->
                     <div class="character-card captain" *ngIf="getCapitan(equipoAzul) as capitanAzul"
@@ -87,35 +87,53 @@
 
         <div class="mensaje-fase">
             <div class="acciones">
-                <span>🔴 {{killerLogRojo.length}} acc</span>
+                <span>🟥 {{killerLogRojo.length}} acc</span>
                 <mat-icon class="material-symbols-outlined" (click)="toggleFiltro()">{{ mostrarFiltro ? 'filter_alt_off'
                     : 'filter_alt' }}</mat-icon>
-                <span>🔵 {{killerLogAzul.length}} acc</span>
+                <span>🟦 {{killerLogAzul.length}} acc</span>
             </div>
         </div>
 
-        <!-- Filtro por personaje y fecha -->
+        <!-- Filtro por personaje, fecha y equipo -->
         <div class="filter-wrapper">
             <div class="filter-container" [class.visible]="mostrarFiltro" style="display: flex; gap: 1rem;">
-                <mat-form-field appearance="fill">
-                    <mat-label>Personaje</mat-label>
-                    <mat-select [(value)]="personajeSeleccionado" (selectionChange)="filtrarLog()">
-                        <mat-option [value]="null">Todos</mat-option>
-                        <mat-option *ngFor="let personaje of characters" [value]="personaje.name">
-                            {{ personaje.name }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <!-- Nuevo filtro de fecha -->
-                <mat-form-field appearance="fill">
-                    <mat-label>Fecha</mat-label>
-                    <input matInput [matDatepicker]="picker" [(ngModel)]="fechaSeleccionada" (dateChange)="filtrarLog()"
-                        placeholder="Fecha">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
+
+                <div class="custom-filter">
+                    <label class="filter-label">Personaje</label>
+                    <mat-form-field appearance="fill">
+                        <mat-select [(value)]="personajeSeleccionado" (selectionChange)="filtrarLog()">
+                            <mat-option [value]="null">Todos</mat-option>
+                            <mat-option *ngFor="let personaje of characters" [value]="personaje.name">
+                                {{ personaje.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="custom-filter">
+                    <label class="filter-label">Fecha</label>
+                    <mat-form-field appearance="fill">
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="fechaSeleccionada"
+                            (dateChange)="filtrarLog()" />
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="custom-filter">
+                    <label class="filter-label">Equipo</label>
+                    <mat-form-field appearance="fill">
+                        <mat-select [(value)]="equipoSeleccionado" (selectionChange)="filtrarLog()">
+                            <mat-option [value]="null">Todos</mat-option>
+                            <mat-option value="rojo">Rojo</mat-option>
+                            <mat-option value="azul">Azul</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
             </div>
         </div>
+
 
 
         <div class="log">

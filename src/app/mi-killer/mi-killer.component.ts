@@ -93,7 +93,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
 
     this.obtenerDatosEquipo();
     this.verificarAsignacion();
-    this.obtenerKillerConfig()
+    this.obtenerKillerConfig();
     //console.log('ID del personaje:', this.id);
   }
 
@@ -194,8 +194,9 @@ export class MiKillerComponent extends BuzonBaseComponent {
     this.brinderService.tiposObjeto().subscribe((data) => {
       tipos = data.map((tipo) => tipo.id);
       tipos.sort((a, b) => a - b);
+
       // Seleccionar un objeto aleatorio con las mismas probabilidades
-      const probabilidades = [
+      /*const probabilidades = [
         0.15, 0.15, 0.15, 0.15, 0.1, 0.1, 0.1, 0.05, 0.05,
       ];
       const sumaProbabilidades = probabilidades.reduce((a, b) => a + b, 0);
@@ -210,6 +211,9 @@ export class MiKillerComponent extends BuzonBaseComponent {
           break;
         }
       }
+      objetoId = tipos[indiceAleatorio];*/
+
+      const indiceAleatorio = Math.floor(Math.random() * tipos.length);
       objetoId = tipos[indiceAleatorio];
 
       const objeto = {
@@ -612,7 +616,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
               accion: objeto.nombre,
               objeto_id: objeto.objeto_id,
               personaje_objetivo_id:
-              personajeSeleccionado?.personaje_id ?? null,
+                personajeSeleccionado?.personaje_id ?? null,
               personaje_objetivo_name: personajeSeleccionado?.name ?? null,
               resultado:
                 '-' +
@@ -870,7 +874,10 @@ export class MiKillerComponent extends BuzonBaseComponent {
   obtenerKillerConfig() {
     this.brinderService.obtenerKillerConfig().subscribe((config) => {
       this.configKiller = config;
-      this.puntosEquipoElegido = this.equipo.equipo === 'rojo' ? this.configKiller.puntos_rojo : this.configKiller.puntos_azul;
+      this.puntosEquipoElegido =
+        this.equipo.equipo === 'rojo'
+          ? this.configKiller.puntos_rojo
+          : this.configKiller.puntos_azul;
     });
   }
 }

@@ -384,3 +384,25 @@
   pointer-events: auto;
 }
 
+.custom-filter {
+  display: flex;
+  flex-direction: column;
+  min-width: 90px;  /* Ajusta ancho para que no se corten */
+}
+
+.filter-label {
+  font-size: 0.75rem; /* Más pequeño */
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #555;
+  user-select: none; /* Para que no se seleccione accidentalmente */
+}
+
+::ng-deep .mat-mdc-select-value-text {
+  font-size: 0.8rem !important;
+}
+
+::ng-deep .mat-mdc-option .mdc-list-item__text {
+  font-size: 0.8rem !important;
+}
+

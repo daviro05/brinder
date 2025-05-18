@@ -28,7 +28,9 @@ export class KillerComponent {
   estadoSeleccionado: string = 'vivo'; // Nuevo estado seleccionado
 
   equipoRojo: any[] = [];
+  vivosRojo: number = 0;
   equipoAzul: any[] = [];
+  vivosAzul: number = 0;
   configKiller: any = {};
 
   killerLogRojo: any[] = []; // Log de acciones del equipo rojo
@@ -43,6 +45,7 @@ export class KillerComponent {
   fechaSeleccionada: Date | null = null; // Nueva propiedad para la fecha seleccionada
   killerLogFiltrado: any[] = []; // Log filtrado
   mostrarFiltro: boolean = false; // Controla la visibilidad del filtro
+  equipoSeleccionado: string | null = null; // "rojo", "azul" o null
 
   constructor(
     private brinderService: BrinderService,
@@ -80,8 +83,13 @@ export class KillerComponent {
             ?.toLowerCase()
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '') || '';
+
         return nombreA > nombreB ? 1 : nombreA < nombreB ? -1 : 0;
       });
+
+      this.vivosRojo = this.equipoRojo.filter(
+        (personaje: any) => personaje.vida !== 0
+      ).length;
       //console.log('Equipo Rojo:', this.equipoRojo);
       //this.obtenerPersonajesFaltantes();
     });
@@ -100,6 +108,9 @@ export class KillerComponent {
             .replace(/[\u0300-\u036f]/g, '') || '';
         return nombreA > nombreB ? 1 : nombreA < nombreB ? -1 : 0;
       });
+      this.vivosAzul = this.equipoAzul.filter(
+        (personaje: any) => personaje.vida !== 0
+      ).length;
       //console.log('Equipo Azul:', this.equipoAzul);
       //this.obtenerPersonajesFaltantes();
     });
@@ -218,12 +229,20 @@ export class KillerComponent {
       });
     }
 
+    if (this.equipoSeleccionado) {
+      filtrado = filtrado.filter(
+        (log) => log.equipo === this.equipoSeleccionado
+      );
+    }
+
     this.killerLogFiltrado = filtrado;
   }
 
   toggleFiltro(): void {
     this.mostrarFiltro = !this.mostrarFiltro;
     this.fechaSeleccionada = null;
+    this.personajeSeleccionado = null;
+    this.equipoSeleccionado = null;
     this.obtenerKillerLog();
   }
 
