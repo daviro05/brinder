@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from '../shared/utils';
 import { BrinderService } from '../shared/services/brinder.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-killer',
@@ -47,16 +49,23 @@ export class KillerComponent {
   mostrarFiltro: boolean = false; // Controla la visibilidad del filtro
   equipoSeleccionado: string | null = null; // "rojo", "azul" o null
 
+  objetosDisponibles: any[] = []; // Objetos disponibles
+
   constructor(
     private brinderService: BrinderService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog // Añade MatDialog aquí
   ) {
     this.utils = new Utils(this.router);
 
     this.route.queryParams.subscribe((params) => {
       const seccion = params['seccion'];
-      if (seccion === 'estado' || seccion === 'log-batalla') {
+      if (
+        seccion === 'estado' ||
+        seccion === 'log-batalla' ||
+        seccion === 'mercado'
+      ) {
         this.seccionActiva = seccion;
       }
     });
@@ -68,6 +77,7 @@ export class KillerComponent {
     this.getPersonajesEquipo(); // Llamar al método para obtener personajes del equipo
     this.obtenerKillerLog();
     this.obtenerKillerConfig();
+    this.obtenerObjetosMercado(); // Cargar objetos del mercado
   }
 
   getPersonajesEquipo() {
@@ -253,5 +263,22 @@ export class KillerComponent {
       this.puntosAzul = this.configKiller.puntos_azul;
     });
     this.getPersonajesEquipo();
+  }
+
+  obtenerObjetosMercado() {
+    this.brinderService.obtenerObjetosMercado().subscribe((objs) => {
+      this.objetosDisponibles = objs;
+      console.log('Objetos disponibles:', this.objetosDisponibles);
+    });
+  }
+
+  abrirDialogoObjeto(objeto: any) {
+    // Usa el componente de dialog existente, por ejemplo DetalleObjetoDialogComponent
+    this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Información del producto',
+        objeto: objeto,
+      },
+    });
   }
 }

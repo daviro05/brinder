@@ -174,7 +174,8 @@
     <div class="killer-estado" *ngIf="seccionActiva === 'mercado'">
         <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->
         <p class="titulo"><b>MERCADO DEL KILLER</b></p>
-        <p class="copy">Compra objetos con los puntos de equipo (sólo capitanes)</p>
+        <p class="copy">Compra objetos o acciones con tus shekels de equipo (Sólo capitanes)</p>
+        <img class="portada" src="assets/mercado.jpg" alt="Cargando...">
 
         <div class="mensaje-fase">
             <div class="acciones">
@@ -184,8 +185,18 @@
             </div>
         </div>
 
-        <div class="log">
-            <ng-container></ng-container>
+        <div class="mercado">
+            <div class="mis-objetos">
+                <div class="grid-objetos">
+                    <button class="objeto example-2" *ngFor="let objeto of objetosDisponibles"
+                        (click)="abrirDialogoObjeto(objeto)">
+                        <img [src]="'assets/objetos/' + objeto.imagen_url" alt="{{objeto.tipo}}" />
+                        <p class="copy">{{objeto.nombre}}</p>
+                        <p class="precio">{{objeto.precio}}🪙</p>
+                        <p class="cantidad">Pack de {{objeto.cantidad}}</p>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -195,7 +206,7 @@
             Mi Equipo
         </button>
         <button class="actualizar-log" mat-raised-button
-            (click)="seccionActiva === 'log-batalla' ? obtenerKillerLog() : obtenerKillerConfig()">
+            (click)="seccionActiva === 'log-batalla' ? obtenerKillerLog() : seccionActiva === 'estado' ? obtenerKillerConfig() : obtenerObjetosMercado()">
             <mat-icon>refresh</mat-icon>
             Actualizar
         </button>

@@ -19,6 +19,7 @@ export class DialogComponent implements OnInit {
       message: string;
       showCancel?: boolean;
       medalla?: any;
+      objeto?: any;
       personajes?: any[]; // Agregado para recibir personajes en caso de bomba
     }
   ) {

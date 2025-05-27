@@ -681,7 +681,10 @@ export class MiKillerComponent extends BuzonBaseComponent {
         message: `<img src="assets/objetos1.jpg" width="100%"/>
         <br>
         <hr>
-        <img src="assets/objetos2.jpg" width="100%" />`,
+        <img src="assets/objetos2.jpg" width="100%" />
+        <br>
+        <hr>
+        <img src="assets/objetos3.jpg" width="100%" />`,
       },
     });
   }

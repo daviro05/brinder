@@ -1,33 +1,46 @@
 <div class="dialog-content-container">
   <h1 mat-dialog-title>{{ data.title }}</h1>
   <div mat-dialog-content>
-    <ng-container *ngIf="data.medalla; else defaultContent">
+    <ng-container *ngIf="data.medalla; else objetoOrDefaultContent">
+      <!-- Medalla content -->
       <div class="dialog-medalla">
         <img [src]="'/assets/medallas/' + data.medalla.icono_url" alt="Medalla" class="dialog-image" />
-        <p><strong>Tipo:</strong> {{ data.medalla.nombre === 'Personalizada' ? data.medalla.nombre_personalizado :
-          data.medalla.nombre }}</p>
+        <p><strong>Tipo:</strong> {{ data.medalla.nombre === 'Personalizada' ? data.medalla.nombre_personalizado : data.medalla.nombre }}</p>
         <p><strong>Descripción:</strong> {{ data.medalla.descripcion }}</p>
         <p><strong>Asignada por:</strong> {{ data.medalla.asignado_por_nombre }}</p>
         <p><strong>Mensaje:</strong> {{ data.medalla.titulo }}</p>
         <p><strong>Fecha:</strong> {{ data.medalla.fecha_asignacion | date: 'dd/MM/yy' }}</p>
       </div>
     </ng-container>
-    <ng-template #defaultContent>
-      <ng-container *ngIf="isHtmlContent; else textContent">
-        <div [innerHTML]="data.message" class="dialog-html-content"></div>
-      </ng-container>
-      <ng-template #textContent>
-        <p>{{ data.message }}</p>
-        <div *ngIf="personajes.length > 0">
-          <mat-form-field appearance="fill">
-            <mat-label>Selecciona un personaje</mat-label>
-            <mat-select [(value)]="personajeSeleccionado">
-              <mat-option *ngFor="let personaje of personajes" [value]="personaje">
-                {{ personaje.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+    <ng-template #objetoOrDefaultContent>
+      <ng-container *ngIf="data.objeto; else defaultContent">
+        <!-- Objeto content -->
+        <div class="dialog-objeto">
+          <img [src]="'/assets/objetos/' + data.objeto.imagen_url" alt="Objeto" class="dialog-image" />
+          <p><strong>Nombre:</strong> {{ data.objeto.nombre }}</p>
+          <p><strong>Descripción:</strong> {{ data.objeto.descripcion }}</p>
+          <p><strong>Precio:</strong> {{ data.objeto.precio }}🪙</p>
+          <p><strong>Cantidad:</strong> Pack de {{ data.objeto.cantidad }}</p>
+          
         </div>
+      </ng-container>
+      <ng-template #defaultContent>
+        <ng-container *ngIf="isHtmlContent; else textContent">
+          <div [innerHTML]="data.message" class="dialog-html-content"></div>
+        </ng-container>
+        <ng-template #textContent>
+          <p>{{ data.message }}</p>
+          <div *ngIf="personajes.length > 0">
+            <mat-form-field appearance="fill">
+              <mat-label>Selecciona un personaje</mat-label>
+              <mat-select [(value)]="personajeSeleccionado">
+                <mat-option *ngFor="let personaje of personajes" [value]="personaje">
+                  {{ personaje.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </ng-template>
       </ng-template>
     </ng-template>
   </div>

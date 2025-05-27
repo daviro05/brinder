@@ -312,4 +312,8 @@ export class BrinderService {
   }) {
     return this.http.post(`${this.BASE_URL}/killer/config`, data);
   }
+
+  obtenerObjetosMercado(){
+    return this.http.get<any[]>(`${this.BASE_URL}/mercado/disponibles`);
+  }
 }
