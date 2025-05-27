@@ -362,7 +362,8 @@ export class MiKillerComponent extends BuzonBaseComponent {
             } else if (
               objeto.tipo === 'bomba' ||
               objeto.tipo === 'eliminar' ||
-              objeto.tipo === 'gomana'
+              objeto.tipo === 'gomana' ||
+              objeto.tipo === 'espia'
             ) {
               this.seleccionarObjetivo(objeto);
             } else if (objeto.tipo === 'cambio') {
@@ -555,6 +556,59 @@ export class MiKillerComponent extends BuzonBaseComponent {
                             });
                         }
                       });
+                  } else if (objeto.tipo === 'espia') {
+                    this.brinderService
+                      .getMisObjetos(personajeSeleccionado.personaje_id)
+                      .subscribe((data) => {
+                        let objetosEnemigo = data.filter(
+                          (objeto: any) => objeto.usado === 0
+                        );
+
+                        if (objetosEnemigo.length === 0) {
+                          this.openDialog(
+                            '¡No tiene objetos!',
+                            `${personajeSeleccionado.name} no tiene objetos en su inventario.`
+                          );
+                          this.obtenerDatosEquipo();
+                          this.brinderService
+                            .registrarLogKiller({
+                              killer_id: '1',
+                              personaje_id: this.id!,
+                              personaje_name: this.nombrePersonaje,
+                              accion: objeto.nombre,
+                              objeto_id: objeto.objeto_id,
+                              personaje_objetivo_id: null,
+                              personaje_objetivo_name: null,
+                              resultado: 'Espía un inventario',
+                              equipo: this.equipo.equipo,
+                            })
+                            .subscribe(() => {
+                              this.incrementarPuntos(this.equipo.equipo, 15);
+                            });
+                          return;
+                        } else {
+                          this.openDialog(
+                            'Éxito',
+                            `${personajeSeleccionado.name} tiene `+objetosEnemigo.length+` objetos: <br><br>`+ objetosEnemigo.map((o: any) => o.nombre).join('<br>')
+                          );
+                          this.obtenerDatosEquipo();
+                          this.brinderService
+                            .registrarLogKiller({
+                              killer_id: '1',
+                              personaje_id: this.id!,
+                              personaje_name: this.nombrePersonaje,
+                              accion: objeto.nombre,
+                              objeto_id: objeto.objeto_id,
+                              personaje_objetivo_id:null,
+                              personaje_objetivo_name:null,
+                              resultado: 'Espía un inventario',
+                              equipo: this.equipo.equipo,
+                            })
+                            .subscribe(() => {
+                              this.incrementarPuntos(this.equipo.equipo, 15);
+                            });
+                        }
+                      });
                   }
                 },
                 error: (err) => {
@@ -712,7 +766,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
         Math.random() * valoresPosibles.length
       );
       let valorAleatorio = valoresPosibles[indiceAleatorio];
-      this.openDialog('Éxito', `Tu equipo suma ${valorAleatorio} puntos.`);
+      this.openDialog('Éxito', `Has sumado al equipo ${this.equipo.equipo}`+' '+`${valorAleatorio} puntos.`);
 
       this.brinderService
         .registrarLogKiller({
@@ -723,7 +777,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
           objeto_id: objeto.objeto_id,
           personaje_objetivo_id: null,
           personaje_objetivo_name: null,
-          resultado: "+" + valorAleatorio + " puntos a equipo " + this.equipo.equipo,
+          resultado:'Suma puntos al equipo ' + this.equipo.equipo,
           equipo: this.equipo.equipo,
         })
         .subscribe(() => {
@@ -738,9 +792,9 @@ export class MiKillerComponent extends BuzonBaseComponent {
       let valorAleatorio = valoresPosibles[indiceAleatorio];
       this.openDialog(
         'Éxito',
-        `Has quitado al equipo ${equipoContrario} ${valorAleatorio} puntos.`
+        `Has quitado al equipo ${equipoContrario}`+' '+`${valorAleatorio} puntos.`
       );
-            this.brinderService
+      this.brinderService
         .registrarLogKiller({
           killer_id: '1',
           personaje_id: this.id!,
@@ -749,7 +803,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
           objeto_id: objeto.objeto_id,
           personaje_objetivo_id: null,
           personaje_objetivo_name: null,
-          resultado: valorAleatorio + " puntos a equipo " + equipoContrario,
+          resultado: 'Resta puntos al equipo ' + equipoContrario,
           equipo: this.equipo.equipo,
         })
         .subscribe(() => {
@@ -903,7 +957,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
             objeto_id: null,
             personaje_objetivo_id: null,
             personaje_objetivo_name: null,
-            resultado: 'Equipo ' + equipo + " "+puntosFormateados + ' puntos',
+            resultado: 'Equipo ' + equipo + ' ' + puntosFormateados + ' puntos',
             equipo: equipo,
           })
           .subscribe();
