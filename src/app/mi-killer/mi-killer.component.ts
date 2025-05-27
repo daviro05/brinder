@@ -367,26 +367,8 @@ export class MiKillerComponent extends BuzonBaseComponent {
               this.seleccionarObjetivo(objeto);
             } else if (objeto.tipo === 'cambio') {
               this.intercambiarInventario(objeto);
-            } else if (objeto.tipo === 'puntos') {
-              this.brinderService
-                .registrarLogKiller({
-                  killer_id: '1',
-                  personaje_id: this.id!,
-                  personaje_name: this.nombrePersonaje,
-                  accion: objeto.nombre,
-                  objeto_id: objeto.objeto_id,
-                  personaje_objetivo_id: null,
-                  personaje_objetivo_name: null,
-                  resultado:
-                    '+' +
-                    objeto.valor +
-                    ' puntos para el equipo ' +
-                    this.equipo.equipo,
-                  equipo: this.equipo.equipo,
-                })
-                .subscribe(() => {
-                  this.incrementarPuntos(this.equipo.equipo, objeto.valor);
-                });
+            } else if (objeto.tipo === 'puntuacion') {
+              this.objetoPuntuacion(objeto);
             }
           },
           error: (err: { status: number }) => {
@@ -720,6 +702,63 @@ export class MiKillerComponent extends BuzonBaseComponent {
     this.misObjetos();
   }
 
+  objetoPuntuacion(objeto: any) {
+    const equipoContrario = this.equipo.equipo === 'rojo' ? 'azul' : 'rojo';
+
+    if (objeto.valor === 1) {
+      // valor aleatorio de 10, 30, 50, 100
+      const valoresPosibles = [10, 30, 50, 100];
+      const indiceAleatorio = Math.floor(
+        Math.random() * valoresPosibles.length
+      );
+      let valorAleatorio = valoresPosibles[indiceAleatorio];
+      this.openDialog('Éxito', `Tu equipo suma ${valorAleatorio} puntos.`);
+
+      this.brinderService
+        .registrarLogKiller({
+          killer_id: '1',
+          personaje_id: this.id!,
+          personaje_name: this.nombrePersonaje,
+          accion: objeto.nombre,
+          objeto_id: objeto.objeto_id,
+          personaje_objetivo_id: null,
+          personaje_objetivo_name: null,
+          resultado: "+" + valorAleatorio + " puntos a equipo " + this.equipo.equipo,
+          equipo: this.equipo.equipo,
+        })
+        .subscribe(() => {
+          this.incrementarPuntos(this.equipo.equipo, valorAleatorio);
+        });
+    } else if (objeto.valor === 0) {
+      // valor aleatorio de -10, -30, -50, -100
+      const valoresPosibles = [-10, -30, -50, -100];
+      const indiceAleatorio = Math.floor(
+        Math.random() * valoresPosibles.length
+      );
+      let valorAleatorio = valoresPosibles[indiceAleatorio];
+      this.openDialog(
+        'Éxito',
+        `Has quitado al equipo ${equipoContrario} ${valorAleatorio} puntos.`
+      );
+            this.brinderService
+        .registrarLogKiller({
+          killer_id: '1',
+          personaje_id: this.id!,
+          personaje_name: this.nombrePersonaje,
+          accion: objeto.nombre,
+          objeto_id: objeto.objeto_id,
+          personaje_objetivo_id: null,
+          personaje_objetivo_name: null,
+          resultado: valorAleatorio + " puntos a equipo " + equipoContrario,
+          equipo: this.equipo.equipo,
+        })
+        .subscribe(() => {
+          this.incrementarPuntos(equipoContrario, valorAleatorio);
+        });
+    }
+    this.misObjetos();
+  }
+
   //Killer
 
   async realizarAtaque() {
@@ -852,6 +891,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
       equipo === 'rojo'
         ? { puntosR: puntos, puntosA: 0 }
         : { puntosR: 0, puntosA: puntos };
+    let puntosFormateados = puntos > 0 ? ' +' + puntos : puntos;
     this.brinderService.registrarKillerConfig(puntosTotales).subscribe(() => {
       setTimeout(() => {
         this.brinderService
@@ -863,7 +903,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
             objeto_id: null,
             personaje_objetivo_id: null,
             personaje_objetivo_name: null,
-            resultado: 'Equipo ' + equipo + ' +' + puntos + ' puntos',
+            resultado: 'Equipo ' + equipo + " "+puntosFormateados + ' puntos',
             equipo: equipo,
           })
           .subscribe();

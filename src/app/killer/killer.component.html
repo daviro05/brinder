@@ -11,7 +11,11 @@
         </button>
         <button mat-raised-button [class.active]="seccionActiva === 'log-batalla'"
             (click)="cambiarSeccion('log-batalla')" class="config">
-            Log Batalla
+            Log Killer
+        </button>
+        <button mat-raised-button [class.active]="seccionActiva === 'mercado'" (click)="cambiarSeccion('mercado')"
+            class="config">
+            Mercado
         </button>
     </div>
 
@@ -164,6 +168,24 @@
                     <div class="log-resultado">{{ log.resultado }}</div>
                 </div>
             </ng-container>
+        </div>
+    </div>
+
+    <div class="killer-estado" *ngIf="seccionActiva === 'mercado'">
+        <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->
+        <p class="titulo"><b>MERCADO DEL KILLER</b></p>
+        <p class="copy">Compra objetos con los puntos de equipo (sólo capitanes)</p>
+
+        <div class="mensaje-fase">
+            <div class="acciones">
+                <span>🔴 {{puntosRojo}}🪙</span>
+                <span>VS</span>
+                <span>🔵 {{puntosAzul}}🪙</span>
+            </div>
+        </div>
+
+        <div class="log">
+            <ng-container></ng-container>
         </div>
     </div>
 
