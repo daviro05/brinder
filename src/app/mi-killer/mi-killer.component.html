@@ -51,8 +51,13 @@
         </button>
     </div>
 
-    <div class="stats" *ngIf="personaje && seccionActiva === 'estado'">
-        <h2>Estado</h2>
+    <div class="stats refresh" *ngIf="personaje && seccionActiva === 'estado'">
+        <div class="header-container">
+            <h2>Estado</h2>
+            <button class="update-icon" mat-icon-button (click)="actualizarDatos(equipo.equipo)">
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </div>
 
         <div class="estado" [ngClass]="{'crucificado': equipo.vida === 0}" *ngIf="equipo && equipo.asignado">
             <p class="equipo">Estado: {{(equipo.vida ? 'vivo🌚' : '✟ crucifixión ✟') | uppercase}}</p>
@@ -88,8 +93,13 @@
         </div>
     </div>
 
-    <div class="stats mi-equipo" *ngIf="personaje && seccionActiva === 'mi-equipo'">
-        <h2>Mi equipo</h2>
+    <div class="stats mi-equipo refresh" *ngIf="personaje && seccionActiva === 'mi-equipo'">
+        <div class="header-container">
+            <h2>Mi Equipo</h2>
+            <button class="update-icon" mat-icon-button (click)="actualizarDatos(equipo.equipo)">
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </div>
 
         <div *ngIf="equipo?.asignado">
             <div class="estado">
@@ -115,7 +125,7 @@
             <button class="info-icon" mat-icon-button (click)="abrirInfoInventario()">
                 <mat-icon>info</mat-icon>
             </button>
-            <button class="update-icon" mat-icon-button (click)="misObjetos()">
+            <button class="update-icon" mat-icon-button (click)="actualizarDatos(equipo.equipo)">
                 <mat-icon>refresh</mat-icon>
             </button>
         </div>
@@ -157,8 +167,11 @@
 
     <div class="button-container-secondary">
 
+        <button mat-raised-button class="buzon" type="button" (click)="utils.navegar('killer')">
+            Killer
+        </button>
         <button mat-raised-button color="warn" class="boton-cerrar" (click)="cerrarBuzon()">
-            Cerrar Mi espacio
+            Cerrar Mi Killer
         </button>
         <button mat-raised-button class="volver" type="button" (click)="utils.navegar('inicio')">
             Volver

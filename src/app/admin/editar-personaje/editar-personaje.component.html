@@ -44,6 +44,18 @@
       <p class="copy">No tiene objetos.</p>
     </div>
 
+    <label>Estado Killer:</label>
+
+    <div class="equipo-container" *ngIf="equipo">
+      <p class="equipo">{{(equipo!.vida ? 'vivo🌚' : '✟ crucifixión ✟') | uppercase}}</p>
+      <p class="equipo">{{equipo!.escudo}}🛡️</p>
+      <p class="equipo">Objetivo:{{equipo.objetivo}} - {{equipo.escudo_objetivo}}🛡️</p>
+      <p class="equipo">Misión: {{equipo.mision}}</p>
+      <div *ngIf=" equipo?.vida === 1 && (equipo?.vida_objetivo === 0 || equipo?.vida_objetivo === null)">
+        <p class="copy info">Ya has matado a tu objetivo.<br>Espera una reasignación.</p>
+      </div>
+    </div>
+
     <button mat-raised-button class="guardar" type="submit">Guardar Cambios</button>
     <button mat-raised-button class="volver" (click)="utils.navegar('admin')">Volver</button>
   </form>

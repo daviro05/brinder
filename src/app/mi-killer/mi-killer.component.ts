@@ -977,4 +977,10 @@ export class MiKillerComponent extends BuzonBaseComponent {
           : this.configKiller.puntos_azul;
     });
   }
+
+  actualizarDatos(equipo: string){
+    this.obtenerKillerConfig();
+    this.getPersonajesEquipo(equipo);
+    this.misObjetos();
+  }
 }

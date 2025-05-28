@@ -30,7 +30,7 @@
       (click)="editarPersonaje(personaje.id!)">
       <img [src]="personaje.image_url" [alt]="personaje.name" class="personaje-img" />
       <div class="info">
-        <span>{{ personaje.name }}</span>
+        <span>{{ personaje.name }} ({{personaje.objetosCount}})</span>
       </div>
       <div class="botones">
         <button class="editar" (click)="editarPersonaje(personaje.id!)">✏️</button>

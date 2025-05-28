@@ -7,6 +7,7 @@ import { BrinderModel } from 'src/app/shared/brinder.model';
 import { BrinderService } from 'src/app/shared/services/brinder.service';
 import { Utils } from 'src/app/shared/utils';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { EquipoModel } from 'src/app/shared/equipo.model';
 
 @Component({
   selector: 'app-editar-personaje',
@@ -19,6 +20,8 @@ export class EditarPersonajeComponent {
   utils: Utils;
   mostrarPassword: boolean = false;
   objetos: any[] = [];
+  id: string | undefined;
+  equipo!: EquipoModel;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +40,7 @@ export class EditarPersonajeComponent {
         this.personaje = data[0]; // Suponiendo que el backend devuelve un array con un solo objeto
       });
       this.misObjetos(id);
+      this.obtenerDatosEquipo(id);
     }
   }
 
@@ -95,7 +99,6 @@ export class EditarPersonajeComponent {
     return url; // Devuelve la misma caena si no cumple el formato
   }
 
-  
   misObjetos(id: any): Promise<void> {
     return new Promise((resolve, reject) => {
       this.brinderService.getMisObjetos(id).subscribe({
@@ -110,4 +113,21 @@ export class EditarPersonajeComponent {
       });
     });
   }
+
+  obtenerDatosEquipo(id: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.brinderService.getEquipoAsignado('1', id).subscribe({
+        next: (res) => {
+          this.equipo = res;
+          console.log('Equipo asignado:', this.equipo);
+          resolve(res);
+        },
+        error: (err) => {
+          console.error('Error al comprobar equipo:', err);
+          reject(err);
+        },
+      });
+    });
+  }
+
 }

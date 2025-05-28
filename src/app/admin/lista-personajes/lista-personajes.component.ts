@@ -18,6 +18,7 @@ export class ListaPersonajesComponent implements OnInit {
   matches: MatchModel[] = [];
   utils: Utils;
   tipo: string = 'brinder';
+  numeroObjetos: any;
 
   constructor(
     private brinderService: BrinderService,
@@ -35,6 +36,25 @@ export class ListaPersonajesComponent implements OnInit {
   cargarPersonajes(): void {
     this.brinderService.obtenerPersonajes(this.tipo).subscribe((data) => {
       this.personajes = data; // Orden alfabético
+      // Añadir un campo dinámico para contar objetos sin modificar el modelo
+      this.personajes.forEach((personaje: any) => {
+        this.obtenerObjetos(personaje.id).then((count) => {
+          personaje.objetosCount = count; // Campo dinámico
+        });
+      });
+    });
+  }
+
+  // Cambiar a async para devolver una promesa con el count
+  async obtenerObjetos(id: any): Promise<number> {
+    return new Promise((resolve) => {
+      this.brinderService.getMisObjetos(id).subscribe({
+        next: (data) => {
+          const count = data.filter((objeto: any) => objeto.usado === 0).length;
+          resolve(count);
+        },
+        error: () => resolve(0)
+      });
     });
   }
 
@@ -94,4 +114,5 @@ export class ListaPersonajesComponent implements OnInit {
       this.utils.navegar(ruta);
     }
   }
+
 }

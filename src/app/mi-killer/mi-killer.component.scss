@@ -170,6 +170,11 @@
   background-size: 200% 200%;
 }
 
+.unirte {
+  background: linear-gradient(90deg, rgb(255, 87, 87), rgb(144, 144, 255));
+  color: white !important;
+}
+
 .obtener-objeto {
   background: linear-gradient(90deg, rgb(255, 87, 87), rgb(144, 144, 255));
   color: white !important;
@@ -255,7 +260,7 @@
   }
 }
 
-.stats.inventario {
+.stats.inventario, .stats.refresh  {
   display: flex;
   flex-direction: column;
 
@@ -290,7 +295,7 @@
   }
 }
 
-.stats.inventario {
+.stats.inventario, .stats.refresh {
   .header-container {
     display: flex;
     align-items: center;

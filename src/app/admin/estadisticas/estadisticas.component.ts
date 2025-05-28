@@ -36,7 +36,7 @@ export class EstadisticasComponent implements OnInit {
         a.personaje1_name.localeCompare(b.personaje1_name)
       ); // Orden alfabético
       this.totalMatches = this.matches.length; // Total de matches
-      this.generarGrafico();
+      //this.generarGrafico();
       this.calcularEstadisticasPersonajes();
     });
   }

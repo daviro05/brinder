@@ -11,6 +11,7 @@ export class BrinderModel {
     public rol: string,
     public id: string,
     public nick: string,
+    public objetosCount?: number
   ) { }
 
 }
