@@ -31,6 +31,19 @@
     <label>Imagen:</label>
     <input type="text" [(ngModel)]="personaje.image_url" name="image_url" required />
 
+    <label>Objetos:</label>
+    <div class="mis-objetos">
+      <div class="grid-objetos">
+        <div class="objeto" *ngFor="let objeto of objetos">
+          <img [src]="'assets/objetos/' + objeto.imagen_url" alt="{{objeto.tipo}}" />
+          <p class="copy">{{objeto.nombre}}</p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="objetos.length === 0" class="no-objetos">
+      <p class="copy">No tiene objetos.</p>
+    </div>
+
     <button mat-raised-button class="guardar" type="submit">Guardar Cambios</button>
     <button mat-raised-button class="volver" (click)="utils.navegar('admin')">Volver</button>
   </form>

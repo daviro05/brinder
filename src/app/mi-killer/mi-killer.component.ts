@@ -351,7 +351,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
                       equipo: this.equipo.equipo,
                     })
                     .subscribe(() => {
-                      this.incrementarPuntos(this.equipo.equipo, 5);
+                      this.incrementarPuntos(this.equipo.equipo, 10);
                     });
                 });
               this.openDialog(
@@ -517,7 +517,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
                                 .subscribe(() => {
                                   this.incrementarPuntos(
                                     this.equipo.equipo,
-                                    15
+                                    20
                                   );
                                 });
                             });
@@ -552,7 +552,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
                               equipo: this.equipo.equipo,
                             })
                             .subscribe(() => {
-                              this.incrementarPuntos(this.equipo.equipo, 20);
+                              this.incrementarPuntos(this.equipo.equipo, 25);
                             });
                         }
                       });
@@ -583,7 +583,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
                               equipo: this.equipo.equipo,
                             })
                             .subscribe(() => {
-                              this.incrementarPuntos(this.equipo.equipo, 15);
+                              this.incrementarPuntos(this.equipo.equipo, 20);
                             });
                           return;
                         } else {
@@ -605,7 +605,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
                               equipo: this.equipo.equipo,
                             })
                             .subscribe(() => {
-                              this.incrementarPuntos(this.equipo.equipo, 15);
+                              this.incrementarPuntos(this.equipo.equipo, 20);
                             });
                         }
                       });
@@ -665,7 +665,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
               equipo: this.equipo.equipo,
             })
             .subscribe(() => {
-              this.incrementarPuntos(this.equipo.equipo, 10);
+              this.incrementarPuntos(this.equipo.equipo, 15);
             });
         },
         error: (err) => {
@@ -745,7 +745,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
                     equipo: this.equipo.equipo,
                   })
                   .subscribe(() => {
-                    this.incrementarPuntos(this.equipo.equipo, 15);
+                    this.incrementarPuntos(this.equipo.equipo, 20);
                   });
                 return;
               },
@@ -937,7 +937,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
           .subscribe(() => {
             let equipoContario =
               this.equipo.equipo === 'rojo' ? 'azul' : 'rojo';
-            this.incrementarPuntos(equipoContario, 50);
+            this.incrementarPuntos(equipoContario, 200);
           });
       }
     });

@@ -205,8 +205,7 @@
         <button mat-raised-button class="unirte" type="button" (click)="utils.navegar('mi-killer')">
             Mi Equipo
         </button>
-        <button class="actualizar-log" mat-raised-button
-            (click)="seccionActiva === 'log-batalla' ? obtenerKillerLog() : seccionActiva === 'estado' ? obtenerKillerConfig() : obtenerObjetosMercado()">
+        <button class="actualizar-log" mat-raised-button (click)="actualizarDatos()">
             <mat-icon>refresh</mat-icon>
             Actualizar
         </button>

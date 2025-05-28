@@ -18,6 +18,7 @@ export class EditarPersonajeComponent {
   texto: string = '';
   utils: Utils;
   mostrarPassword: boolean = false;
+  objetos: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +36,7 @@ export class EditarPersonajeComponent {
       this.brinderService.obtenerPersonaje(id).subscribe((data) => {
         this.personaje = data[0]; // Suponiendo que el backend devuelve un array con un solo objeto
       });
+      this.misObjetos(id);
     }
   }
 
@@ -91,5 +93,21 @@ export class EditarPersonajeComponent {
       return `https://lh3.googleusercontent.com/d/${match[1]}`;
     }
     return url; // Devuelve la misma caena si no cumple el formato
+  }
+
+  
+  misObjetos(id: any): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.brinderService.getMisObjetos(id).subscribe({
+        next: (data) => {
+          this.objetos = data.filter((objeto: any) => objeto.usado === 0);
+          resolve();
+        },
+        error: (err) => {
+          console.error('Error al obtener objetos:', err);
+          reject(err);
+        },
+      });
+    });
   }
 }

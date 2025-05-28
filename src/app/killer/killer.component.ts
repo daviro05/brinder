@@ -268,7 +268,6 @@ export class KillerComponent {
   obtenerObjetosMercado() {
     this.brinderService.obtenerObjetosMercado().subscribe((objs) => {
       this.objetosDisponibles = objs;
-      console.log('Objetos disponibles:', this.objetosDisponibles);
     });
   }
 
@@ -280,5 +279,11 @@ export class KillerComponent {
         objeto: objeto,
       },
     });
+  }
+
+  actualizarDatos(){
+    this.obtenerKillerLog();
+    this.obtenerKillerConfig();
+    this.obtenerObjetosMercado();
   }
 }
