@@ -38,6 +38,8 @@ export class MiKillerComponent extends BuzonBaseComponent {
   equipoAzul: any[] = [];
   configKiller: any = {};
 
+  objetosRecogidosHoy: number = 0; // Nueva variable para contar objetos recogidos hoy
+
   constructor(
     protected override buzonService: BuzonService,
     protected override router: Router,
@@ -94,6 +96,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
     this.obtenerDatosEquipo();
     this.verificarAsignacion();
     this.obtenerKillerConfig();
+    this.misObjetos();
     //console.log('ID del personaje:', this.id);
   }
 
@@ -161,11 +164,12 @@ export class MiKillerComponent extends BuzonBaseComponent {
   obtenerObjeto() {
     this.brinderService.verificarObjetoAsignadoHoy(this.id!).subscribe({
       next: (asignadoHoy) => {
-        this.objetoAsignadoHoy = asignadoHoy; // Actualizar el estado del botón
-        if (asignadoHoy) {
+        //this.objetoAsignadoHoy = asignadoHoy;
+        this.objetosRecogidosHoy = asignadoHoy; // Actualizar el estado del botón
+        if (this.objetosRecogidosHoy >= 2) {
           this.openDialog(
             'Información',
-            'Ya has obtenido un objeto hoy. Vuelve mañana.'
+            'Ya has obtenido los objetos de hoy. Vuelve mañana.'
           );
         } else {
           this.mostrandoCuentaAtras = true;
@@ -228,7 +232,8 @@ export class MiKillerComponent extends BuzonBaseComponent {
         .asignarObjeto(objeto)
         .toPromise()
         .then(() => {
-          this.objetoAsignadoHoy = true; // Actualizar el estado
+          //this.objetoAsignadoHoy = true; // Actualizar el estado
+          this.objetosRecogidosHoy++;
           this.mostrandoCuentaAtras = false; // Ocultar el botón
           this.misObjetos(); // Actualizar la lista de objetos
           this.brinderService
@@ -250,14 +255,13 @@ export class MiKillerComponent extends BuzonBaseComponent {
 
   verificarAsignacion() {
     this.brinderService.verificarObjetoAsignadoHoy(this.id!).subscribe({
-      next: (asignadoHoy) => {
-        this.objetoAsignadoHoy = asignadoHoy;
+      next: (cantidad: number) => {
+        this.objetosRecogidosHoy = cantidad;
       },
       error: (err) => {
-        console.error('Error al verificar objeto asignado:', err);
+        console.error('Error al verificar objetos asignados:', err);
       },
     });
-    this.misObjetos();
   }
 
   misObjetos(): Promise<void> {
@@ -589,7 +593,12 @@ export class MiKillerComponent extends BuzonBaseComponent {
                         } else {
                           this.openDialog(
                             'Éxito',
-                            `${personajeSeleccionado.name} tiene `+objetosEnemigo.length+` objetos: <br><br>`+ objetosEnemigo.map((o: any) => o.nombre).join('<br>')
+                            `${personajeSeleccionado.name} tiene ` +
+                              objetosEnemigo.length +
+                              ` objetos: <br><br>` +
+                              objetosEnemigo
+                                .map((o: any) => o.nombre)
+                                .join('<br>')
                           );
                           this.obtenerDatosEquipo();
                           this.brinderService
@@ -599,8 +608,8 @@ export class MiKillerComponent extends BuzonBaseComponent {
                               personaje_name: this.nombrePersonaje,
                               accion: objeto.nombre,
                               objeto_id: objeto.objeto_id,
-                              personaje_objetivo_id:null,
-                              personaje_objetivo_name:null,
+                              personaje_objetivo_id: null,
+                              personaje_objetivo_name: null,
                               resultado: 'Espía un inventario',
                               equipo: this.equipo.equipo,
                             })
@@ -728,8 +737,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
                   'Éxito',
                   `Has intercambiado tu Inventario con ${personajeSeleccionado.name}.`
                 );
-                this.obtenerDatosEquipo();
-                this.misObjetos();
+                this.actualizarDatos(this.equipo.equipo);
                 this.brinderService
                   .registrarLogKiller({
                     killer_id: '1',
@@ -769,7 +777,12 @@ export class MiKillerComponent extends BuzonBaseComponent {
         Math.random() * valoresPosibles.length
       );
       let valorAleatorio = valoresPosibles[indiceAleatorio];
-      this.openDialog('Éxito', `Has sumado al equipo ${this.equipo.equipo}`+' '+`${valorAleatorio} puntos.`);
+      this.openDialog(
+        'Éxito',
+        `Has sumado al equipo ${this.equipo.equipo}` +
+          ' ' +
+          `${valorAleatorio} puntos.`
+      );
 
       this.brinderService
         .registrarLogKiller({
@@ -780,7 +793,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
           objeto_id: objeto.objeto_id,
           personaje_objetivo_id: null,
           personaje_objetivo_name: null,
-          resultado:'Suma puntos al equipo ' + this.equipo.equipo,
+          resultado: 'Suma puntos al equipo ' + this.equipo.equipo,
           equipo: this.equipo.equipo,
         })
         .subscribe(() => {
@@ -795,7 +808,9 @@ export class MiKillerComponent extends BuzonBaseComponent {
       let valorAleatorio = valoresPosibles[indiceAleatorio];
       this.openDialog(
         'Éxito',
-        `Has quitado al equipo ${equipoContrario}`+' '+`${valorAleatorio} puntos.`
+        `Has quitado al equipo ${equipoContrario}` +
+          ' ' +
+          `${valorAleatorio} puntos.`
       );
       this.brinderService
         .registrarLogKiller({
@@ -978,9 +993,10 @@ export class MiKillerComponent extends BuzonBaseComponent {
     });
   }
 
-  actualizarDatos(equipo: string){
+  actualizarDatos(equipo: string) {
     this.obtenerKillerConfig();
     this.getPersonajesEquipo(equipo);
     this.misObjetos();
+    this.verificarAsignacion();
   }
 }

@@ -234,8 +234,8 @@ export class BrinderService {
     );
   }
 
-  verificarObjetoAsignadoHoy(personaje_id: string): Observable<boolean> {
-    return this.http.get<boolean>(
+  verificarObjetoAsignadoHoy(personaje_id: string): Observable<number> {
+    return this.http.get<number>(
       `${this.BASE_URL}/killer/objetos/verificar/${personaje_id}`
     );
   }

@@ -130,11 +130,13 @@
             </button>
         </div>
 
-        <div class="estado" *ngIf="equipo && equipo.asignado && !objetoAsignadoHoy && equipo.vida === 1">
-            <p class="copy">Obtén objetos de ataque, defensa o especiales. Sólo se puede obtener 1 por día.</p>
-            <button mat-raised-button class="obtener-objeto" (click)="obtenerObjeto()" [disabled]="objetoAsignadoHoy"
-                *ngIf="!objetoAsignadoHoy && !mostrandoCuentaAtras">
-                Obtener objeto
+        <div *ngIf="equipo && equipo.asignado && objetosRecogidosHoy < 2 && equipo.vida === 1">
+            <p class="copy">Obtén objetos de ataque, defensa o especiales. Sólo se pueden obtener 2 por día.</p>
+
+            <button mat-raised-button class="obtener-objeto" (click)="obtenerObjeto()"
+                [disabled]="objetosRecogidosHoy >= 2 || mostrandoCuentaAtras"
+                *ngIf="objetosRecogidosHoy < 2 && !mostrandoCuentaAtras">
+                Obtener objeto ({{objetosRecogidosHoy}}/2)
             </button>
 
             <div *ngIf="mostrandoCuentaAtras" class="spinner-container">
@@ -143,9 +145,11 @@
             </div>
 
         </div>
-        <div *ngIf="equipo && equipo.asignado && objetoAsignadoHoy && equipo.vida === 1">
-            <p class="copy">Hoy no hay más objetos disponibles.<br>Vuelve mañana</p>
+
+        <div *ngIf="objetosRecogidosHoy >= 2 && !mostrandoCuentaAtras && equipo.vida === 1">
+            <p class="copy">Hoy no hay más objetos disponibles.<br>Vuelve mañana.</p>
         </div>
+
         <div *ngIf="equipo && equipo.asignado && equipo.vida === 0">
             <p class="copy">No puedes obtener objetos, estás muerto.</p>
         </div>
