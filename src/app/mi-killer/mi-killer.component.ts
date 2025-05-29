@@ -39,7 +39,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
   configKiller: any = {};
 
   objetosRecogidosHoy: number = 0; // Nueva variable para contar objetos recogidos hoy
-  limiteObjetos: number = 2; // Límite de objetos que se pueden recoger hoy
+  limiteObjetos: number = 1; // Límite de objetos que se pueden recoger hoy
 
   constructor(
     protected override buzonService: BuzonService,
