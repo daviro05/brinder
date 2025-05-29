@@ -20,6 +20,7 @@ import { MiEspacioComponent } from './mi-espacio/mi-espacio.component';
 import { MedallasComponent } from './medallas/medallas.component';
 import { MedallasAdminComponent } from './admin/medallas/medallas.component';
 import { MiKillerComponent } from './mi-killer/mi-killer.component';
+import { KillerAdminComponent } from './admin/killer/killer.component';
 
 const routes: Routes = [
   { path: 'inicio', component: InicioComponent }, // Ruta específica para "Inicio"
@@ -70,6 +71,7 @@ const routes: Routes = [
       { path: 'editar-personaje/:id', component: EditarPersonajeComponent }, // Edición de personajes
       { path: 'avisos', component: AvisosComponent }, // Avisos
       { path: 'medallas', component: MedallasAdminComponent }, // Medallas
+      { path: 'killer', component: KillerAdminComponent }, // Killer
     ],
   },
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' }, // Redirección a la ruta específica

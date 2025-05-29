@@ -89,6 +89,9 @@ button:hover {
   margin: 10px 0;
   display: flex;
   justify-content: space-around;
+  overflow-x: auto;
+  border: 1px solid #f5cb41;
+  border-radius: 10px;
 }
 
 h1 {
@@ -100,6 +103,6 @@ h1 {
   margin-top: 40px;
 }
 
-.elem_lista{
+.elem_lista {
   cursor: pointer;
 }

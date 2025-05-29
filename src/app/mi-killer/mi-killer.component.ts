@@ -39,6 +39,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
   configKiller: any = {};
 
   objetosRecogidosHoy: number = 0; // Nueva variable para contar objetos recogidos hoy
+  limiteObjetos: number = 2; // Límite de objetos que se pueden recoger hoy
 
   constructor(
     protected override buzonService: BuzonService,
@@ -166,7 +167,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
       next: (asignadoHoy) => {
         //this.objetoAsignadoHoy = asignadoHoy;
         this.objetosRecogidosHoy = asignadoHoy; // Actualizar el estado del botón
-        if (this.objetosRecogidosHoy >= 2) {
+        if (this.objetosRecogidosHoy >= this.limiteObjetos) {
           this.openDialog(
             'Información',
             'Ya has obtenido los objetos de hoy. Vuelve mañana.'

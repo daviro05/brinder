@@ -49,6 +49,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { KillerAdminComponent } from './admin/killer/killer.component';
 
 
 export const MY_DATE_FORMATS = {
@@ -92,6 +93,7 @@ registerLocaleData(localeEs);
     MedallasAdminComponent,
     MiKillerComponent,
     MensajesDialogComponent,
+    KillerAdminComponent
   ],
   imports: [
     BrowserModule,

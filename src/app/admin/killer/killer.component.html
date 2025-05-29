@@ -1,0 +1,66 @@
+<div class="chat-container">
+    <div class="title-container">
+        <h2>GESTIONAR KILLER</h2>
+    </div>
+
+    <div class="button-container">
+        <button mat-raised-button class="buzon" [class.active]="seccionActiva === 'crear-medallas'"
+            (click)="cambiarSeccion('crear-medallas')" class="config">
+            <mat-icon>workspace_premium</mat-icon> Crear
+        </button>
+        <button mat-raised-button class="buzon" [class.active]="seccionActiva === 'eliminar-medallas'"
+            (click)="cambiarSeccion('eliminar-medallas')" class="config">
+            <mat-icon>delete</mat-icon> Eliminar
+        </button>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="stats" *ngIf="seccionActiva === 'crear-medallas'">
+        <h2>Crear Medallas</h2>
+        <form (ngSubmit)="crearMedalla()">
+            <label for="nombre">Nombre</label>
+            <input matInput id="nombre" [(ngModel)]="medalla.nombre" name="nombre" required />
+
+            <label for="mensaje">Descripción</label>
+            <textarea id="mensaje" [(ngModel)]="medalla.descripcion" name="mensaje" required></textarea>
+
+            <label for="icono">Nombre imagen</label>
+            <input matInput id="icono" [(ngModel)]="medalla.icono_url" name="icono" required />
+
+            <div class="button-container">
+                <button mat-raised-button type="submit" class="guardar"
+                    [disabled]="!medalla.nombre || !medalla.descripcion || !medalla.icono_url">
+                    Enviar
+                </button>
+                <button mat-raised-button class="volver" type="button" (click)="utils.navegar('admin')">
+                    Volver
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="prefs" *ngIf="seccionActiva === 'eliminar-medallas'">
+        <h2>Eliminar Medallas</h2>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Medallas</mat-label>
+            <mat-select [(ngModel)]="medallasSeleccionadas" name="medallaSeleccionada" multiple required>
+                <mat-option *ngFor="let medalla of medallas" [value]="medalla.id">
+                    {{ medalla.nombre }} a {{medalla.personaje_nombre}} por {{ medalla.asignado_por_nombre }} el {{
+                    medalla.fecha_asignacion | date: 'dd/MM' }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="button-container">
+            <button mat-raised-button color="warn" (click)="eliminarMedalla()" [disabled]="medallasSeleccionadas.length === 0">
+                Eliminar
+            </button>
+            <button mat-raised-button class="volver" type="button" (click)="utils.navegar('admin')">
+                Volver
+            </button>
+        </div>
+
+    </div>
+</div>

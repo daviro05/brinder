@@ -130,13 +130,13 @@
             </button>
         </div>
 
-        <div *ngIf="equipo && equipo.asignado && objetosRecogidosHoy < 2 && equipo.vida === 1">
+        <div *ngIf="equipo && equipo.asignado && objetosRecogidosHoy < limiteObjetos && equipo.vida === 1">
             <p class="copy">Obtén objetos de ataque, defensa o especiales. Sólo se pueden obtener 2 por día.</p>
 
             <button mat-raised-button class="obtener-objeto" (click)="obtenerObjeto()"
-                [disabled]="objetosRecogidosHoy >= 2 || mostrandoCuentaAtras"
-                *ngIf="objetosRecogidosHoy < 2 && !mostrandoCuentaAtras">
-                Obtener objeto ({{objetosRecogidosHoy}}/2)
+                [disabled]="objetosRecogidosHoy >= limiteObjetos || mostrandoCuentaAtras"
+                *ngIf="objetosRecogidosHoy < limiteObjetos && !mostrandoCuentaAtras">
+                Obtener objeto ({{objetosRecogidosHoy}}/{{limiteObjetos}})
             </button>
 
             <div *ngIf="mostrandoCuentaAtras" class="spinner-container">
@@ -146,7 +146,7 @@
 
         </div>
 
-        <div *ngIf="objetosRecogidosHoy >= 2 && !mostrandoCuentaAtras && equipo.vida === 1">
+        <div *ngIf="objetosRecogidosHoy >= limiteObjetos && !mostrandoCuentaAtras && equipo.vida === 1">
             <p class="copy">Hoy no hay más objetos disponibles.<br>Vuelve mañana.</p>
         </div>
 
