@@ -8,9 +8,9 @@
             (click)="cambiarSeccion('crear-log')" class="config">
             <mat-icon>workspace_premium</mat-icon> Crear
         </button>
-        <button mat-raised-button class="buzon" [class.active]="seccionActiva === 'eliminar-medallas'"
-            (click)="cambiarSeccion('eliminar-medallas')" class="config">
-            <mat-icon>delete</mat-icon> Eliminar
+        <button mat-raised-button class="buzon" [class.active]="seccionActiva === 'acciones'"
+            (click)="cambiarSeccion('acciones')" class="config">
+            <mat-icon>bolt</mat-icon> Acciones
         </button>
     </div>
 
@@ -87,7 +87,30 @@
         </form>
     </div>
 
-    <div class="prefs" *ngIf="seccionActiva === 'eliminar-medallas'">
+    <div class="prefs" *ngIf="seccionActiva === 'acciones'">
+
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Equipo</mat-label>
+                <mat-select [(ngModel)]="equipoElegido" name="equipo" required>
+                    <mat-option [value]="'azul'">
+                        Azul
+                    </mat-option>
+                    <mat-option [value]="'rojo'">
+                        Rojo
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="button-container">
+            <button mat-raised-button class="buzon" (click)="realizarAccion('add')">
+                Añade 🛡️
+            </button>
+            <button mat-raised-button class="buzon" (click)="realizarAccion('remove')">
+                Elimina 🛡️
+            </button>
+        </div>
 
 
     </div>

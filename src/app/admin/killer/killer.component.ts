@@ -23,6 +23,8 @@ export class KillerAdminComponent {
   seccionActiva: string = 'crear-log';
   utils: Utils;
 
+  equipoElegido = 'rojo'; // Valor por defecto para el equipo elegido
+
   constructor(
     private brinderService: BrinderService,
     private router: Router,
@@ -34,7 +36,11 @@ export class KillerAdminComponent {
     // Leer parámetros de la URL y establecer la sección activa
     this.route.queryParams.subscribe((params) => {
       const seccion = params['seccion'];
-      if (seccion === 'crear-log' || seccion === 'asignar-objetos') {
+      if (
+        seccion === 'crear-log' ||
+        seccion === 'asignar-objetos' ||
+        seccion === 'acciones'
+      ) {
         this.seccionActiva = seccion;
       }
     });
@@ -146,5 +152,34 @@ export class KillerAdminComponent {
         ? { puntosR: puntos, puntosA: 0 }
         : { puntosR: 0, puntosA: puntos };
     this.brinderService.registrarKillerConfig(puntosTotales).subscribe();
+  }
+
+  realizarAccion(accion: string) {
+    if (accion !== 'add' && accion !== 'remove') return;
+
+    const isAdd = accion === 'add';
+    const data = {
+      equipo: this.equipoElegido,
+      accion: isAdd ? 'add' : 'remove',
+    };
+    const resultado = isAdd
+      ? `Añadidos 🛡️ al equipo ${this.equipoElegido}`
+      : `Eliminados 🛡️ del equipo ${this.equipoElegido}`;
+
+    this.brinderService.realizarAccionKiller(data).subscribe(() => {
+      this.brinderService.registrarLogKiller({
+        killer_id: '1',
+        personaje_id: '51',
+        personaje_name: 'David',
+        accion: 'puntos',
+        objeto_id: null,
+        personaje_objetivo_id: null,
+        personaje_objetivo_name: null,
+        resultado,
+        equipo: this.equipoElegido,
+      }).subscribe(() => {
+        this.openDialog('Éxito', `Acción ${accion} realizada correctamente.`);
+      });
+    });
   }
 }

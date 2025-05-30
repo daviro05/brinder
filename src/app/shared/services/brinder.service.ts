@@ -306,14 +306,17 @@ export class BrinderService {
     return this.http.get<any[]>(`${this.BASE_URL}/killer/config`);
   }
 
-  registrarKillerConfig(data: {
-    puntosR: number;
-    puntosA: number;
-  }) {
+  registrarKillerConfig(data: { puntosR: number; puntosA: number }) {
     return this.http.post(`${this.BASE_URL}/killer/config`, data);
   }
 
-  obtenerObjetosMercado(){
+  obtenerObjetosMercado() {
     return this.http.get<any[]>(`${this.BASE_URL}/mercado/disponibles`);
+  }
+
+  /** ACCIONES KILLER */
+
+  realizarAccionKiller(data: { equipo: string; accion: string }) {
+    return this.http.post(`${this.BASE_URL}/acciones-killer/escudos`, data);
   }
 }
