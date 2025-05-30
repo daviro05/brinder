@@ -95,8 +95,8 @@ export class MiKillerComponent extends BuzonBaseComponent {
     });
 
     this.obtenerDatosEquipo();
-    this.verificarAsignacion();
     this.obtenerKillerConfig();
+    this.verificarAsignacion();
     this.misObjetos();
     //console.log('ID del personaje:', this.id);
   }
@@ -141,6 +141,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
         next: (res) => {
           this.equipo = res;
           this.getPersonajesEquipo(this.equipo.equipo);
+          this.obtenerKillerConfig();
           resolve(res);
         },
         error: (err) => {
@@ -165,7 +166,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
   obtenerObjeto() {
     this.brinderService.verificarObjetoAsignadoHoy(this.id!).subscribe({
       next: (asignadoHoy) => {
-        //this.objetoAsignadoHoy = asignadoHoy;
+        this.actualizarDatos(this.equipo.equipo);
         this.objetosRecogidosHoy = asignadoHoy; // Actualizar el estado del botón
         if (this.objetosRecogidosHoy >= this.limiteObjetos) {
           this.openDialog(
@@ -181,6 +182,7 @@ export class MiKillerComponent extends BuzonBaseComponent {
             if (this.cuentaAtras === 0) {
               clearInterval(intervalo);
               this.asignarObjeto();
+              this.actualizarDatos(this.equipo.equipo);
               this.mostrandoCuentaAtras = false;
             }
           }, 1000);
@@ -987,16 +989,19 @@ export class MiKillerComponent extends BuzonBaseComponent {
   obtenerKillerConfig() {
     this.brinderService.obtenerKillerConfig().subscribe((config) => {
       this.configKiller = config;
-      this.puntosEquipoElegido =
-        this.equipo.equipo === 'rojo'
-          ? this.configKiller.puntos_rojo
-          : this.configKiller.puntos_azul;
+      if (this.equipo.equipo === 'rojo') {
+        this.puntosEquipoElegido = this.configKiller.puntos_rojo;
+        this.limiteObjetos = this.configKiller.limite_obj_rojo;
+      } else if (this.equipo.equipo === 'azul') {
+        this.puntosEquipoElegido = this.configKiller.puntos_azul;
+        this.limiteObjetos = this.configKiller.limite_obj_azul;
+      }
     });
   }
 
   actualizarDatos(equipo: string) {
-    this.obtenerKillerConfig();
     this.getPersonajesEquipo(equipo);
+    this.obtenerKillerConfig();
     this.misObjetos();
     this.verificarAsignacion();
   }
