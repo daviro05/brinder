@@ -131,7 +131,7 @@
         </div>
 
         <div *ngIf="equipo && equipo.asignado && objetosRecogidosHoy < limiteObjetos && equipo.vida === 1">
-            <p class="copy">Obtén objetos de ataque, defensa o especiales. Sólo se pueden obtener 2 por día.</p>
+            <p class="copy">Obtén objetos de ataque, defensa o especiales. Sólo se pueden obtener {{limiteObjetos}} por día.</p>
 
             <button mat-raised-button class="obtener-objeto" (click)="obtenerObjeto()"
                 [disabled]="objetosRecogidosHoy >= limiteObjetos || mostrandoCuentaAtras"
