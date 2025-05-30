@@ -4,8 +4,8 @@
     </div>
 
     <div class="button-container">
-        <button mat-raised-button class="buzon" [class.active]="seccionActiva === 'crear-medallas'"
-            (click)="cambiarSeccion('crear-medallas')" class="config">
+        <button mat-raised-button class="buzon" [class.active]="seccionActiva === 'crear-log'"
+            (click)="cambiarSeccion('crear-log')" class="config">
             <mat-icon>workspace_premium</mat-icon> Crear
         </button>
         <button mat-raised-button class="buzon" [class.active]="seccionActiva === 'eliminar-medallas'"
@@ -16,51 +16,70 @@
 
     <hr class="separator" />
 
-    <div class="stats" *ngIf="seccionActiva === 'crear-medallas'">
-        <h2>Crear Medallas</h2>
-        <form (ngSubmit)="crearMedalla()">
-            <label for="nombre">Nombre</label>
-            <input matInput id="nombre" [(ngModel)]="medalla.nombre" name="nombre" required />
+    <div class="prefs" *ngIf="seccionActiva === 'crear-log'">
+        <form (ngSubmit)="crearLog()">
+            <h2>Crear Killer Log</h2>
 
-            <label for="mensaje">Descripción</label>
-            <textarea id="mensaje" [(ngModel)]="medalla.descripcion" name="mensaje" required></textarea>
+            <mat-form-field appearance="fill">
+                <mat-label>Personaje</mat-label>
+                <mat-select [(ngModel)]="killerLogForm.personajes_ids" name="personajes_ids" multiple required>
+                    <mat-option *ngFor="let personaje of personajes" [value]="personaje.id">
+                        {{ personaje.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
-            <label for="icono">Nombre imagen</label>
-            <input matInput id="icono" [(ngModel)]="medalla.icono_url" name="icono" required />
+            <mat-form-field appearance="fill">
+                <mat-label>Equipo</mat-label>
+                <mat-select [(ngModel)]="killerLogForm.equipo" name="equipo" required>
+                    <mat-option [value]="'admin'">
+                        Admin
+                    </mat-option>
+                    <mat-option [value]="'azul'">
+                        Azul
+                    </mat-option>
+                    <mat-option [value]="'rojo'">
+                        Rojo
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
-            <div class="button-container">
-                <button mat-raised-button type="submit" class="guardar"
-                    [disabled]="!medalla.nombre || !medalla.descripcion || !medalla.icono_url">
-                    Enviar
-                </button>
-                <button mat-raised-button class="volver" type="button" (click)="utils.navegar('admin')">
-                    Volver
-                </button>
-            </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Acción</mat-label>
+                <input matInput [(ngModel)]="killerLogForm.accion" name="accion" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Resultado</mat-label>
+                <mat-select [(ngModel)]="killerLogForm.resultado" name="resultado" required
+                    (selectionChange)="onResultadoChange()">
+                    <mat-option [value]="'David 🎁 objeto a personajes.'">David 🎁 objeto a personajes.</mat-option>
+                    <mat-option [value]="'Equipo 🔵 compra en el mercado 🪙💰'">Equipo 🔵 compra en mercado.</mat-option>
+                    <mat-option [value]="'Equipo 🔴 compra en el mercado 🪙💰'">Equipo 🔴 compra en mercado.</mat-option>
+                    <mat-option [value]="'otro'">Otro</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" *ngIf="killerLogForm.resultado === 'otro'">
+                <mat-label>Resultado personalizado</mat-label>
+                <input matInput [(ngModel)]="resultadoPersonalizado" name="resultadoPersonalizado" required />
+            </mat-form-field>
+
+            <hr class="separator" />
+            <button mat-raised-button class="menu-button" type="submit"
+                [disabled]="!killerLogForm.personajes_ids || !killerLogForm.accion || !killerLogForm.resultado">
+                Crear Log
+            </button>
         </form>
     </div>
 
     <div class="prefs" *ngIf="seccionActiva === 'eliminar-medallas'">
-        <h2>Eliminar Medallas</h2>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Medallas</mat-label>
-            <mat-select [(ngModel)]="medallasSeleccionadas" name="medallaSeleccionada" multiple required>
-                <mat-option *ngFor="let medalla of medallas" [value]="medalla.id">
-                    {{ medalla.nombre }} a {{medalla.personaje_nombre}} por {{ medalla.asignado_por_nombre }} el {{
-                    medalla.fecha_asignacion | date: 'dd/MM' }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
 
-        <div class="button-container">
-            <button mat-raised-button color="warn" (click)="eliminarMedalla()" [disabled]="medallasSeleccionadas.length === 0">
-                Eliminar
-            </button>
-            <button mat-raised-button class="volver" type="button" (click)="utils.navegar('admin')">
-                Volver
-            </button>
-        </div>
+    </div>
 
+    <div class="button-container">
+        <button mat-raised-button class="volver" type="button" (click)="utils.navegar('admin')">
+            Volver
+        </button>
     </div>
 </div>
