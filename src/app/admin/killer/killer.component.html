@@ -50,15 +50,30 @@
             </mat-form-field>
 
             <mat-form-field appearance="fill">
+                <mat-label>Valor</mat-label>
+                <input matInput [(ngModel)]="valorPersonalizado" name="valorPersonalizado"
+                    placeholder="Introduce un valor" type="number" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
                 <mat-label>Resultado</mat-label>
                 <mat-select [(ngModel)]="killerLogForm.resultado" name="resultado" required
                     (selectionChange)="onResultadoChange()">
-                    <mat-option [value]="'David 🎁 objeto a personajes.'">David 🎁 objeto a personajes.</mat-option>
-                    <mat-option [value]="'Equipo 🔵 compra en el mercado 🪙💰'">Equipo 🔵 compra en mercado.</mat-option>
-                    <mat-option [value]="'Equipo 🔴 compra en el mercado 🪙💰'">Equipo 🔴 compra en mercado.</mat-option>
+                    <mat-option [value]="'David 🎁 objeto a personajes.'">David 🎁 objeto a personajes</mat-option>
+                    <mat-option [value]="'Equipo 🔵 compra en el mercado 🪙💰'">🔵 compra mercado</mat-option>
+                    <mat-option [value]="'Equipo 🔴 compra en el mercado 🪙💰'">🔴 compra mercado</mat-option>
+                    <mat-option
+                        [value]="'Equipo azul ' + (valorPersonalizado > 0 ? '+' : '') + valorPersonalizado + ' puntos'">
+                        Equipo 🔵 puntos
+                    </mat-option>
+                    <mat-option
+                        [value]="'Equipo rojo ' + (valorPersonalizado > 0 ? '+' : '') + valorPersonalizado + ' puntos'">
+                        Equipo 🔴 puntos
+                    </mat-option>
                     <mat-option [value]="'otro'">Otro</mat-option>
                 </mat-select>
             </mat-form-field>
+
             <mat-form-field appearance="fill" *ngIf="killerLogForm.resultado === 'otro'">
                 <mat-label>Resultado personalizado</mat-label>
                 <input matInput [(ngModel)]="resultadoPersonalizado" name="resultadoPersonalizado" required />

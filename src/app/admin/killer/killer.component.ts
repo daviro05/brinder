@@ -18,6 +18,7 @@ export class KillerAdminComponent {
     equipo: '',
   };
   resultadoPersonalizado: string = ''; // Nuevo campo para resultado personalizado
+  valorPersonalizado: number = 0; // Valor personalizado para puntos'';
   personajes: any[] = [];
   seccionActiva: string = 'crear-log';
   utils: Utils;
@@ -107,7 +108,9 @@ export class KillerAdminComponent {
             resultado: log.resultado,
             equipo: log.equipo,
           })
-          .subscribe();
+          .subscribe(() => {
+            this.incrementarPuntos(log.equipo, this.valorPersonalizado);
+          });
       }
     );
 
@@ -135,5 +138,13 @@ export class KillerAdminComponent {
         message: message,
       },
     });
+  }
+
+  incrementarPuntos(equipo: string, puntos: number) {
+    let puntosTotales =
+      equipo === 'rojo'
+        ? { puntosR: puntos, puntosA: 0 }
+        : { puntosR: 0, puntosA: puntos };
+    this.brinderService.registrarKillerConfig(puntosTotales).subscribe();
   }
 }
