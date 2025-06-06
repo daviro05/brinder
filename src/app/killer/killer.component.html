@@ -4,20 +4,20 @@
         </h2>
     </div>
 
-    <div class="button-container">
+    <!--<div class="button-container">
         <button mat-raised-button [class.active]="seccionActiva === 'estado'" (click)="cambiarSeccion('estado')"
             class="config">
             Estado
         </button>
         <button mat-raised-button [class.active]="seccionActiva === 'log-batalla'"
-            (click)="cambiarSeccion('log-batalla')" class="config">
+            (click)="cambiarSeccion('log-batalla')" class="config" disabled>
             Log Killer
         </button>
         <button mat-raised-button [class.active]="seccionActiva === 'mercado'" (click)="cambiarSeccion('mercado')"
-            class="config">
+            class="config" disabled>
             Mercado
         </button>
-    </div>
+    </div>-->
 
     <div class="killer-estado" *ngIf="seccionActiva === 'estado'">
         <!--<img src="assets/killer-gif.gif" alt="Cargando..." class="loading-gif">-->

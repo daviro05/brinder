@@ -38,7 +38,7 @@
 
     <div class="button-container" *ngIf="personaje">
         <button mat-raised-button [class.active]="seccionActiva === 'estado'" (click)="cambiarSeccion('estado')"
-            class="config">
+            class="config" disabled>
             Estado
         </button>
         <button mat-raised-button [class.active]="seccionActiva === 'mi-equipo'" (click)="cambiarSeccion('mi-equipo')"
@@ -46,7 +46,7 @@
             Mi equipo
         </button>
         <button mat-raised-button [class.active]="seccionActiva === 'inventario'" (click)="cambiarSeccion('inventario')"
-            class="config">
+            class="config" disabled>
             Inventario
         </button>
     </div>

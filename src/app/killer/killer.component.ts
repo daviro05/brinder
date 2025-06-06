@@ -75,9 +75,9 @@ export class KillerComponent {
   ngOnInit() {
     this.loadCharacters();
     this.getPersonajesEquipo(); // Llamar al método para obtener personajes del equipo
-    this.obtenerKillerLog();
+    //this.obtenerKillerLog();
     this.obtenerKillerConfig();
-    this.obtenerObjetosMercado(); // Cargar objetos del mercado
+    //this.obtenerObjetosMercado(); // Cargar objetos del mercado
   }
 
   getPersonajesEquipo() {
